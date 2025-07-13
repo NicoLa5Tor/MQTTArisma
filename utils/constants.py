@@ -1,0 +1,47 @@
+"""
+Constantes para la aplicación MQTT
+"""
+
+# Configuración MQTT
+DEFAULT_MQTT_BROKER = "161.35.239.177"
+DEFAULT_MQTT_PORT = 17090
+DEFAULT_MQTT_TOPIC = "empresas"
+DEFAULT_MQTT_QOS = 0
+DEFAULT_MQTT_KEEPALIVE = 60
+
+# Configuración WebSocket
+DEFAULT_WS_RECONNECT_ATTEMPTS = 5
+DEFAULT_WS_RECONNECT_DELAY = 3
+
+# Configuración Backend
+DEFAULT_BACKEND_TIMEOUT = 30
+DEFAULT_BACKEND_RETRY_ATTEMPTS = 3
+DEFAULT_BACKEND_RETRY_DELAY = 5
+
+# Tipos de mensajes
+MESSAGE_TYPE_SEMAFOROS = "semaforos"
+MESSAGE_TYPE_ALARMAS = "alarmas"
+MESSAGE_TYPE_ESTADO = "estado"
+MESSAGE_TYPE_CONFIGURACION = "configuracion"
+MESSAGE_TYPE_HEARTBEAT = "heartbeat"
+
+# Niveles de prioridad de alarmas
+ALARM_PRIORITY_LOW = "low"
+ALARM_PRIORITY_MEDIUM = "medium"
+ALARM_PRIORITY_HIGH = "high"
+ALARM_PRIORITY_CRITICAL = "critical"
+
+# Códigos de estado
+STATUS_CONNECTED = "connected"
+STATUS_DISCONNECTED = "disconnected"
+STATUS_ERROR = "error"
+STATUS_ALIVE = "alive"
+
+# Intervalos de tiempo (segundos)
+STATS_INTERVAL = 60
+HEARTBEAT_INTERVAL = 30
+RECONNECT_INTERVAL = 5
+
+# Formatos de timestamp
+TIMESTAMP_FORMAT = "%Y-%m-%d %H:%M:%S"
+ISO_TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%S"
