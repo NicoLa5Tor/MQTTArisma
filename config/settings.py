@@ -28,7 +28,7 @@ class MQTTConfig:
 @dataclass
 class BackendConfig:
     """Configuración para conexión al backend"""
-    base_url: str = "http://localhost:5002"
+    base_url: str = "http://127.0.0.1:5002"
     api_key: Optional[str] = None
     timeout: int = 30
     retry_attempts: int = 3
