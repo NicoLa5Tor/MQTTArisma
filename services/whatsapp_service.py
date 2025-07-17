@@ -125,6 +125,59 @@ class WhatsAppService:
             self.logger.error(f"Error en servicio WhatsApp broadcast: {e}")
             return False
     
+    def send_personalized_broadcast(self, recipients: List[Dict], header_type: str, header_content: str,
+                                   button_text: str, button_url: str, footer_text: str, use_queue: bool = True) -> bool:
+        """
+        Enviar mensaje broadcast personalizado de WhatsApp
+        
+        Args:
+            recipients: Lista de diccionarios con 'phone' y 'body_text'
+            header_type: Tipo de encabezado
+            header_content: Contenido del encabezado
+            button_text: Texto del botón
+            button_url: URL del botón
+            footer_text: Texto de pie de página
+            use_queue: Si usar cola o no
+            
+        Returns:
+            bool: True si se envió exitosamente, False en caso contrario
+        """
+        try:
+            if not self.config.enabled:
+                self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
+                return False
+            
+            print(f"📱 Servicio WhatsApp - Enviando broadcast personalizado a {len(recipients)} destinatarios...")
+            
+            response = self.client.send_personalized_broadcast(
+                recipients=recipients,
+                header_type=header_type,
+                header_content=header_content,
+                button_text=button_text,
+                button_url=button_url,
+                footer_text=footer_text,
+                use_queue=use_queue
+            )
+            
+            if response:
+                self.stats["broadcast_messages_sent"] += 1
+                self.stats["total_recipients"] += len(recipients)
+                
+                print(f"✅ Broadcast personalizado enviado exitosamente a {len(recipients)} destinatarios")
+                self.logger.info(f"Broadcast personalizado enviado a {len(recipients)} destinatarios")
+                return True
+            else:
+                self.stats["errors"] += 1
+                print(f"❌ Error enviando broadcast personalizado")
+                self.logger.error(f"Error enviando broadcast personalizado a {len(recipients)} destinatarios")
+                return False
+                
+        except Exception as e:
+            self.stats["errors"] += 1
+            print(f"💥 Error en servicio WhatsApp broadcast personalizado: {e}")
+            self.logger.error(f"Error en servicio WhatsApp broadcast personalizado: {e}")
+            return False
+    
     def process_whatsapp_notification(self, notification: Dict[str, Any]) -> bool:
         """
         Procesar notificación de WhatsApp desde el backend

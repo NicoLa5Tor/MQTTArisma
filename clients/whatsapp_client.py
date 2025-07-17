@@ -170,6 +170,56 @@ class WhatsAppClient:
             self.logger.error(f"Error enviando broadcast: {e}")
             return None
     
+    def send_personalized_broadcast(self, recipients: List[Dict], header_type: str, header_content: str, 
+                                   button_text: str, button_url: str, footer_text: str, use_queue: bool = True) -> Optional[Dict]:
+        """
+        Enviar un broadcast personalizado usando el API de WhatsApp
+        
+        Args:
+            recipients: Lista de diccionarios con 'phone' y 'body_text'
+            header_type: Tipo de encabezado, e.g., 'text', 'image'
+            header_content: Contenido del encabezado, URL o texto
+            button_text: Texto del botón
+            button_url: URL del botón
+            footer_text: Texto del pie de página
+            use_queue: Si usar cola o no (default True)
+            
+        Returns:
+            Dict con respuesta de la API o None si hay error
+        """
+        try:
+            data = {
+                "recipients": recipients,
+                "header_type": header_type,
+                "header_content": header_content,
+                "button_text": button_text,
+                "button_url": button_url,
+                "footer_text": footer_text,
+                "use_queue": use_queue
+            }
+            
+            print(f"📱 Enviando broadcast personalizado:")
+            print(f"   📋 Recipients: {len(recipients)}")
+            print(f"   📋 Encabezado: {header_content}")
+            print(f"   🔘 Botón: {button_text}")
+            print(f"   🔗 URL: {button_url}")
+            print(f"   📝 Pie: {footer_text}")
+            print(f"   🔄 Cola: {use_queue}")
+            
+            response = self.post('/api/send-personalized-broadcast', data=data)
+            
+            if response:
+                print(f"✅ Broadcast personalizado enviado exitosamente")
+                return response
+            else:
+                print(f"❌ Error enviando broadcast personalizado")
+                return None
+                
+        except Exception as e:
+            print(f"💥 Error enviando broadcast personalizado: {e}")
+            self.logger.error(f"Error enviando broadcast personalizado: {e}")
+            return None
+    
     def _clean_phone_number(self, phone: str) -> str:
         """
         Limpiar número de teléfono (remover +, espacios, guiones)

@@ -102,7 +102,6 @@ class MessageHandler:
         """Enviar mensaje de BOTONERA al backend usando un nuevo hilo"""
         thread = threading.Thread(target=self._send_alarm_thread, args=(hardware_name, data, topic, payload))
         thread.start()
-
     def _send_alarm_thread(self, hardware_name: str, data: Dict, topic: str, payload: str):
         """Enviar mensaje de BOTONERA al backend"""
         try:
@@ -113,13 +112,11 @@ class MessageHandler:
             if len(topic_parts) < 5 or topic_parts[0] != "empresas":
                 print(f"❌ Formato de topic inválido")
                 return False
-            
             # Extraer partes del topic
             empresa = topic_parts[1]
             sede = topic_parts[2] 
             tipo_hardware = topic_parts[3]  # BOTONERA
             nombre_hardware = topic_parts[4]
-            
             # Crear estructura de datos con SOLO los campos requeridos
             mqtt_data = {
                 "empresa": empresa,
@@ -128,8 +125,6 @@ class MessageHandler:
                 "nombre_hardware": nombre_hardware,
                 "data": data
             }
-            
-            
             # Autenticar y enviar alarma
             token = self.backend_client.authenticate_hardware(mqtt_data)
             
@@ -141,26 +136,28 @@ class MessageHandler:
             
             if response:
                 self._handle_alarm_notifications(response, mqtt_data)
-                
                 return True
             else:
                 print(f"❌ Error enviando alarma")
                 return False
-                
         except Exception as e:
             print(f"❌ Error: {e}")
             return False
-
-  
     def _handle_alarm_notifications(self, response: Dict, mqtt_data: Dict) -> None:
         """Procesar respuesta del backend y enviar notificaciones"""
         try:
-            print("📥 RESPUESTA DEL BACKEND:")
-            print(json.dumps(response, indent=4))
-            
-            # Procesar topics de otros hardware (MQTT)
-            if "topics_otros_hardware" in response:
-                other_hardwars = response["topics_otros_hardware"]
+            # print(" RESPUESTA DEL BACKEND:")
+            # print(json.dumps(response, indent=4))
+            self._send_mqtt_message(data=response)
+            self._send_broadcast_personalized_message(data=response)
+            print("ℹ️ Procesamiento de notificaciones completado")
+        except Exception as e:
+            print(f"❌ Error manejando notificaciones: {e}")
+            self.logger.error(f"Error en notificaciones: {e}")
+    def _send_mqtt_message(self, data) -> None:
+         # Procesar topics de otros hardware (MQTT)
+            if "topics_otros_hardware" in data:
+                other_hardwars = data["topics_otros_hardware"]
                 for item in other_hardwars:
                     item = self.pathern_topic + "/" + item
                     if "SEMAFORO" in item:
@@ -181,12 +178,29 @@ class MessageHandler:
                         }
                     
                     self.send_mqtt_message(topic=item, message_data=messsage_data)
-        
-            print("ℹ️ Procesamiento de notificaciones completado")
-                
-        except Exception as e:
-            print(f"❌ Error manejando notificaciones: {e}")
-            self.logger.error(f"Error en notificaciones: {e}")
+    def _send_broadcast_personalized_message(self, data) -> None:
+        print(f"la data es {json.dumps(data,indent=4)}")
+        numeros_data = data["numeros_telefonicos"]
+        tipo_alarma_info = data.get("tipo_alarma_info",{})
+        recipients = []
+        for item in numeros_data:
+            data_item = {
+                "phone":item["numero"],
+                "body_text": f"Hola {item.get("nombre","")}.\nRESCUE te informa sobre una alerta de {tipo_alarma_info.get("nombre")}"
+            }
+            recipients.append(data_item)
+        self.whatsapp_service.send_personalized_broadcast(
+            recipients= recipients,
+            header_type="image",
+            header_content=tipo_alarma_info.get("imagen_base64",""),
+            button_text="Más detalles",
+            button_url="https://mi-app.com/update",
+            footer_text="Equipo RESCUE",
+            use_queue=True
+        )
+
+        return
+
     def send_mqtt_message(self, topic: str, message_data: Dict, qos: int = 0) -> bool:
         """
         Función para enviar mensajes MQTT a un topic específico.
@@ -228,9 +242,7 @@ class MessageHandler:
             # Iniciar el procesador de cola si no está corriendo
             if not self.is_processing:
                 self._queue_task = asyncio.create_task(self._process_whatsapp_queue())
-            
             return True
-            
         except asyncio.QueueFull:
             print(f"⚠️ Cola de WhatsApp llena, descartando mensaje")
             self.whatsapp_error_count += 1
