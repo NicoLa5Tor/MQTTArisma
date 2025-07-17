@@ -10,6 +10,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from config import AppConfig
+from utils.redis_queue_manager import RedisQueueManager
 
 def test_configuration():
     """Probar que la configuración centralizada funciona correctamente"""
@@ -52,6 +53,16 @@ def test_configuration():
         print(f"  • Enabled: {config.websocket.enabled}")
         print()
         
+        # Probar configuración Redis
+        print(f"📊 Redis Configuration:")
+        print(f"  • Host: {config.redis.host}:{config.redis.port}")
+        print(f"  • Database: {config.redis.db}")
+        print(f"  • Password: {'***' if config.redis.password else 'None'}")
+        print(f"  • Queue name: {config.redis.whatsapp_queue_name}")
+        print(f"  • Workers: {config.redis.whatsapp_workers}")
+        print(f"  • Queue TTL: {config.redis.whatsapp_queue_ttl}s")
+        print()
+        
         # Probar configuración general
         print(f"⚙️ General Configuration:")
         print(f"  • Log level: {config.log_level}")
@@ -68,6 +79,58 @@ def test_configuration():
         print(f"❌ Error en configuración: {e}")
         return False
 
+def test_redis_queue_manager():
+    """Probar que RedisQueueManager funciona con RedisConfig"""
+    print("🧪 Probando RedisQueueManager...")
+    print("=" * 50)
+    
+    try:
+        # Crear configuración
+        config = AppConfig()
+        
+        # Crear RedisQueueManager con RedisConfig
+        redis_queue = RedisQueueManager(config.redis)
+        
+        print(f"📊 RedisQueueManager creado exitosamente:")
+        print(f"  • Host: {redis_queue.redis_host}:{redis_queue.redis_port}")
+        print(f"  • Database: {redis_queue.redis_db}")
+        print(f"  • Queue name: {redis_queue.queue_name}")
+        print(f"  • Workers: {redis_queue.workers_count}")
+        print(f"  • TTL: {redis_queue.message_ttl}s")
+        print()
+        
+        # Probar salud de Redis
+        is_healthy = redis_queue.is_healthy()
+        if is_healthy:
+            print("✅ Redis está disponible y saludable")
+        else:
+            print("⚠️ Redis no está disponible (fallback normal)")
+        
+        print("✅ RedisQueueManager funciona correctamente con RedisConfig!")
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error probando RedisQueueManager: {e}")
+        return False
+
 if __name__ == "__main__":
-    success = test_configuration()
-    sys.exit(0 if success else 1)
+    print("🚀 Iniciando pruebas...\n")
+    
+    tests = [
+        ("Configuración", test_configuration),
+        ("RedisQueueManager", test_redis_queue_manager)
+    ]
+    
+    passed = 0
+    total = len(tests)
+    
+    for test_name, test_func in tests:
+        if test_func():
+            passed += 1
+            print(f"✅ {test_name}: PASÓ\n")
+        else:
+            print(f"❌ {test_name}: FALLÓ\n")
+    
+    print(f"📊 Resumen: {passed}/{total} pruebas pasaron")
+    sys.exit(0 if passed == total else 1)

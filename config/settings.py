@@ -60,11 +60,26 @@ class WebSocketConfig:
 
 
 @dataclass
+class RedisConfig:
+    """Configuración para Redis"""
+    host: str = os.getenv("REDIS_HOST", "localhost")
+    port: int = int(os.getenv("REDIS_PORT", "6379"))
+    db: int = int(os.getenv("REDIS_DB", "0"))
+    password: Optional[str] = os.getenv("REDIS_PASSWORD") or None
+    
+    # Configuración de colas WhatsApp
+    whatsapp_queue_name: str = os.getenv("WHATSAPP_QUEUE_NAME", "whatsapp_messages")
+    whatsapp_workers: int = int(os.getenv("WHATSAPP_WORKERS", "3"))
+    whatsapp_queue_ttl: int = int(os.getenv("WHATSAPP_QUEUE_TTL", "3600"))
+
+
+@dataclass
 class AppConfig:
     """Configuración general de la aplicación"""
     mqtt: MQTTConfig = field(default_factory=MQTTConfig)
     backend: BackendConfig = field(default_factory=BackendConfig)
     whatsapp: WhatsAppConfig = field(default_factory=WhatsAppConfig)
     websocket: WebSocketConfig = field(default_factory=WebSocketConfig)
+    redis: RedisConfig = field(default_factory=RedisConfig)
     log_level: str = os.getenv("LOG_LEVEL", "INFO")
     message_interval: int = int(os.getenv("MESSAGE_INTERVAL", "20"))

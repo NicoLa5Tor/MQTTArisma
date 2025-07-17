@@ -23,6 +23,10 @@ class MQTTClient:
         self.on_connect_callback: Optional[Callable] = None
         self.on_disconnect_callback: Optional[Callable] = None
         
+        # Control de logs para evitar spam
+        self.first_connection = True
+        self.connection_count = 0
+        
         # Configurar cliente
         self._setup_client()
     
@@ -32,6 +36,7 @@ class MQTTClient:
         self.client.on_connect = self._on_connect
         self.client.on_message = self._on_message
         self.client.on_disconnect = self._on_disconnect
+        self.client.reconnect_delay_set(min_delay=1, max_delay=120)
     
     def _should_display_message(self, topic: str) -> bool:
         """Determinar si un mensaje debe mostrarse (solo BOTONERA válidos)"""
@@ -63,16 +68,14 @@ class MQTTClient:
         """Callback interno para conexión"""
         if rc == 0:
             self.is_connected = True
-            self.logger.info("Conectado al broker MQTT!")
-            print(f"🔥 CONECTADO AL BROKER MQTT 🔥")
+            self.connection_count += 1
+            if self.connection_count > 1:
+                self.logger.info("Reconexión exitosa al broker MQTT")
             
-            # Suscribirse a TODO
-            client.subscribe("#", qos=0)
-            print(f"SUSCRITO A: #")
-            
-            # También suscribirse al topic configurado
-            client.subscribe(self.config.topic, qos=0)
-            print(f"SUSCRITO A: {self.config.topic}")
+            # Solo mostrar log la primera vez o cada 10 reconexiones
+            if self.first_connection or self.connection_count % 10 == 0:
+                self.logger.info(f"✅ Conectado al broker MQTT (conexión #{self.connection_count})")
+                self.first_connection = False
             
             # Ejecutar callback personalizado si existe
             if self.on_connect_callback:
@@ -133,7 +136,9 @@ class MQTTClient:
     def _on_disconnect(self, client, userdata, rc):
         """Callback interno para desconexión"""
         self.is_connected = False
-        self.logger.info(f"Desconectado del broker MQTT: {rc}")
+        # Solo mostrar log de desconexión si es un error (rc != 0)
+        if rc != 0:
+            self.logger.warning(f"Desconexión inesperada del broker MQTT: {rc}, reintentando...")
         
         if self.on_disconnect_callback:
             self.on_disconnect_callback(client, userdata, rc)

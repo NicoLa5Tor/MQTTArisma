@@ -1,6 +1,6 @@
-# Aplicación MQTT Escalable
+# Sistema WebSocket y MQTT Unificado
 
-Una aplicación escalable para manejar comunicación MQTT, WebSocket y Backend para múltiples empresas.
+Sistema unificado para manejar servicios WebSocket y MQTT con procesamiento de mensajes de WhatsApp y backend, utilizando configuración centralizada.
 
 ## Estructura del Proyecto
 

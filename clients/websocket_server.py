@@ -16,7 +16,8 @@ from config import AppConfig
 class WebSocketServer:
     """Servidor WebSocket híbrido que maneja WhatsApp y MQTT"""
     
-    def __init__(self, host: str = None, port: int = None, enable_mqtt: bool = True):
+    def __init__(self, host: str = None, port: int = None, enable_mqtt: bool = True, 
+                 backend_client=None, whatsapp_service=None, mqtt_publisher=None):
         # Crear configuración completa
         self.config = AppConfig()
         
@@ -25,18 +26,25 @@ class WebSocketServer:
         self.port = port or self.config.websocket.port
         self.enable_mqtt = enable_mqtt
         
-        # Inicializar clientes
-        self.backend_client = BackendClient(self.config.backend)
+        # Usar servicios externos si se proporcionan, sino crear propios
+        self.backend_client = backend_client or BackendClient(self.config.backend)
+        self.whatsapp_service = whatsapp_service
+        self.mqtt_publisher = mqtt_publisher
         self.mqtt_client = None
         
-        if self.enable_mqtt:
+        # Solo crear MQTTClient si enable_mqtt es True Y no hay mqtt_publisher
+        # Si hay mqtt_publisher, significa que solo queremos enviar mensajes
+        if self.enable_mqtt and not self.mqtt_publisher:
             self.mqtt_client = MQTTClient(self.config.mqtt)
             self._setup_mqtt_callbacks()
         
         # Inicializar manejador de mensajes
         self.message_handler = MessageHandler(
             backend_client=self.backend_client,
-            mqtt_client=self.mqtt_client
+            mqtt_client=self.mqtt_client,
+            whatsapp_service=self.whatsapp_service,
+            config=self.config,
+            mqtt_publisher=self.mqtt_publisher
         )
         
         self.server = None
@@ -115,7 +123,6 @@ class WebSocketServer:
             self.logger.info(f"Cliente desconectado")
         except Exception as e:
             self.logger.error(f"Error manejando cliente: {e}")
-    
     async def start(self):
         """Iniciar el servidor WebSocket"""
         self.logger.info(f"Iniciando servidor WebSocket en ws://{self.host}:{self.port}")

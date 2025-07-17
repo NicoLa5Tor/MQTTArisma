@@ -10,16 +10,18 @@ import asyncio
 from asyncio import Queue
 from typing import Dict, Any, Optional
 from dotenv import load_dotenv
+from utils.redis_queue_manager import RedisQueueManager
 
 # Cargar variables de entorno
 load_dotenv()
 class MessageHandler:
     """Manejador de mensajes MQTT para BOTONERA"""
     
-    def __init__(self, backend_client, mqtt_client=None, whatsapp_service=None, config=None):
+    def __init__(self, backend_client, mqtt_client=None, whatsapp_service=None, config=None, mqtt_publisher=None):
         
         self.backend_client = backend_client
         self.mqtt_client = mqtt_client
+        self.mqtt_publisher = mqtt_publisher
         self.whatsapp_service = whatsapp_service
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -27,12 +29,25 @@ class MessageHandler:
         self.processed_messages = 0
         self.error_count = 0
         
-        # Sistema de colas para mensajes de WhatsApp
-        self.whatsapp_queue = Queue(maxsize=1000)  # Cola con límite de 1000 mensajes
-        self.whatsapp_processed_count = 0
-        self.whatsapp_error_count = 0
+        # Sistema de colas Redis para mensajes de WhatsApp
+        try:
+            # Pasar configuración Redis específica si está disponible
+            redis_config = config.redis if config else None
+            self.redis_queue = RedisQueueManager(redis_config)
+            self.redis_queue.start_workers(self._process_single_whatsapp_message_sync)
+            self.logger.info("✅ Sistema de colas Redis iniciado")
+        except Exception as e:
+            self.logger.error(f"❌ Error iniciando Redis, usando cola en memoria: {e}")
+            # Fallback a cola en memoria si Redis no está disponible
+            self.redis_queue = None
+            
+        # Siempre inicializar cola en memoria como fallback
+        self.whatsapp_queue = Queue(maxsize=1000)
         self.is_processing = False
         self._queue_task = None
+        
+        self.whatsapp_processed_count = 0
+        self.whatsapp_error_count = 0
         # Usar settings en lugar de .env directo
         self.pathern_topic = config.mqtt.topic if config else "empresas"
 
@@ -214,18 +229,30 @@ class MessageHandler:
             bool: True si el mensaje se envió correctamente, False en caso contrario
         """
         try:
-            if not self.mqtt_client:
-                print(f"❌ Cliente MQTT no disponible")
-                return False
+            # Preferir mqtt_publisher si está disponible (solo envío)
+            if self.mqtt_publisher:
+                success = self.mqtt_publisher.publish_json(topic, message_data, qos)
                 
-            # Usar el método publish_json del cliente MQTT
-            success = self.mqtt_client.publish_json(topic, message_data, qos)
+                if success:
+                    print(f"✅ Mensaje MQTT enviado a topic: {topic} (via publisher)")
+                    return True
+                else:
+                    print(f"❌ Error enviando mensaje MQTT a topic: {topic} (via publisher)")
+                    return False
             
-            if success:
-                print(f"✅ Mensaje MQTT enviado a topic: {topic}")
-                return True
+            # Fallback a mqtt_client si no hay mqtt_publisher
+            elif self.mqtt_client:
+                success = self.mqtt_client.publish_json(topic, message_data, qos)
+                
+                if success:
+                    print(f"✅ Mensaje MQTT enviado a topic: {topic} (via client)")
+                    return True
+                else:
+                    print(f"❌ Error enviando mensaje MQTT a topic: {topic} (via client)")
+                    return False
+            
             else:
-                print(f"❌ Error enviando mensaje MQTT a topic: {topic}")
+                print(f"❌ No hay cliente MQTT disponible")
                 return False
                 
         except Exception as e:
@@ -236,13 +263,17 @@ class MessageHandler:
     async def queue_whatsapp_message(self, message: str) -> bool:
         """Agregar mensaje de WhatsApp a la cola para procesamiento"""
         try:
-            # Intentar agregar el mensaje a la cola
-            await self.whatsapp_queue.put(message)
-            
-            # Iniciar el procesador de cola si no está corriendo
-            if not self.is_processing:
-                self._queue_task = asyncio.create_task(self._process_whatsapp_queue())
-            return True
+            # Usar Redis si está disponible
+            if self.redis_queue and self.redis_queue.is_healthy():
+                return self.redis_queue.add_message(message)
+            else:
+                # Fallback a cola en memoria
+                await self.whatsapp_queue.put(message)
+                
+                # Iniciar el procesador de cola si no está corriendo
+                if not self.is_processing:
+                    self._queue_task = asyncio.create_task(self._process_whatsapp_queue())
+                return True
         except asyncio.QueueFull:
             print(f"⚠️ Cola de WhatsApp llena, descartando mensaje")
             self.whatsapp_error_count += 1
@@ -280,8 +311,46 @@ class MessageHandler:
             self.is_processing = False
             self.logger.info("🔄 Procesador de cola de WhatsApp detenido")
     
+    def _process_single_whatsapp_message_sync(self, message: str) -> bool:
+        """Procesar un solo mensaje de WhatsApp (versión síncrona para Redis)"""
+        try:
+            # Parsear JSON
+            json_message = json.loads(message)
+            """
+            se obtiene la llave del mendaje, si sale error es porque 
+            el mensaje no es correcto entonces pasa a la exceptio y no ejecuta nada
+            (este paso es necesario, a veces se envian mensajes de conexion al webhook por parte de whp)
+            """
+            entry = json_message["entry"][0]["changes"][0]["value"]["messages"][0]
+            #obtener numero
+            number_client = entry["from"]
+            type_message = entry["type"]
+            is_text = entry[type_message]["body"] if type_message == "text" else False
+             #validar si el usuario ya existe 
+            if json_message["save_number"]:
+                #usuario guardado
+                pass
+            else:
+                #usuario nuevo
+                # Versión síncrona para Redis
+                self._process_new_number_sync(number=number_client)
+            print(f"📱 Mensaje WhatsApp #{self.whatsapp_processed_count + 1}:")
+            print(json.dumps(entry, indent=4, ensure_ascii=False))
+            print("=" * 50)         
+            self.whatsapp_processed_count += 1
+            return True
+        except json.JSONDecodeError:
+            print(f"❌ Error: Mensaje no es JSON válido")
+            print(f"Mensaje recibido: {message}")
+            self.whatsapp_error_count += 1
+            return False
+        except Exception as e:
+            print(f"❌ Error procesando mensaje: {e}")
+            self.whatsapp_error_count += 1
+            return False
+    
     async def _process_single_whatsapp_message(self, message: str) -> None:
-        """Procesar un solo mensaje de WhatsApp"""
+        """Procesar un solo mensaje de WhatsApp (versión asíncrona para fallback)"""
         try:
             # Parsear JSON
             json_message = json.loads(message)
@@ -313,11 +382,18 @@ class MessageHandler:
         except Exception as e:
             print(f"❌ Error procesando mensaje: {e}")
             self.whatsapp_error_count += 1
-    async def _process_new_number(self,number:str) -> None:
+    def _process_new_number_sync(self, number: str) -> None:
+        """Procesar nuevo número (versión síncrona para Redis)"""
         verify_number = self.backend_client.verify_user_number(number)
         print(verify_number)
+    
+    async def _process_new_number(self, number: str) -> None:
+        """Procesar nuevo número (versión asíncrona para fallback)"""
+        verify_number = self.backend_client.verify_user_number(number)
+        print(verify_number)
+    
     async def _process_save_number(self) -> None:
-        return 
+        return
 
     def process_whatsapp_message(self, message: str) -> None:
         """Función de compatibilidad - crear tarea para agregar a cola"""
@@ -360,13 +436,21 @@ class MessageHandler:
     
     async def stop_whatsapp_processing(self):
         """Detener el procesamiento de la cola de WhatsApp"""
-        if self._queue_task and not self._queue_task.done():
+        # Detener workers de Redis si existen
+        if self.redis_queue:
+            self.redis_queue.stop_workers()
+        
+        # Detener cola en memoria si existe
+        if hasattr(self, '_queue_task') and self._queue_task and not self._queue_task.done():
             self._queue_task.cancel()
             try:
                 await self._queue_task
             except asyncio.CancelledError:
                 pass
-        self.is_processing = False
+        
+        if hasattr(self, 'is_processing'):
+            self.is_processing = False
+        
         self.logger.info("🛑 Procesador de WhatsApp detenido")
     
     async def clear_whatsapp_queue(self):
