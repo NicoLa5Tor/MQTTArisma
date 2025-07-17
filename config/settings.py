@@ -1,6 +1,7 @@
 """
 Configuración centralizada para la aplicación MQTT
 """
+import os
 import uuid
 from dataclasses import dataclass, field
 from typing import Optional
@@ -37,19 +38,9 @@ class BackendConfig:
 
 
 @dataclass
-class WebSocketConfig:
-    """Configuración para WebSocket"""
-    url: str = "ws://localhost:8080/ws"
-    reconnect_attempts: int = 3
-    reconnect_delay: int = 5
-    enabled: bool = False  # Por defecto deshabilitado
-
-
-@dataclass
 class AppConfig:
     """Configuración general de la aplicación"""
     mqtt: MQTTConfig = field(default_factory=MQTTConfig)
     backend: BackendConfig = field(default_factory=BackendConfig)
-    websocket: WebSocketConfig = field(default_factory=WebSocketConfig)
     log_level: str = "INFO"
     message_interval: int = 20

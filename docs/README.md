@@ -2,45 +2,37 @@
 
 ## Introducción
 
-Este sistema permite la gestión y monitoreo de alertas MQTT para tu infraestructura. Proporciona herramientas robustas de logging, métricas en tiempo real, y un dashboard interactivo.
+Este sistema permite la gestión y procesamiento de alertas MQTT para tu infraestructura. Proporciona herramientas robustas de logging y conectividad con sistemas backend.
 
 ## Componentes Principales
 
-1. **Servidor MQTT**
-   - Gestiona las conexiones y mensajes MQTT, asegurándose de validar el hardware antes de procesar alertas de empresa y sede.
+1. **Cliente MQTT**
+   - Gestiona las conexiones y mensajes MQTT, procesando alertas de diferentes tipos de hardware.
 
-2. **Backend REST**
-   - Proporciona endpoints para el registro y validación de alertas. Integra con una base de datos para persistir información crítica.
+2. **Cliente Backend**
+   - Autentica hardware y envía datos de alarma a sistemas backend externos.
    
-3. **Cliente MQTT**
-   - Envía mensajes al backend y maneja respuestas según las condiciones predefinidas.
+3. **Receptor WebSocket**
+   - Maneja conexiones WebSocket para comunicación en tiempo real.
 
-4. **Logger y Monitoreo**
-   - Logs distribuidos para mensajes del sistema, alertas y errores.
-   - Recolección de métricas con una vista de monitoreo en tiempo real a través de un panel desarrollado en Flask.
+4. **Manejador de Mensajes**
+   - Procesa mensajes MQTT y coordina la comunicación con el backend.
 
 ## Estructura del Proyecto
 
-- **`mqtt_connection/`**: Contiene la lógica de conexión MQTT.
-- **`backend/`**: Implementación del servidor backend y sus endpoints.
-- **`client/`**: Cliente MQTT para simulación y validación.
-- **`monitoring/`**: Incluye el sistema de logging, métricas y dashboard en Flask.
+- **`clients/`**: Clientes MQTT, Backend y WebSocket.
+- **`config/`**: Configuración del sistema y gestión de hardware.
+- **`core/`**: Aplicación principal escalable.
+- **`handlers/`**: Manejadores de mensajes y lógica de procesamiento.
+- **`utils/`**: Utilidades y herramientas de logging.
 
-## Configuración Inicia
+## Configuración Inicial
 
-- **Logs:**
-  - Configuraciones en `logger_config.py`. Directorios para logs son creados automáticamente en `./logs/`.
-- **Métricas:**
-  - Usa `MetricsCollector` para recolectar métricas, accesibles vía endpoints del dashboard.
-  
-## Uso del Dashboard
-
-- **Iniciar el Dashboard:**
-  Ejecutar `python -m monitoring.dashboard`.
-- **URL:**
-  Accede a `http://localhost:5001` para visualizar métricas y logs.
-- **Auto-refresh:**
-  Actualiza cada 30 segundos. Puedes desactivar esta opción manualmente.
+- **Configuración:**
+  - Variables de entorno en `.env` para configurar conexiones.
+  - Configuración de hardware en `config/hardware_types.json`.
+- **Logging:**
+  - Sistema de logging integrado con diferentes niveles de detalle.
 
 ## Futuras Mejoras
 

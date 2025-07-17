@@ -9,7 +9,7 @@
 ## Dependencias de Python
 
 ```bash
-pip install pymongo flask paho-mqtt python-dateutil
+pip install -r requirements.txt
 ```
 
 ## Configuración del Entorno
@@ -113,45 +113,20 @@ db.sedes.insertMany([
 ### 2. Iniciar los Servicios
 
 ```bash
-# 1. Iniciar el servidor MQTT (en una terminal)
-python servidor_mqtt.py
+# 1. Iniciar la aplicación principal
+python main.py
 
-# 2. Iniciar el dashboard de monitoreo (en otra terminal)
-python -m monitoring.dashboard
-
-# 3. Probar el sistema (en otra terminal)
-python ejemplo_uso.py
+# 2. Probar el sistema (en otra terminal)
+python test_backend_client.py
 ```
 
 ## Verificación de la Instalación
 
-### 1. Verificar el Dashboard
+### 1. Verificar el Sistema
 
-Accede a `http://localhost:5001` para ver el dashboard de monitoreo.
+Verifica que la aplicación esté funcionando correctamente observando los logs.
 
-### 2. Probar los Endpoints
-
-```bash
-# Verificar salud del sistema
-curl http://localhost:5000/health
-
-# Verificar hardware
-curl -X POST http://localhost:5000/verificar-hardware \
-  -H "Content-Type: application/json" \
-  -d '{"nombre": "Semaforo001"}'
-
-# Verificar empresa
-curl -X POST http://localhost:5000/verificar-empresa \
-  -H "Content-Type: application/json" \
-  -d '{"nombre": "empresa1"}'
-
-# Verificar sede
-curl -X POST http://localhost:5000/verificar-sede \
-  -H "Content-Type: application/json" \
-  -d '{"empresa": "empresa1", "sede": "principal"}'
-```
-
-### 3. Enviar Mensaje MQTT de Prueba
+### 2. Enviar Mensaje MQTT de Prueba
 
 ```bash
 # Usar mosquitto_pub para enviar un mensaje de prueba
@@ -166,6 +141,7 @@ mosquitto_pub -h localhost -t alerts/mqtt -m '{
   }
 }'
 ```
+
 
 ## Solución de Problemas
 
@@ -223,55 +199,14 @@ sudo nano /etc/supervisor/conf.d/mqtt-system.conf
 
 Contenido del archivo:
 ```ini
-[program:mqtt-server]
-command=python /ruta/completa/servidor_mqtt.py
+[program:mqtt-app]
+command=python /ruta/completa/main.py
 directory=/ruta/completa/
 user=tu_usuario
 autostart=true
 autorestart=true
-stderr_logfile=/var/log/mqtt-server.err.log
-stdout_logfile=/var/log/mqtt-server.out.log
-
-[program:mqtt-dashboard]
-command=python -m monitoring.dashboard
-directory=/ruta/completa/
-user=tu_usuario
-autostart=true
-autorestart=true
-stderr_logfile=/var/log/mqtt-dashboard.err.log
-stdout_logfile=/var/log/mqtt-dashboard.out.log
-```
-
-### 2. Nginx para el Dashboard
-
-```bash
-# Instalar nginx
-sudo apt-get install nginx
-
-# Configurar proxy reverso
-sudo nano /etc/nginx/sites-available/mqtt-dashboard
-```
-
-Contenido del archivo:
-```nginx
-server {
-    listen 80;
-    server_name tu-dominio.com;
-
-    location / {
-        proxy_pass http://localhost:5001;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-
-```bash
-# Activar configuración
-sudo ln -s /etc/nginx/sites-available/mqtt-dashboard /etc/nginx/sites-enabled/
-sudo systemctl restart nginx
+stderr_logfile=/var/log/mqtt-app.err.log
+stdout_logfile=/var/log/mqtt-app.out.log
 ```
 
 ## Configuración de Seguridad
@@ -307,9 +242,9 @@ allow_anonymous false
 password_file /etc/mosquitto/passwd
 ```
 
-### 3. SSL/TLS
+### 2. SSL/TLS
 
-Para producción, configurar certificados SSL tanto para el dashboard como para MQTT.
+Para producción, configurar certificados SSL para MQTT.
 
 ## Mantenimiento
 
@@ -332,9 +267,8 @@ mongo tu_base_de_datos --eval "
 
 ### 3. Monitoreo de Salud
 
-El sistema incluye endpoints de salud en:
-- `http://localhost:5000/health` - Backend
-- `http://localhost:5001/api/health` - Dashboard
+El sistema incluye logging integrado para monitorear la salud del sistema.
+Puede revisar los logs en el directorio `logs/` para verificar el estado.
 
 ## Contacto y Soporte
 

@@ -2,7 +2,7 @@
 Configuración basada en variables de entorno
 """
 import os
-from .settings import MQTTConfig, BackendConfig, WebSocketConfig, AppConfig
+from .settings import MQTTConfig, BackendConfig, AppConfig
 
 
 def load_config_from_env() -> AppConfig:
@@ -33,18 +33,10 @@ def load_config_from_env() -> AppConfig:
         retry_delay=int(os.getenv('BACKEND_RETRY_DELAY', '5'))
     )
     
-    # Configuración WebSocket
-    websocket_config = WebSocketConfig(
-        url=os.getenv('WEBSOCKET_URL', 'ws://localhost:8080/ws'),
-        reconnect_attempts=int(os.getenv('WS_RECONNECT_ATTEMPTS', '5')),
-        reconnect_delay=int(os.getenv('WS_RECONNECT_DELAY', '3'))
-    )
-    
     # Configuración de la aplicación
     app_config = AppConfig(
         mqtt=mqtt_config,
         backend=backend_config,
-        websocket=websocket_config,
         log_level=os.getenv('LOG_LEVEL', 'INFO'),
         message_interval=int(os.getenv('MESSAGE_INTERVAL', '20'))
     )
