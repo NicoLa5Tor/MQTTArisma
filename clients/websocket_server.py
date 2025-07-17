@@ -16,13 +16,14 @@ from config import AppConfig
 class WebSocketServer:
     """Servidor WebSocket híbrido que maneja WhatsApp y MQTT"""
     
-    def __init__(self, host: str = "localhost", port: int = 8080, enable_mqtt: bool = True):
-        self.host = host
-        self.port = port
-        self.enable_mqtt = enable_mqtt
-        
+    def __init__(self, host: str = None, port: int = None, enable_mqtt: bool = True):
         # Crear configuración completa
         self.config = AppConfig()
+        
+        # Usar configuración centralizada o parámetros proporcionados
+        self.host = host or self.config.websocket.host
+        self.port = port or self.config.websocket.port
+        self.enable_mqtt = enable_mqtt
         
         # Inicializar clientes
         self.backend_client = BackendClient(self.config.backend)
@@ -123,8 +124,8 @@ class WebSocketServer:
             self.handle_client,
             self.host,
             self.port,
-            ping_interval=30,
-            ping_timeout=10
+            ping_interval=self.config.websocket.ping_interval,
+            ping_timeout=self.config.websocket.ping_timeout
         )
         
         self.is_running = True

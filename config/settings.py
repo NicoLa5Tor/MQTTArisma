@@ -5,18 +5,22 @@ import os
 import uuid
 from dataclasses import dataclass, field
 from typing import Optional
+from dotenv import load_dotenv
+
+# Cargar variables de entorno
+load_dotenv()
 
 
 @dataclass
 class MQTTConfig:
     """Configuración para conexión MQTT"""
-    broker: str = "161.35.239.177"
-    port: int = 17090
-    topic: str = "empresas"
-    username: str = "tocancipa"
-    password: str = "B0mb3r0s"
-    client_id: str = "TST123"
-    keep_alive: int = 60
+    broker: str = os.getenv("MQTT_BROKER", "161.35.239.177")
+    port: int = int(os.getenv("MQTT_PORT", "17090"))
+    topic: str = os.getenv("MQTT_TOPIC", "empresas")
+    username: str = os.getenv("MQTT_USERNAME", "tocancipa")
+    password: str = os.getenv("MQTT_PASSWORD", "B0mb3r0s")
+    client_id: str = os.getenv("MQTT_CLIENT_ID", "TST123")
+    keep_alive: int = int(os.getenv("MQTT_KEEP_ALIVE", "60"))
     
     @classmethod
     def with_random_client_id(cls) -> 'MQTTConfig':
@@ -29,12 +33,30 @@ class MQTTConfig:
 @dataclass
 class BackendConfig:
     """Configuración para conexión al backend"""
-    base_url: str = "http://127.0.0.1:5002"
-    api_key: Optional[str] = None
-    timeout: int = 30
-    retry_attempts: int = 3
-    retry_delay: int = 5
+    base_url: str = os.getenv("BACKEND_URL", "http://localhost:5002")
+    api_key: Optional[str] = os.getenv("BACKEND_API_KEY") or None
+    timeout: int = int(os.getenv("BACKEND_TIMEOUT", "30"))
+    retry_attempts: int = int(os.getenv("BACKEND_RETRY_ATTEMPTS", "3"))
+    retry_delay: int = int(os.getenv("BACKEND_RETRY_DELAY", "5"))
     enabled: bool = True  # Habilitado porque está corriendo
+
+
+@dataclass
+class WhatsAppConfig:
+    """Configuración para API de WhatsApp"""
+    api_url: str = os.getenv("WHATSAPP_API_URL", "http://localhost:5050")
+    timeout: int = int(os.getenv("WHATSAPP_API_TIMEOUT", "30"))
+    enabled: bool = True
+
+
+@dataclass
+class WebSocketConfig:
+    """Configuración para servidor WebSocket"""
+    host: str = os.getenv("WEBSOCKET_HOST", "localhost")
+    port: int = int(os.getenv("WEBSOCKET_PORT", "8080"))
+    ping_interval: int = int(os.getenv("WEBSOCKET_PING_INTERVAL", "30"))
+    ping_timeout: int = int(os.getenv("WEBSOCKET_PING_TIMEOUT", "10"))
+    enabled: bool = True
 
 
 @dataclass
@@ -42,5 +64,7 @@ class AppConfig:
     """Configuración general de la aplicación"""
     mqtt: MQTTConfig = field(default_factory=MQTTConfig)
     backend: BackendConfig = field(default_factory=BackendConfig)
-    log_level: str = "INFO"
-    message_interval: int = 20
+    whatsapp: WhatsAppConfig = field(default_factory=WhatsAppConfig)
+    websocket: WebSocketConfig = field(default_factory=WebSocketConfig)
+    log_level: str = os.getenv("LOG_LEVEL", "INFO")
+    message_interval: int = int(os.getenv("MESSAGE_INTERVAL", "20"))

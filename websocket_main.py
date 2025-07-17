@@ -7,10 +7,6 @@ import asyncio
 import signal
 import sys
 import os
-from dotenv import load_dotenv
-
-# Cargar variables de entorno
-load_dotenv()
 
 # Agregar el directorio actual al path para las importaciones
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -18,6 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from clients import WebSocketServer
 from handlers import MessageHandler
 from utils import setup_logger
+from config import AppConfig
 
 # Instancia global del servidor
 server_instance = None
@@ -64,14 +61,13 @@ async def main():
     logger = setup_logger("websocket_server", "INFO")
     
     try:
-        # Obtener configuración desde variables de entorno
-        websocket_host = os.getenv('WEBSOCKET_HOST', 'localhost')
-        websocket_port = int(os.getenv('WEBSOCKET_PORT', '8080'))
+        # Obtener configuración centralizada
+        config = AppConfig()
         
-        # Crear servidor WebSocket
+        # Crear servidor WebSocket usando la configuración
         server_instance = WebSocketServer(
-            host=websocket_host,
-            port=websocket_port
+            host=config.websocket.host,
+            port=config.websocket.port
         )
         
         # Iniciar servidor
@@ -115,12 +111,11 @@ async def main():
             await server_instance.stop()
 
 if __name__ == "__main__":
-    # Obtener configuración para mostrar
-    websocket_host = os.getenv('WEBSOCKET_HOST', 'localhost')
-    websocket_port = os.getenv('WEBSOCKET_PORT', '8080')
+    # Obtener configuración centralizada para mostrar
+    config = AppConfig()
     
     print("🚀 Iniciando servidor WebSocket para mensajes de WhatsApp...")
-    print(f"📡 Servidor: ws://{websocket_host}:{websocket_port}")
+    print(f"📡 Servidor: ws://{config.websocket.host}:{config.websocket.port}")
     print("=" * 60)
     
     try:

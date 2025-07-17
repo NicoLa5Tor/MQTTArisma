@@ -16,10 +16,12 @@ load_dotenv()
 class MessageHandler:
     """Manejador de mensajes MQTT para BOTONERA"""
     
-    def __init__(self, backend_client, mqtt_client=None):
+    def __init__(self, backend_client, mqtt_client=None, whatsapp_service=None, config=None):
         
         self.backend_client = backend_client
         self.mqtt_client = mqtt_client
+        self.whatsapp_service = whatsapp_service
+        self.config = config
         self.logger = logging.getLogger(__name__)
         # Estadísticas
         self.processed_messages = 0
@@ -31,7 +33,8 @@ class MessageHandler:
         self.whatsapp_error_count = 0
         self.is_processing = False
         self._queue_task = None
-        self.pathern_topic = os.getenv("MQTT_TOPIC")
+        # Usar settings en lugar de .env directo
+        self.pathern_topic = config.mqtt.topic if config else "empresas"
 
     def process_mqtt_message(self, topic: str, payload: str, json_data: Optional[Dict] = None) -> bool:
         """FILTRO ABSOLUTO PARA BOTONERA - Solo procesar topics que terminen después del hardware"""
@@ -149,25 +152,38 @@ class MessageHandler:
             return False
 
   
-    def _handle_alarm_notifications(self,response:Dict, mqtt_data: Dict) -> None:
-        """Función simplificada que solo recibe el JSON y lo imprime"""
+    def _handle_alarm_notifications(self, response: Dict, mqtt_data: Dict) -> None:
+        """Procesar respuesta del backend y enviar notificaciones"""
         try:
+            print("📥 RESPUESTA DEL BACKEND:")
             print(json.dumps(response, indent=4))
-            other_hardwars = response["topics_otros_hardware"]
-            for item in other_hardwars:
-                item = self.pathern_topic+"/"+item
-                if "SEMAFORO" in item:
-                    messsage_data = {
-                        "aqui" : "mensaje para activar semaforo"
-                    }
-                elif "BOTONERA" in item:
-                    messsage_data = {
-                        "botonera" : "mensaje para enviar"
-                    }
-                self.send_mqtt_message(topic=item,message_data=messsage_data)
-
-
             
+            # Procesar topics de otros hardware (MQTT)
+            if "topics_otros_hardware" in response:
+                other_hardwars = response["topics_otros_hardware"]
+                for item in other_hardwars:
+                    item = self.pathern_topic + "/" + item
+                    if "SEMAFORO" in item:
+                        messsage_data = {
+                            "action": "activar botonera",
+                            "semaforo": "mensaje para activar semaforo",
+                           
+                        }
+                    elif "BOTONERA" in item:
+                        messsage_data = {
+                            "action": "activar botone",
+                            "botonera": "mensaje para enviar",
+                        }
+                    else:
+                        messsage_data = {
+                            "action": "generic",
+                            "message": "notificación genérica",
+                        }
+                    
+                    self.send_mqtt_message(topic=item, message_data=messsage_data)
+        
+            print("ℹ️ Procesamiento de notificaciones completado")
+                
         except Exception as e:
             print(f"❌ Error manejando notificaciones: {e}")
             self.logger.error(f"Error en notificaciones: {e}")

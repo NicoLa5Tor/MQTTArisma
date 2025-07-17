@@ -16,6 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config import AppConfig
 from clients import MQTTClient, BackendClient
 from handlers import MessageHandler
+from services.whatsapp_service import WhatsAppService
 from utils import setup_logger
 
 app_instance = None
@@ -30,11 +31,13 @@ class SimpleMQTTApp:
         # Inicializar componentes
         self.mqtt_client = MQTTClient(config.mqtt)
         self.backend_client = BackendClient(config.backend)
+        self.whatsapp_service = WhatsAppService(config.whatsapp)
         
         # Inicializar manejador de mensajes
         self.message_handler = MessageHandler(
             backend_client=self.backend_client,
-            mqtt_client=self.mqtt_client
+            mqtt_client=self.mqtt_client,
+            whatsapp_service=self.whatsapp_service
         )
         
         # Configurar callbacks
