@@ -29,17 +29,19 @@ class MessageHandler:
         self.processed_messages = 0
         self.error_count = 0
         
-        # Sistema de colas Redis para mensajes de WhatsApp
-        try:
-            # Pasar configuración Redis específica si está disponible
-            redis_config = config.redis if config else None
-            self.redis_queue = RedisQueueManager(redis_config)
-            self.redis_queue.start_workers(self._process_single_whatsapp_message_sync)
-            self.logger.info("✅ Sistema de colas Redis iniciado")
-        except Exception as e:
-            self.logger.error(f"❌ Error iniciando Redis, usando cola en memoria: {e}")
-            # Fallback a cola en memoria si Redis no está disponible
-            self.redis_queue = None
+        # Sistema de colas Redis para mensajes de WhatsApp SOLO si tenemos WhatsApp service
+        self.redis_queue = None
+        if whatsapp_service:
+            try:
+                # Pasar configuración Redis específica si está disponible
+                redis_config = config.redis if config else None
+                self.redis_queue = RedisQueueManager(redis_config)
+                self.redis_queue.start_workers(self._process_single_whatsapp_message_sync)
+                self.logger.info("✅ Sistema de colas Redis iniciado para WhatsApp")
+            except Exception as e:
+                self.logger.error(f"❌ Error iniciando Redis, usando cola en memoria: {e}")
+                # Fallback a cola en memoria si Redis no está disponible
+                self.redis_queue = None
             
         # Siempre inicializar cola en memoria como fallback
         self.whatsapp_queue = Queue(maxsize=1000)

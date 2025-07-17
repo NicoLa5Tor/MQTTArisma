@@ -75,6 +75,10 @@ class BackendClient:
         """Realizar petición POST"""
         return self._make_request('POST', endpoint, data=data)
     
+    def get(self, endpoint: str, params: Optional[Dict] = None) -> Optional[Dict]:
+        """Realizar petición GET"""
+        return self._make_request('GET', endpoint, params=params)
+    
     def authenticate_hardware(self, mqtt_data: Dict[str, Any]) -> Optional[str]:
         """Autenticar hardware y obtener token"""
         try:
