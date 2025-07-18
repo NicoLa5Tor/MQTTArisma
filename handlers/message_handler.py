@@ -323,26 +323,67 @@ class MessageHandler:
             el mensaje no es correcto entonces pasa a la exceptio y no ejecuta nada
             (este paso es necesario, a veces se envian mensajes de conexion al webhook por parte de whp)
             """
+            # print(json.dumps(json_message,indent=4))
+            # time.sleep(100000)
+            # Validar estructura del mensaje antes de procesar
+            if ("entry" not in json_message or 
+                not json_message["entry"] or 
+                "changes" not in json_message["entry"][0] or
+                not json_message["entry"][0]["changes"] or
+                "value" not in json_message["entry"][0]["changes"][0] or
+                "messages" not in json_message["entry"][0]["changes"][0]["value"] or
+                not json_message["entry"][0]["changes"][0]["value"]["messages"]):              
+                return True  # No es un error, simplemente ignoramos
+            """
+             "messages": [
+                            {
+                                "context": {
+                                    "from": "15556484140",
+                                    "id": "wamid.HBgMNTczMTAzMzkxODU0FQIAERgSMDIzODkyMUMzNzI1MTg4RkYyAA=="
+                                },
+                                "from": "573103391854",
+                                "id": "wamid.HBgMNTczMTAzMzkxODU0FQIAEhggODNCM0E5MEJEOEQ4QTVDMzA1N0FCNzdEQzEzOThEQ0IA",
+                                "timestamp": "1752817791",
+                                "type": "interactive",
+                                "interactive": {
+                                    "type": "list_reply",
+                                    "list_reply": {
+                                        "id": "ROJO",
+                                        "title": "Alerta Roja",
+                                        "description": "Ayuda con problemas t\u00e9cnicos"
+                                    }
+                                }
+                            }
+                        ]
+            """
+            #print(json.dumps(json_message,indent=4))
             entry = json_message["entry"][0]["changes"][0]["value"]["messages"][0]
-            #obtener numero
+            
+            # Obtener número
             number_client = entry["from"]
-            type_message = entry["type"]
-            is_text = entry[type_message]["body"] if type_message == "text" else False
-             #validar si el usuario ya existe 
-            if json_message["save_number"]:
-                #usuario guardado
+            # type_message = entry["type"]
+            # is_text = entry[type_message]["body"] if type_message == "text" else False
+           
+            # Validar si el usuario ya existe 
+            if json_message.get("save_number", False):
+                # Usuario guardado
                 pass
             else:
-                #usuario nuevo
-                response_verify = self._process_new_number_sync(number=number_client,entry = entry)
+                # Usuario nuevo
+                response_verify = self._process_new_number_sync(number=number_client, entry=entry)
                 if not response_verify:
                     self.whatsapp_service.send_individual_message(
-                        phone= number_client, message = "Lo siento  😞, Pero actualmente no te encuentras registrado en el sistema RESCUE.")
+                        phone=number_client, 
+                        message="Lo siento  😞, Pero actualmente no te encuentras registrado en el sistema RESCUE."
+                    )
+            
             print(f"📱 Mensaje WhatsApp #{self.whatsapp_processed_count + 1}:")
-            print(json.dumps(entry, indent=4, ensure_ascii=False))
-            print("=" * 50)         
+            print(f"   📞 Número: {number_client}")
+           
+            print("=" * 50)
             self.whatsapp_processed_count += 1
             return True
+            
         except json.JSONDecodeError:
             print(f"❌ Error: Mensaje no es JSON válido")
             print(f"Mensaje recibido: {message}")
@@ -364,6 +405,18 @@ class MessageHandler:
             el mensaje no es correcto entonces pasa a la exceptio y no ejecuta nada
             (este paso es necesario, a veces se envian mensajes de conexion al webhook por parte de whp)
             """
+            print(json.dumps(json_message,indent=4))
+            time.sleep(100000)
+            # Validar estructura del mensaje antes de procesar
+            if ("entry" not in json_message or 
+                not json_message["entry"] or 
+                "changes" not in json_message["entry"][0] or
+                not json_message["entry"][0]["changes"] or
+                "value" not in json_message["entry"][0]["changes"][0] or
+                "messages" not in json_message["entry"][0]["changes"][0]["value"] or
+                not json_message["entry"][0]["changes"][0]["value"]["messages"]):
+                return  
+            
             entry = json_message["entry"][0]["changes"][0]["value"]["messages"][0]
             #obtener numero
             number_client = entry["from"]
@@ -377,8 +430,9 @@ class MessageHandler:
                 #usuario nuevo
                 await self._process_new_number(number=number_client)
             print(f"📱 Mensaje WhatsApp #{self.whatsapp_processed_count + 1}:")
-            print(json.dumps(entry, indent=4, ensure_ascii=False))
-            print("=" * 50)         
+            print(f"   📞 Número: {number_client}")
+            print(f"   📋 Tipo: {type_message}")
+            print("=" * 50)
             self.whatsapp_processed_count += 1
         except json.JSONDecodeError:
             print(f"❌ Error: Mensaje no es JSON válido")
@@ -389,7 +443,9 @@ class MessageHandler:
             self.whatsapp_error_count += 1
     def _process_new_number_sync(self, number: str,entry:Dict=None) -> Optional[bool]:
         """Procesar nuevo número (versión síncrona para Redis)"""
+        
         verify_number = self.backend_client.verify_user_number(number).get("data")
+
         print(verify_number)
         if "telefono" not in verify_number:
             return False
@@ -407,11 +463,35 @@ class MessageHandler:
             return False
         #el numero existe
         #es para apagar
+        """
+         "messages": [
+                            {
+                                "context": {
+                                    "from": "15556484140",
+                                    "id": "wamid.HBgMNTczMTAzMzkxODU0FQIAERgSMDIzODkyMUMzNzI1MTg4RkYyAA=="
+                                },
+                                "from": "573103391854",
+                                "id": "wamid.HBgMNTczMTAzMzkxODU0FQIAEhggODNCM0E5MEJEOEQ4QTVDMzA1N0FCNzdEQzEzOThEQ0IA",
+                                "timestamp": "1752817791",
+                                "type": "interactive",
+                                "interactive": {
+                                    "type": "list_reply",
+                                    "list_reply": {
+                                        "id": "ROJO",
+                                        "title": "Alerta Roja",
+                                        "description": "Ayuda con problemas t\u00e9cnicos"
+                                    }
+                                }
+                            }
+                        ]
+        """
         type_message = entry["type"]
-        is_text = entry[type_message]["body"] if type_message == "text" else False
-        if "Apagar alarma" in is_text:
+        is_down_alarm = entry[type_message].get("list_reply", False)
+        if is_down_alarm:
             #codigo para apagar alarma
-            pass
+            is_normal = is_down_alarm["id"] if "NORMAL" in is_down_alarm.get("id") else False
+            if is_normal:
+                return True
         #no es para apagar alarma, entonces 
         sections = [
         {
@@ -445,6 +525,7 @@ class MessageHandler:
                 ]
             }
         ]
+
         self.whatsapp_service.send_list_message(
             phone=number,
             header_text=f"Hola {usuario}.\nBienvenido al Sistema de Alertas RESCUE",
@@ -453,6 +534,7 @@ class MessageHandler:
             button_text="Ver alertas",
             sections=sections
         )
+
         return True
     async def _process_new_number(self, number: str) -> None:
         """Procesar nuevo número (versión asíncrona para fallback)"""

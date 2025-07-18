@@ -251,11 +251,11 @@ class WhatsAppClient:
             
             print(f"📱 Enviando mensaje de lista:")
             print(f"   📞 Teléfono: {phone_clean}")
-            print(f"   📋 Encabezado: {header_text}")
+            print(f"   📋 Encabezado: {header_text[:50]}{'...' if len(header_text) > 50 else ''}")
             print(f"   💬 Cuerpo: {body_text[:50]}{'...' if len(body_text) > 50 else ''}")
-            print(f"   📝 Pie: {footer_text}")
-            print(f"   🔘 Botón: {button_text}")
-            print(f"   📋 Secciones: {len(sections)}")
+            print(f"   📝 Pie: {footer_text[:30]}{'...' if len(footer_text) > 30 else ''}")
+            print(f"   🔘 Botón: {button_text[:30]}{'...' if len(button_text) > 30 else ''}")
+            print(f"   📋 Secciones: {len(sections)} secciones")
             
             response = self.post('/api/send-list', data=data)
             
@@ -267,8 +267,8 @@ class WhatsAppClient:
                 return None
                 
         except Exception as e:
-            print(f"💥 Error enviando mensaje de lista: {e}")
-            self.logger.error(f"Error enviando mensaje de lista: {e}")
+            print(f"💥 Error enviando mensaje de lista: {type(e).__name__}")
+            self.logger.error(f"Error enviando mensaje de lista: {str(e)[:200]}")
             return None
     
     def add_number_to_cache(self, phone: str, name: str = None, data: Dict = None) -> Optional[Dict]:
@@ -296,7 +296,7 @@ class WhatsAppClient:
             print(f"📞 Agregando número al cache:")
             print(f"   📞 Teléfono: {phone_clean}")
             print(f"   👤 Nombre: {name or 'N/A'}")
-            print(f"   📋 Datos: {data or {}}")
+            print(f"   📋 Datos: {len(str(data or {})) if data else 0} caracteres")
             
             response = self.post('/api/numbers', data=payload)
             
@@ -308,8 +308,8 @@ class WhatsAppClient:
                 return None
                 
         except Exception as e:
-            print(f"💥 Error agregando número al cache: {e}")
-            self.logger.error(f"Error agregando número al cache: {e}")
+            print(f"💥 Error agregando número al cache: {type(e).__name__}")
+            self.logger.error(f"Error agregando número al cache: {str(e)[:200]}")
             return None
     
     def _clean_phone_number(self, phone: str) -> str:
