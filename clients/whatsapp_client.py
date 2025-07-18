@@ -220,6 +220,98 @@ class WhatsAppClient:
             self.logger.error(f"Error enviando broadcast personalizado: {e}")
             return None
     
+    def send_list_message(self, phone: str, header_text: str, body_text: str, 
+                         footer_text: str, button_text: str, sections: List[Dict]) -> Optional[Dict]:
+        """
+        Enviar mensaje de lista de WhatsApp
+        
+        Args:
+            phone: Número del destinatario (formato internacional)
+            header_text: Texto del encabezado
+            body_text: Texto principal del mensaje
+            footer_text: Texto de pie de página
+            button_text: Texto del botón
+            sections: Lista de secciones con sus opciones
+            
+        Returns:
+            Dict con respuesta de la API o None si hay error
+        """
+        try:
+            # Validar formato del número
+            phone_clean = self._clean_phone_number(phone)
+            
+            data = {
+                "phone": phone_clean,
+                "header_text": header_text,
+                "body_text": body_text,
+                "footer_text": footer_text,
+                "button_text": button_text,
+                "sections": sections
+            }
+            
+            print(f"📱 Enviando mensaje de lista:")
+            print(f"   📞 Teléfono: {phone_clean}")
+            print(f"   📋 Encabezado: {header_text}")
+            print(f"   💬 Cuerpo: {body_text[:50]}{'...' if len(body_text) > 50 else ''}")
+            print(f"   📝 Pie: {footer_text}")
+            print(f"   🔘 Botón: {button_text}")
+            print(f"   📋 Secciones: {len(sections)}")
+            
+            response = self.post('/api/send-list', data=data)
+            
+            if response:
+                print(f"✅ Mensaje de lista enviado exitosamente")
+                return response
+            else:
+                print(f"❌ Error enviando mensaje de lista")
+                return None
+                
+        except Exception as e:
+            print(f"💥 Error enviando mensaje de lista: {e}")
+            self.logger.error(f"Error enviando mensaje de lista: {e}")
+            return None
+    
+    def add_number_to_cache(self, phone: str, name: str = None, data: Dict = None) -> Optional[Dict]:
+        """
+        Agregar número al cache de WhatsApp
+        
+        Args:
+            phone: Número de teléfono (formato internacional)
+            name: Nombre del contacto
+            data: Datos adicionales del contacto
+            
+        Returns:
+            Dict con respuesta de la API o None si hay error
+        """
+        try:
+            # Validar formato del número
+            phone_clean = self._clean_phone_number(phone)
+            
+            payload = {
+                "phone": phone_clean,
+                "name": name,
+                "data": data or {}
+            }
+            
+            print(f"📞 Agregando número al cache:")
+            print(f"   📞 Teléfono: {phone_clean}")
+            print(f"   👤 Nombre: {name or 'N/A'}")
+            print(f"   📋 Datos: {data or {}}")
+            
+            response = self.post('/api/numbers', data=payload)
+            
+            if response:
+                print(f"✅ Número agregado al cache exitosamente")
+                return response
+            else:
+                print(f"❌ Error agregando número al cache")
+                return None
+                
+        except Exception as e:
+            print(f"💥 Error agregando número al cache: {e}")
+            self.logger.error(f"Error agregando número al cache: {e}")
+            return None
+    
     def _clean_phone_number(self, phone: str) -> str:
         """
         Limpiar número de teléfono (remover +, espacios, guiones)

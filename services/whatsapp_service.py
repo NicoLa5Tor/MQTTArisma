@@ -178,6 +178,92 @@ class WhatsAppService:
             self.logger.error(f"Error en servicio WhatsApp broadcast personalizado: {e}")
             return False
     
+    def send_list_message(self, phone: str, header_text: str, body_text: str, 
+                         footer_text: str, button_text: str, sections: List[Dict]) -> bool:
+        """
+        Enviar mensaje de lista de WhatsApp
+        
+        Args:
+            phone: Número del destinatario (formato internacional)
+            header_text: Texto del encabezado
+            body_text: Texto principal del mensaje
+            footer_text: Texto de pie de página
+            button_text: Texto del botón
+            sections: Lista de secciones con sus opciones
+            
+        Returns:
+            bool: True si se envió exitosamente, False en caso contrario
+        """
+        try:
+            if not self.config.enabled:
+                self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
+                return False
+            
+            print(f"📱 Servicio WhatsApp - Enviando mensaje de lista...")
+            
+            response = self.client.send_list_message(
+                phone=phone,
+                header_text=header_text,
+                body_text=body_text,
+                footer_text=footer_text,
+                button_text=button_text,
+                sections=sections
+            )
+            
+            if response:
+                self.stats["individual_messages_sent"] += 1
+                self.stats["total_recipients"] += 1
+                
+                print(f"✅ Mensaje de lista enviado exitosamente")
+                self.logger.info(f"Mensaje de lista enviado a {phone}")
+                return True
+            else:
+                self.stats["errors"] += 1
+                print(f"❌ Error enviando mensaje de lista")
+                self.logger.error(f"Error enviando mensaje de lista a {phone}")
+                return False
+                
+        except Exception as e:
+            self.stats["errors"] += 1
+            print(f"💥 Error en servicio WhatsApp enviando lista: {e}")
+            self.logger.error(f"Error en servicio WhatsApp enviando lista: {e}")
+            return False
+    
+    def add_number_to_cache(self, phone: str, name: str = None, data: Dict = None) -> bool:
+        """
+        Agregar número al cache de WhatsApp
+        
+        Args:
+            phone: Número de teléfono (formato internacional)
+            name: Nombre del contacto
+            data: Datos adicionales del contacto
+            
+        Returns:
+            bool: True si se agregó exitosamente, False en caso contrario
+        """
+        try:
+            if not self.config.enabled:
+                self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
+                return False
+            
+            print(f"📞 Servicio WhatsApp - Agregando número al cache...")
+            
+            response = self.client.add_number_to_cache(phone, name, data)
+            
+            if response:
+                print(f"✅ Número agregado al cache exitosamente")
+                self.logger.info(f"Número {phone} agregado al cache")
+                return True
+            else:
+                print(f"❌ Error agregando número al cache")
+                self.logger.error(f"Error agregando número {phone} al cache")
+                return False
+                
+        except Exception as e:
+            print(f"💥 Error en servicio WhatsApp agregando al cache: {e}")
+            self.logger.error(f"Error en servicio WhatsApp agregando al cache: {e}")
+            return False
+    
     def process_whatsapp_notification(self, notification: Dict[str, Any]) -> bool:
         """
         Procesar notificación de WhatsApp desde el backend

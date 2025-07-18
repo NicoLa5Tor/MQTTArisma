@@ -334,8 +334,10 @@ class MessageHandler:
                 pass
             else:
                 #usuario nuevo
-                # Versión síncrona para Redis
-                self._process_new_number_sync(number=number_client)
+                response_verify = self._process_new_number_sync(number=number_client,entry = entry)
+                if not response_verify:
+                    self.whatsapp_service.send_individual_message(
+                        phone= number_client, message = "Lo siento  😞, Pero actualmente no te encuentras registrado en el sistema RESCUE.")
             print(f"📱 Mensaje WhatsApp #{self.whatsapp_processed_count + 1}:")
             print(json.dumps(entry, indent=4, ensure_ascii=False))
             print("=" * 50)         
@@ -355,6 +357,7 @@ class MessageHandler:
         """Procesar un solo mensaje de WhatsApp (versión asíncrona para fallback)"""
         try:
             # Parsear JSON
+            print("asincrona")
             json_message = json.loads(message)
             """
             se obtiene la llave del mendaje, si sale error es porque 
@@ -384,11 +387,73 @@ class MessageHandler:
         except Exception as e:
             print(f"❌ Error procesando mensaje: {e}")
             self.whatsapp_error_count += 1
-    def _process_new_number_sync(self, number: str) -> None:
+    def _process_new_number_sync(self, number: str,entry:Dict=None) -> Optional[bool]:
         """Procesar nuevo número (versión síncrona para Redis)"""
-        verify_number = self.backend_client.verify_user_number(number)
+        verify_number = self.backend_client.verify_user_number(number).get("data")
         print(verify_number)
-    
+        if "telefono" not in verify_number:
+            return False
+        usuario = verify_number.get("nombre","")
+        
+        response_verify = self.whatsapp_service.add_number_to_cache(
+            phone= verify_number["telefono"],           
+            name= verify_number.get("nombre",""),           
+            data= {
+                "empresa" : verify_number.get("empresa"),
+                "sede" : verify_number.get("sede")
+            }          
+         )   
+        if not response_verify:
+            return False
+        #el numero existe
+        #es para apagar
+        type_message = entry["type"]
+        is_text = entry[type_message]["body"] if type_message == "text" else False
+        if "Apagar alarma" in is_text:
+            #codigo para apagar alarma
+            pass
+        #no es para apagar alarma, entonces 
+        sections = [
+        {
+        "title": "Servicios técnicos",
+        "rows": [
+                  {
+                    "id": "ROJO",
+                    "title": "Alerta Roja", 
+                    "description": "Ayuda con problemas técnicos"
+                  },
+                  {
+                    "id": "AZUL",
+                    "title": "Alerta Azul", 
+                    "description": "Ayuda con problemas técnicos"
+                   },
+                   {
+                    "id": "AMARILLO",
+                    "title": "Alerta Amarilla", 
+                    "description": "Ayuda con problemas técnicos"
+                   },
+                   {
+                    "id": "VERDE",
+                    "title": "Alerta Verde", 
+                    "description": "Ayuda con problemas técnicos"
+                   },
+                   {
+                    "id": "NARANJA",
+                    "title": "Alerta Naranja", 
+                    "description": "Ayuda con problemas técnicos"
+                   }
+                ]
+            }
+        ]
+        self.whatsapp_service.send_list_message(
+            phone=number,
+            header_text=f"Hola {usuario}.\nBienvenido al Sistema de Alertas RESCUE",
+            body_text="Selecciona la alerta que deseas activar",
+            footer_text="RESCUE SYSTEM",
+            button_text="Ver alertas",
+            sections=sections
+        )
+        return True
     async def _process_new_number(self, number: str) -> None:
         """Procesar nuevo número (versión asíncrona para fallback)"""
         verify_number = self.backend_client.verify_user_number(number)

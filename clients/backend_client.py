@@ -48,6 +48,7 @@ class BackendClient:
         url = f"{self.config.base_url.rstrip('/')}/{endpoint.lstrip('/')}"
         
         try:
+        
             response = self.session.request(
                 method=method,
                 url=url,
@@ -70,15 +71,31 @@ class BackendClient:
             if hasattr(e, 'response') and e.response is not None:
                 self.logger.error(f"Código: {e.response.status_code}, Respuesta: {e.response.text}")
             return None
-    
+    def get(self,endpoint:str,data:Optional[Dict]= None) -> Optional[Dict]:
+        """Realizar petición GET"""
+        return self._make_request('GET',endpoint,params=data)
     def post(self, endpoint: str, data: Optional[Dict] = None) -> Optional[Dict]:
         """Realizar petición POST"""
         return self._make_request('POST', endpoint, data=data)
-    
-    def get(self, endpoint: str, params: Optional[Dict] = None) -> Optional[Dict]:
-        """Realizar petición GET"""
-        return self._make_request('GET', endpoint, params=params)
-    
+    def verify_user_number(self,number) -> Optional[Dict]:
+        try:
+            endpoint = "/api/phone-lookup"
+            data = {
+                "telefono":number
+            }
+           # print(f"el numero es {data}")
+            response = self.get(data=data,endpoint=endpoint)
+            #print(response)
+            if response.get('success') is True:
+                print("response bien")
+                # import time
+                # time.sleep(10000)
+                return response
+            else:
+                self.logger.error(f"Error al verificar numero, el response dio {response}")
+                return None
+        except Exception as ex:
+            self.logger.error(f"Error al tratar de verificar el numero: {ex}")
     def authenticate_hardware(self, mqtt_data: Dict[str, Any]) -> Optional[str]:
         """Autenticar hardware y obtener token"""
         try:
