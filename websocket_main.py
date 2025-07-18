@@ -18,6 +18,7 @@ from handlers import MessageHandler
 from services.whatsapp_service import WhatsAppService
 from utils import setup_logger
 from config import AppConfig
+from config.settings import MQTTConfig
 
 # Instancias globales para cada servicio
 websocket_server_instance = None
@@ -149,10 +150,39 @@ def run_mqtt():
         # Crear clientes independientes para MQTT
         mqtt_backend_client = BackendClient(config.backend)
         mqtt_whatsapp_service = WhatsAppService(config.whatsapp)  # Para ENVIAR mensajes
-        mqtt_publisher = MQTTPublisherLite(config.mqtt)
         
-        # Inicializar cliente MQTT
-        mqtt_client_instance = MQTTClient(config.mqtt)
+        # Crear configuración separada para el publisher con client_id diferente
+        publisher_config = MQTTConfig(
+            broker=config.mqtt.broker,
+            port=config.mqtt.port,
+            topic=config.mqtt.topic,
+            username=config.mqtt.username,
+            password=config.mqtt.password,
+            client_id=f"{config.mqtt.client_id}_publisher",  # Client ID diferente
+            keep_alive=config.mqtt.keep_alive
+        )
+        
+        mqtt_publisher = MQTTPublisherLite(publisher_config)
+        
+        # Conectar el MQTT Publisher
+        if not mqtt_publisher.connect():
+            logger.error("❌ Error conectando MQTT Publisher")
+            return
+        
+        logger.info("✅ MQTT Publisher conectado exitosamente")
+        
+        # Inicializar cliente MQTT con client_id diferente
+        receiver_config = MQTTConfig(
+            broker=config.mqtt.broker,
+            port=config.mqtt.port,
+            topic=config.mqtt.topic,
+            username=config.mqtt.username,
+            password=config.mqtt.password,
+            client_id=f"{config.mqtt.client_id}_receiver",  # Client ID diferente
+            keep_alive=config.mqtt.keep_alive
+        )
+        
+        mqtt_client_instance = MQTTClient(receiver_config)
         
         # Inicializar manejador de mensajes para MQTT (con WhatsApp para ENVIAR)
         mqtt_message_handler = MessageHandler(
