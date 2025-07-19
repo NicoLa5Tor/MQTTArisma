@@ -271,6 +271,120 @@ class WhatsAppClient:
             self.logger.error(f"Error enviando mensaje de lista: {str(e)[:200]}")
             return None
     
+    def send_bulk_list_message(self, header_text: str, footer_text: str, button_text: str, 
+                              sections: List[Dict], recipients: List[Dict], use_queue: bool = True) -> Optional[Dict]:
+        """
+        Enviar mensaje de lista de manera masiva a múltiples destinatarios con contenido personalizado
+        
+        Args:
+            header_text: Texto del encabezado (común para todos)
+            footer_text: Texto de pie de página (común para todos)
+            button_text: Texto del botón (común para todos)
+            sections: Lista de secciones con sus opciones (común para todos)
+            recipients: Lista de diccionarios con 'phone' y 'body_text' personalizado
+            use_queue: Si usar cola o no (default True)
+            
+        Returns:
+            Dict con respuesta de la API o None si hay error
+        """
+        try:
+            # Limpiar números de teléfono en recipients
+            recipients_clean = []
+            for recipient in recipients:
+                phone_clean = self._clean_phone_number(recipient["phone"])
+                recipients_clean.append({
+                    "phone": phone_clean,
+                    "body_text": recipient["body_text"]
+                })
+            
+            data = {
+                "header_text": header_text,
+                "footer_text": footer_text,
+                "button_text": button_text,
+                "sections": sections,
+                "recipients": recipients_clean,
+                "use_queue": use_queue
+            }
+            
+            print(f"📱 Enviando bulk list message:")
+            print(f"   📋 Encabezado: {header_text[:50]}{'...' if len(header_text) > 50 else ''}")
+            print(f"   📝 Pie: {footer_text[:30]}{'...' if len(footer_text) > 30 else ''}")
+            print(f"   🔘 Botón: {button_text[:30]}{'...' if len(button_text) > 30 else ''}")
+            print(f"   📋 Secciones: {len(sections)} secciones")
+            print(f"   📞 Destinatarios: {len(recipients_clean)} números")
+            print(f"   🔄 Cola: {use_queue}")
+            
+            response = self.post('/api/send-bulk-list', data=data)
+            
+            if response:
+                print(f"✅ Bulk list message enviado exitosamente a {len(recipients_clean)} números")
+                return response
+            else:
+                print(f"❌ Error enviando bulk list message")
+                return None
+                
+        except Exception as e:
+            print(f"💥 Error enviando bulk list message: {type(e).__name__}")
+            self.logger.error(f"Error enviando bulk list message: {str(e)[:200]}")
+            return None
+    
+    def send_bulk_button_message(self, header_type: str, header_content: str, buttons: List[Dict], 
+                                footer_text: str, recipients: List[Dict], use_queue: bool = True) -> Optional[Dict]:
+        """
+        Enviar mensaje con botones de manera masiva a múltiples destinatarios con contenido personalizado
+        
+        Args:
+            header_type: Tipo de encabezado (e.g., 'text')
+            header_content: Contenido del encabezado (común para todos)
+            buttons: Lista de botones con 'id' y 'title' (común para todos)
+            footer_text: Texto de pie de página (común para todos)
+            recipients: Lista de diccionarios con 'phone' y 'body_text' personalizado
+            use_queue: Si usar cola o no (default True)
+            
+        Returns:
+            Dict con respuesta de la API o None si hay error
+        """
+        try:
+            # Limpiar números de teléfono en recipients
+            recipients_clean = []
+            for recipient in recipients:
+                phone_clean = self._clean_phone_number(recipient["phone"])
+                recipients_clean.append({
+                    "phone": phone_clean,
+                    "body_text": recipient["body_text"]
+                })
+            
+            data = {
+                "header_type": header_type,
+                "header_content": header_content,
+                "buttons": buttons,
+                "footer_text": footer_text,
+                "recipients": recipients_clean,
+                "use_queue": use_queue
+            }
+            
+            print(f"📱 Enviando bulk button message:")
+            print(f"   📋 Encabezado tipo: {header_type}")
+            print(f"   📋 Encabezado: {header_content}")
+            print(f"   📝 Pie: {footer_text}")
+            print(f"   🔘 Botones: {len(buttons)} botones")
+            print(f"   📞 Destinatarios: {len(recipients_clean)} números")
+            print(f"   🔄 Cola: {use_queue}")
+            
+            response = self.post('/api/send-bulk-button', data=data)
+            
+            if response:
+                print(f"✅ Bulk button message enviado exitosamente a {len(recipients_clean)} números")
+                return response
+            else:
+                print(f"❌ Error enviando bulk button message")
+                return None
+                
+        except Exception as e:
+            print(f"💥 Error enviando bulk button message: {type(e).__name__}")
+            self.logger.error(f"Error enviando bulk button message: {str(e)[:200]}")
+            return None
+    
     def add_number_to_cache(self, phone: str, name: str = None, data: Dict = None) -> Optional[Dict]:
         """
         Agregar número al cache de WhatsApp

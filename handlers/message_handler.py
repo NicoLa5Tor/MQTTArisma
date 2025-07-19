@@ -165,59 +165,87 @@ class MessageHandler:
         try:
             # print(" RESPUESTA DEL BACKEND:")
             # print(json.dumps(response, indent=4))
-            self._send_mqtt_message(data=response)
-            self._send_broadcast_personalized_message(data=response)
+            self._send_mqtt_message(data=response,mqtt_data=mqtt_data)
+            # print(json.dumps(response,indent=4))
+            # time.sleep(10000)
+            list_users = response["numeros_telefonicos"]
+            tipo_alarma_info = response["tipo_alarma_info"]
+            task_id = self._send_create_down_alarma(list_users=list_users,alert=tipo_alarma_info)
+            hardware_location = response["hardware_ubicacion"]
+            time.sleep(1)
+            self._send_location_personalized_message(hardware_location=hardware_location,numeros_data=list_users,tipo_alarma_info=tipo_alarma_info)
             print("ℹ️ Procesamiento de notificaciones completado")
         except Exception as e:
             print(f"❌ Error manejando notificaciones: {e}")
             self.logger.error(f"Error en notificaciones: {e}")
-    def _send_mqtt_message(self, data) -> None:
+    def _send_mqtt_message(self, data,mqtt_data) -> None:
          # Procesar topics de otros hardware (MQTT)
+            #print(json.dumps(data,indent=4))
+            alarm_info = data.get("tipo_alarma_info",False)
+            if not alarm_info:
+                return
+            hardware_ubication = data["hardware_ubicacion"]
+            priority = data["prioridad"]
             if "topics_otros_hardware" in data:
                 other_hardwars = data["topics_otros_hardware"]
                 for item in other_hardwars:
                     item = self.pathern_topic + "/" + item
-                    if "SEMAFORO" in item:
-                        messsage_data = {
-                            "action": "activar botonera",
-                            "semaforo": "mensaje para activar semaforo",
-                           
-                        }
-                    elif "BOTONERA" in item:
-                        messsage_data = {
-                            "action": "activar botone",
-                            "botonera": "mensaje para enviar",
-                        }
-                    else:
-                        messsage_data = {
-                            "action": "generic",
-                            "message": "notificación genérica",
-                        }
-                    
-                    self.send_mqtt_message(topic=item, message_data=messsage_data)
-    def _send_broadcast_personalized_message(self, data) -> None:
-        print(f"la data es {json.dumps(data,indent=4)}")
-        numeros_data = data["numeros_telefonicos"]
-        tipo_alarma_info = data.get("tipo_alarma_info",{})
-        recipients = []
-        for item in numeros_data:
-            data_item = {
-                "phone":item["numero"],
-                "body_text": f"Hola {item.get("nombre","")}.\nRESCUE te informa sobre una alerta de {tipo_alarma_info.get("nombre")}"
-            }
-            recipients.append(data_item)
-        self.whatsapp_service.send_personalized_broadcast(
-            recipients= recipients,
-            header_type="image",
-            header_content=tipo_alarma_info.get("imagen_base64",""),
-            button_text="Más detalles",
-            button_url="https://mi-app.com/update",
-            footer_text="Equipo RESCUE",
-            use_queue=True
-        )
+                    message_data = self._select_data_hardware(item=item,
+                                                              data=alarm_info,
+                                                              hardware_ubication=hardware_ubication,
+                                                              priority=priority)
+                    self.send_mqtt_message(topic=item, message_data=message_data)
+ 
+    def _select_data_hardware(self,item,data,hardware_ubication,priority) -> Dict:
+            alarm_color = data["tipo_alerta"]
+            #print(mqtt_data)
+            # time.sleep(10000)
+            if "SEMAFORO" in item:
+                            messsage_data = {
+                                "tipo_alarma": alarm_color,
+                            }
+            elif "TELEVISOR" in item:
+                            messsage_data = {
+                                
+                                    "tipo_alarma": alarm_color,
+                                    "prioridad" : priority,
+                                    "ubicacion": hardware_ubication.get("direccion",""),
+                                    "url": hardware_ubication.get("direccion_open_maps",""),
+                                    "elementos_necesarios": data.get("implementos_necesarios",[]),
+                                    "instrucciones": data.get("recomendaciones",[])
+                            }
+            else:
+                            messsage_data = {
+                                "action": "generic",
+                                "message": "notificación genérica",
+                            }
+            return messsage_data
+    def _send_location_personalized_message(self, numeros_data:list[Dict],tipo_alarma_info:Dict,hardware_location:Dict) -> bool:
+            print(f"la data es {json.dumps(tipo_alarma_info,indent=4)}")
+            url_maps = hardware_location["direccion_url"]
+            recipients = []
+            for item in numeros_data:
+                nombre = str(item.get("nombre",""))
+                data_item = {
+                    "phone":item["numero"],
+                    "body_text": f"¡HOLA {nombre.split()[0].upper()}!.\nRESCUE TE AYUDA A LLEGAR A LA EMERGENCIA"
+                }
+                recipients.append(data_item)
+            
+            header_content = f"¡RESCUE SYSTEM UBICACIÓN!"
+            self.whatsapp_service.send_personalized_broadcast(
+                recipients= recipients,
+                header_type="text",
+                header_content=header_content,
+                button_url=url_maps,
+                footer_text="Equipo RESCUE",
+                button_text = "Google Maps",
+                use_queue=True
+            )
 
-        return
-
+            return True
+        
+    
     def send_mqtt_message(self, topic: str, message_data: Dict, qos: int = 0) -> bool:
         """
         Función para enviar mensajes MQTT a un topic específico.
@@ -363,14 +391,17 @@ class MessageHandler:
             number_client = entry["from"]
             # type_message = entry["type"]
             # is_text = entry[type_message]["body"] if type_message == "text" else False
-           
+            print("llega antes de validar")
             # Validar si el usuario ya existe 
-            if json_message.get("save_number", False):
+            save_message = json_message.get("save_number")
+            if save_message:
                 # Usuario guardado
-                pass
+                cached_info = json_message["cached_info"]
+                self._process_save_number(entry=entry,cached_info=cached_info)
             else:
                 # Usuario nuevo
                 response_verify = self._process_new_number_sync(number=number_client, entry=entry)
+                print(f"si verifica y pasa: {response_verify}")
                 if not response_verify:
                     self.whatsapp_service.send_individual_message(
                         phone=number_client, 
@@ -393,7 +424,32 @@ class MessageHandler:
             print(f"❌ Error procesando mensaje: {e}")
             self.whatsapp_error_count += 1
             return False
-    
+    def _process_save_number(self,entry:Dict,cached_info:Dict) -> None:
+        print(f"El entry es: {json.dumps(entry,indent=4)}")
+        print(f"El cached es:{json.dumps(cached_info,indent=4)}")
+        if not cached_info:
+            return
+        number = cached_info["phone"]
+        user = cached_info["name"]
+        type_message = entry["type"]
+        is_alarm = entry[type_message].get("list_reply", False)
+        if is_alarm:
+          """
+                'list_reply': 
+                {'id': 'VERDE', 
+                'title': 'Alerta Verde', 
+                'description': 
+                'Ayuda con problemas técnicos'}    
+          """  
+          print("Es para alarma")
+          alarm_id = is_alarm["id"]
+          return
+        is_down_alarm = entry[type_message].get("button_reply",False)
+        if is_down_alarm:
+            print("es apagar a alarma")
+        #mandar lista para apagar
+        self._send_create_alarma(number=number,usuario=user,is_in_cached=True)
+  
     async def _process_single_whatsapp_message(self, message: str) -> None:
         """Procesar un solo mensaje de WhatsApp (versión asíncrona para fallback)"""
         try:
@@ -405,8 +461,8 @@ class MessageHandler:
             el mensaje no es correcto entonces pasa a la exceptio y no ejecuta nada
             (este paso es necesario, a veces se envian mensajes de conexion al webhook por parte de whp)
             """
-            print(json.dumps(json_message,indent=4))
-            time.sleep(100000)
+            #print(json.dumps(json_message,indent=4))
+           
             # Validar estructura del mensaje antes de procesar
             if ("entry" not in json_message or 
                 not json_message["entry"] or 
@@ -441,20 +497,46 @@ class MessageHandler:
         except Exception as e:
             print(f"❌ Error procesando mensaje: {e}")
             self.whatsapp_error_count += 1
+   
     def _process_new_number_sync(self, number: str,entry:Dict=None) -> Optional[bool]:
         """Procesar nuevo número (versión síncrona para Redis)"""
         
-        verify_number = self.backend_client.verify_user_number(number).get("data")
-
-        print(verify_number)
-        if "telefono" not in verify_number:
+        response = self.backend_client.verify_user_number(number)
+        print(f"El verify es: {response}")
+        
+        # Verificar si la respuesta es None (error de conexión)
+        if response is None:
+            print("❌ Sin respuesta del servidor")
             return False
+            
+        # Verificar códigos de estado específicos
+        status_code = response.get('_status_code', 200)
+        
+        if status_code == 404:
+            print("🔍 Usuario no encontrado (404)")
+            return False
+        
+        elif status_code == 401:
+            print("🔒 No autorizado (401)")
+            return False
+        
+        # Para respuestas exitosas, obtener los datos
+        if not response.get('success', False):
+            print(f"❌ Verificación fallida: {response.get('message', 'Error desconocido')}")
+            return False
+        
+        verify_number = response.get("data")
+        if verify_number is None or "telefono" not in verify_number:
+            print("❌ Datos de usuario incompletos")
+            return False
+        print("si pasa")
         usuario = verify_number.get("nombre","")
         
         response_verify = self.whatsapp_service.add_number_to_cache(
             phone= verify_number["telefono"],           
             name= verify_number.get("nombre",""),           
             data= {
+                "id":verify_number.get("id"),
                 "empresa" : verify_number.get("empresa"),
                 "sede" : verify_number.get("sede")
             }          
@@ -493,56 +575,95 @@ class MessageHandler:
             if is_normal:
                 return True
         #no es para apagar alarma, entonces 
-        sections = [
-        {
-        "title": "Servicios técnicos",
-        "rows": [
-                  {
-                    "id": "ROJO",
-                    "title": "Alerta Roja", 
-                    "description": "Ayuda con problemas técnicos"
-                  },
-                  {
-                    "id": "AZUL",
-                    "title": "Alerta Azul", 
-                    "description": "Ayuda con problemas técnicos"
-                   },
-                   {
-                    "id": "AMARILLO",
-                    "title": "Alerta Amarilla", 
-                    "description": "Ayuda con problemas técnicos"
-                   },
-                   {
-                    "id": "VERDE",
-                    "title": "Alerta Verde", 
-                    "description": "Ayuda con problemas técnicos"
-                   },
-                   {
-                    "id": "NARANJA",
-                    "title": "Alerta Naranja", 
-                    "description": "Ayuda con problemas técnicos"
-                   }
-                ]
-            }
-        ]
-
-        self.whatsapp_service.send_list_message(
-            phone=number,
-            header_text=f"Hola {usuario}.\nBienvenido al Sistema de Alertas RESCUE",
-            body_text="Selecciona la alerta que deseas activar",
-            footer_text="RESCUE SYSTEM",
-            button_text="Ver alertas",
-            sections=sections
-        )
+        self._send_create_alarma(number=number,usuario=usuario)
 
         return True
+    """
+      Esta en hardcode, pero la idea es traer los tipos de alertas 
+      tal cual como el usuario empresa las adita y guarda
+    """
+    def _send_create_down_alarma(self,list_users : list[Dict],alert:Dict,data_user:Dict = {}) -> bool:
+        try:
+            id_alert = alert["id"]
+            image = alert["imagen_base64"]
+            alert_name = alert["nombre"]
+            empresa =  "en "+ data_user.get("empresa","la empresa")
+            recipients = []
+            for item in list_users:
+                body_text = f"¡Hola {item["nombre"]}!.\nAlerta de {alert_name} {empresa}"
+                data = {
+                    "phone": item.get("numero",""),
+                    "body_text": body_text
+                }
+                recipients.append(data)
+            buttons = [
+                {
+                    "id": id_alert,
+                    "title": "Apagar alarma"
+                }
+            ]
+            self.whatsapp_service.send_bulk_button_message(
+                header_type="image",
+                header_content=image,
+                buttons=buttons,
+                footer_text="Sistema RESCUE",
+                recipients=recipients,
+                use_queue=True
+            )
+        except Exception as ex:
+            self.logger.error(f"Error al tratar de enviar el bulk list message: {ex}")
+   
+    def _send_create_alarma(self, number, usuario,is_in_cached:bool = False) -> bool:
+            try:
+                sections = [
+                {
+                "title": "Servicios técnicos",
+                "rows": [
+                        {
+                            "id": "ROJO",
+                            "title": "Incendio", 
+                            "description": "Alerta por incendio"
+                        },
+                        {
+                            "id": "AZUL",
+                            "title": "Inundación", 
+                            "description": "Alerta por inundación"
+                        },
+                        {
+                            "id": "AMARILLO",
+                            "title": "Peligro químico", 
+                            "description": "Exposición a sustancias químicas nocivas"
+                        },
+                        {
+                            "id": "VERDE",
+                            "title": "Robo", 
+                            "description": "Riesgo de robo o hurto"
+                        },
+                        {
+                            "id": "NARANJA",
+                            "title": "Terremoto", 
+                            "description": "Alerta por de sismo o terremoto"
+                        }
+                        ]
+                    }
+                ]
+                body_text = f"Hola de nuevo {usuario}.\nUn gusto tenerte de vuelta" if is_in_cached else f"Hola {usuario}.\nBienvenido al Sistema de Alertas RESCUE"
+                self.whatsapp_service.send_list_message(
+                    phone=number,
+                    header_text= body_text,
+                    body_text="Selecciona la alerta que deseas activar",
+                    footer_text="RESCUE SYSTEM",
+                    button_text="Ver alertas",
+                    sections=sections
+                )
+            except Exception as ex:
+                self.logger.error(f"error al tatrar de crear la alerta {ex}") 
     async def _process_new_number(self, number: str) -> None:
         """Procesar nuevo número (versión asíncrona para fallback)"""
         verify_number = self.backend_client.verify_user_number(number)
         print(verify_number)
     
-    async def _process_save_number(self) -> None:
-        return
+    
 
     def process_whatsapp_message(self, message: str) -> None:
         """Función de compatibilidad - crear tarea para agregar a cola"""

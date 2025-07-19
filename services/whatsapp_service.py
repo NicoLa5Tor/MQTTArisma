@@ -229,6 +229,110 @@ class WhatsAppService:
             self.logger.error(f"Error en servicio WhatsApp enviando lista: {e}")
             return False
     
+    def send_bulk_list_message(self, header_text: str, footer_text: str, button_text: str, 
+                              sections: List[Dict], recipients: List[Dict], use_queue: bool = True) -> bool:
+        """
+        Enviar mensaje de lista de manera masiva a múltiples destinatarios
+        
+        Args:
+            header_text: Texto del encabezado (común para todos)
+            footer_text: Texto de pie de página (común para todos)
+            button_text: Texto del botón (común para todos)
+            sections: Lista de secciones con sus opciones (común para todos)
+            recipients: Lista de diccionarios con 'phone' y 'body_text' personalizado
+            use_queue: Si usar cola o no (default True)
+            
+        Returns:
+            bool: True si se envió exitosamente, False en caso contrario
+        """
+        try:
+            if not self.config.enabled:
+                self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
+                return False
+            
+            print(f"📱 Servicio WhatsApp - Enviando bulk list a {len(recipients)} destinatarios...")
+            
+            response = self.client.send_bulk_list_message(
+                header_text=header_text,
+                footer_text=footer_text,
+                button_text=button_text,
+                sections=sections,
+                recipients=recipients,
+                use_queue=use_queue
+            )
+            
+            if response:
+                # Actualizar estadísticas - consideramos bulk list como un broadcast
+                self.stats["broadcast_messages_sent"] += 1
+                self.stats["total_recipients"] += len(recipients)
+                
+                print(f"✅ Bulk list enviado exitosamente a {len(recipients)} destinatarios")
+                self.logger.info(f"Bulk list enviado a {len(recipients)} destinatarios")
+                return True
+            else:
+                self.stats["errors"] += 1
+                print(f"❌ Error enviando bulk list")
+                self.logger.error(f"Error enviando bulk list a {len(recipients)} destinatarios")
+                return False
+                
+        except Exception as e:
+            self.stats["errors"] += 1
+            print(f"💥 Error en servicio WhatsApp bulk list: {e}")
+            self.logger.error(f"Error en servicio WhatsApp bulk list: {e}")
+            return False
+    
+    def send_bulk_button_message(self, header_type: str, header_content: str, buttons: List[Dict], 
+                                footer_text: str, recipients: List[Dict], use_queue: bool = True) -> bool:
+        """
+        Enviar mensaje con botones de manera masiva a múltiples destinatarios
+        
+        Args:
+            header_type: Tipo de encabezado (e.g., 'text')
+            header_content: Contenido del encabezado (común para todos)
+            buttons: Lista de botones con 'id' y 'title' (común para todos)
+            footer_text: Texto de pie de página (común para todos)
+            recipients: Lista de diccionarios con 'phone' y 'body_text' personalizado
+            use_queue: Si usar cola o no (default True)
+            
+        Returns:
+            bool: True si se envió exitosamente, False en caso contrario
+        """
+        try:
+            if not self.config.enabled:
+                self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
+                return False
+            
+            print(f"📱 Servicio WhatsApp - Enviando bulk button a {len(recipients)} destinatarios...")
+            
+            response = self.client.send_bulk_button_message(
+                header_type=header_type,
+                header_content=header_content,
+                buttons=buttons,
+                footer_text=footer_text,
+                recipients=recipients,
+                use_queue=use_queue
+            )
+            
+            if response:
+                # Actualizar estadísticas - consideramos bulk button como un broadcast
+                self.stats["broadcast_messages_sent"] += 1
+                self.stats["total_recipients"] += len(recipients)
+                
+                print(f"✅ Bulk button enviado exitosamente a {len(recipients)} destinatarios")
+                self.logger.info(f"Bulk button enviado a {len(recipients)} destinatarios")
+                return True
+            else:
+                self.stats["errors"] += 1
+                print(f"❌ Error enviando bulk button")
+                self.logger.error(f"Error enviando bulk button a {len(recipients)} destinatarios")
+                return False
+                
+        except Exception as e:
+            self.stats["errors"] += 1
+            print(f"💥 Error en servicio WhatsApp bulk button: {e}")
+            self.logger.error(f"Error en servicio WhatsApp bulk button: {e}")
+            return False
+    
     def add_number_to_cache(self, phone: str, name: str = None, data: Dict = None) -> bool:
         """
         Agregar número al cache de WhatsApp

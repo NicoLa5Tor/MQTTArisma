@@ -86,6 +86,111 @@ async def main():
     success = whatsapp_service.process_whatsapp_notification(notification_broadcast)
     print(f"   - Notificación broadcast: {'✅ Éxito' if success else '❌ Error'}")
     
+    # Ejemplo 4: Enviar bulk list message (NUEVO)
+    print(f"\n📱 Ejemplo 4: Bulk List Message (Lista Masiva)")
+    
+    # Definir secciones de lista (común para todos)
+    sections = [
+        {
+            "title": "Servicios técnicos",
+            "rows": [
+                {
+                    "id": "ROJO",
+                    "title": "Alerta Roja",
+                    "description": "Emergencia crítica - Ayuda inmediata"
+                },
+                {
+                    "id": "AMARILLO",
+                    "title": "Alerta Amarilla",
+                    "description": "Precaución - Situación a monitorear"
+                },
+                {
+                    "id": "VERDE",
+                    "title": "Alerta Verde",
+                    "description": "Todo normal - Estado seguro"
+                }
+            ]
+        },
+        {
+            "title": "Acciones",
+            "rows": [
+                {
+                    "id": "STATUS",
+                    "title": "Ver Estado",
+                    "description": "Consultar estado actual del sistema"
+                },
+                {
+                    "id": "HELP",
+                    "title": "Ayuda",
+                    "description": "Obtener asistencia técnica"
+                }
+            ]
+        }
+    ]
+    
+    # Definir destinatarios con mensajes personalizados
+    recipients = [
+        {
+            "phone": "573001234567",
+            "body_text": "Hola Juan, selecciona el tipo de alerta que deseas activar:"
+        },
+        {
+            "phone": "573007654321",
+            "body_text": "Hola María, ¿qué tipo de alerta necesitas configurar?"
+        }
+    ]
+    
+    success = whatsapp_service.send_bulk_list_message(
+        header_text="🚨 Sistema de Alertas RESCUE",
+        footer_text="Powered by ECOES - Sistema MQTT",
+        button_text="Ver opciones disponibles",
+        sections=sections,
+        recipients=recipients,
+        use_queue=True
+    )
+    print(f"   - Bulk list message: {'✅ Éxito' if success else '❌ Error'}")
+    
+    # Ejemplo 5: Enviar bulk button message (NUEVO)
+    print(f"\n📱 Ejemplo 5: Bulk Button Message (Botones Masivos)")
+    
+    # Definir botones (común para todos)
+    buttons = [
+        {
+            "id": "confirm_yes",
+            "title": "Confirmar"
+        },
+        {
+            "id": "confirm_no",
+            "title": "Cancelar"
+        },
+        {
+            "id": "more_info",
+            "title": "Más info"
+        }
+    ]
+    
+    # Definir destinatarios con mensajes personalizados
+    recipients_button = [
+        {
+            "phone": "573001234567",
+            "body_text": "Hola Juan, ¿confirmas tu cita del lunes a las 10:00 AM?"
+        },
+        {
+            "phone": "573007654321",
+            "body_text": "Hola María, ¿confirmas tu reserva para el evento del miércoles?"
+        }
+    ]
+    
+    success = whatsapp_service.send_bulk_button_message(
+        header_type="text",
+        header_content="📋 Confirmación Requerida",
+        buttons=buttons,
+        footer_text="Responde por favor - Sistema ECOES",
+        recipients=recipients_button,
+        use_queue=True
+    )
+    print(f"   - Bulk button message: {'✅ Éxito' if success else '❌ Error'}")
+    
     # Mostrar estadísticas finales
     print(f"\n📊 Estadísticas finales:")
     final_status = whatsapp_service.get_simple_status()
