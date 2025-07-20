@@ -14,7 +14,7 @@ from config import AppConfig
 class WebSocketServer:
     """Servidor WebSocket puro - SOLO para WhatsApp, sin dependencias MQTT"""
     
-    def __init__(self, host: str = None, port: int = None, backend_client=None, whatsapp_service=None):
+    def __init__(self, host: str = None, port: int = None, backend_client=None, whatsapp_service=None, enable_mqtt_publisher=False):
         # Crear configuración completa
         self.config = AppConfig()
         
@@ -30,7 +30,8 @@ class WebSocketServer:
         self.message_handler = WebSocketMessageHandler(
             backend_client=self.backend_client,
             whatsapp_service=self.whatsapp_service,
-            config=self.config
+            config=self.config,
+            enable_mqtt_publisher=enable_mqtt_publisher
         )
         
         self.server = None

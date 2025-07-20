@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Servicio WebSocket independiente - SIN MQTT
-Maneja SOLO conexiones WebSocket para recibir mensajes de WhatsApp.
+Servicio WebSocket independiente
+Recibe mensajes de WhatsApp por WebSocket y puede enviar notificaciones MQTT.
 """
 
 import asyncio
@@ -38,12 +38,13 @@ class WebSocketService:
         self.backend_client = BackendClient(self.config.backend)
         self.whatsapp_service = WhatsAppService(self.config.whatsapp)
         
-        # Servidor WebSocket SIN MQTT
+        # Servidor WebSocket CON MQTT Publisher para envío
         self.websocket_server = WebSocketServer(
             host=self.config.websocket.host,
             port=self.config.websocket.port,
             backend_client=self.backend_client,
-            whatsapp_service=self.whatsapp_service
+            whatsapp_service=self.whatsapp_service,
+            enable_mqtt_publisher=True  # Habilitar envío MQTT desde WhatsApp
         )
         
         # Estado del servicio
@@ -63,8 +64,8 @@ class WebSocketService:
         """Iniciar el servicio WebSocket"""
         self.logger.info("🚀 Iniciando servicio WebSocket independiente...")
         self.logger.info(f"📡 Servidor: ws://{self.config.websocket.host}:{self.config.websocket.port}")
-        self.logger.info("📱 SOLO procesamiento de WhatsApp")
-        self.logger.info("❌ SIN dependencias de MQTT")
+        self.logger.info("📱 Procesamiento de WhatsApp con envío MQTT")
+        self.logger.info("✅ MQTT Publisher habilitado para notificaciones")
         
         try:
             # Iniciar servidor WebSocket

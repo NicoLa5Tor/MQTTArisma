@@ -8,12 +8,14 @@ import asyncio
 from asyncio import Queue
 from typing import Dict, Any, Optional
 from utils.redis_queue_manager import RedisQueueManager
+from clients.mqtt_publisher_lite import MQTTPublisherLite
+from config.settings import MQTTConfig
 
 
 class WebSocketMessageHandler:
     """Manejador de mensajes WebSocket puro - SIN dependencias de MQTT"""
     
-    def __init__(self, backend_client, whatsapp_service=None, config=None):
+    def __init__(self, backend_client, whatsapp_service=None, config=None, enable_mqtt_publisher=False):
         self.backend_client = backend_client
         self.whatsapp_service = whatsapp_service
         self.config = config
@@ -22,6 +24,29 @@ class WebSocketMessageHandler:
         # Estadísticas solo para WhatsApp
         self.whatsapp_processed_count = 0
         self.whatsapp_error_count = 0
+        
+        # MQTT Publisher OPCIONAL (solo para envío desde WhatsApp)
+        self.mqtt_publisher = None
+        if enable_mqtt_publisher and config:
+            try:
+                publisher_config = MQTTConfig(
+                    broker=config.mqtt.broker,
+                    port=config.mqtt.port,
+                    topic=config.mqtt.topic,
+                    username=config.mqtt.username,
+                    password=config.mqtt.password,
+                    client_id=f"{config.mqtt.client_id}_websocket_publisher",
+                    keep_alive=config.mqtt.keep_alive
+                )
+                self.mqtt_publisher = MQTTPublisherLite(publisher_config)
+                if self.mqtt_publisher.connect():
+                    self.logger.info("✅ MQTT Publisher conectado desde WebSocket handler")
+                else:
+                    self.logger.warning("⚠️ Error conectando MQTT Publisher")
+                    self.mqtt_publisher = None
+            except Exception as e:
+                self.logger.error(f"❌ Error iniciando MQTT Publisher: {e}")
+                self.mqtt_publisher = None
         
         # Sistema de colas Redis para mensajes de WhatsApp ENTRANTES
         self.redis_queue = None
@@ -218,6 +243,8 @@ class WebSocketMessageHandler:
                 data_user=cached_info
             )
             # print(json.dumps(response_alarm,indent=4))
+            topics = response_alarm.get("topics",{})
+            self._intermediate_to_mqtt(alert=data_alert,topics=topics)
             return
             
         is_down_alarm = entry[type_message].get("button_reply", False)
@@ -369,6 +396,26 @@ class WebSocketMessageHandler:
             self.logger.error(f"Error al tratar de crear la alerta (websocket service): {ex}")
             return None
 
+    def send_mqtt_message(self, topic: str, message_data: Dict, qos: int = 0) -> bool:
+        """Enviar mensaje MQTT desde el handler de WebSocket"""
+        if not self.mqtt_publisher:
+            self.logger.warning("⚠️ No hay cliente MQTT publisher disponible en WebSocket handler")
+            return False
+            
+        try:
+            success = self.mqtt_publisher.publish_json(topic, message_data, qos)
+            
+            if success:
+                self.logger.info(f"✅ Mensaje MQTT enviado desde WebSocket a topic: {topic}")
+                return True
+            else:
+                self.logger.error(f"❌ Error enviando mensaje MQTT desde WebSocket a topic: {topic}")
+                return False
+                
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando mensaje MQTT desde WebSocket: {e}")
+            return False
+    
     def get_whatsapp_statistics(self) -> Dict[str, Any]:
         """Obtener estadísticas del procesador de WhatsApp"""
         return {
@@ -380,6 +427,27 @@ class WebSocketMessageHandler:
             "is_processing": self.is_processing
         }
     
+    def _send_mqtt_message(self, topic: str, message_data: Dict, qos: int = 0) -> bool:
+        """Enviar mensajes MQTT a un topic específico"""
+        try:
+            # Usar mqtt_publisher si está disponible
+            if self.mqtt_publisher:
+                success = self.mqtt_publisher.publish_json(topic, message_data, qos)
+                
+                if success:
+                    self.logger.info(f"✅ Mensaje MQTT enviado a topic: {topic}")
+                    return True
+                else:
+                    self.logger.error(f"❌ Error enviando mensaje MQTT a topic: {topic}")
+                    return False
+            else:
+                self.logger.warning(f"⚠️ No hay cliente MQTT publisher disponible")
+                return False
+                
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando mensaje MQTT: {e}")
+            return False
+
     def _send_create_down_alarma(self, list_users: list, alert: Dict, data_user: Dict = {}) -> bool:
         """Crear notificación de alarma por WhatsApp"""
         if not self.whatsapp_service:
@@ -421,13 +489,49 @@ class WebSocketMessageHandler:
                 recipients=recipients,
                 use_queue=True
             )
-            self.logger(f"Alarma {id_alert} enviada")
+            self.logger.info(f"Alarma {id_alert} enviada")
             return True
             
         except Exception as e:
             self.logger.error(f"❌ Error enviando notificación de alarma: {e}")
             return False
- 
+   
+    def _intermediate_to_mqtt(self,topics,alert) -> None:
+        try:
+            print(json.dumps(alert,indent=4))
+            #enviar alerta a mqtt
+            for topic in topics:
+                message_hardware = self._select_data_hardware(alert=alert,topic=topic)
+                self._send_mqtt_message(message_data=message_hardware,topic=topic)
+
+        except Exception as ex:
+            self.logger.error(f"Error en el intermedario a enviar mensajes al mqtt {ex}")
+
+    def _select_data_hardware(self, topic, alert) -> Dict:
+        """Seleccionar datos específicos según el tipo de hardware"""
+        alarm_color = alert.get("tipo_alerta", "")
+        if "SEMAFORO" in topic:
+            message_data = {
+                "tipo_alarma": alarm_color,
+            }
+        elif "TELEVISOR" in topic:
+            message_data = {
+                "tipo_alarma": alarm_color,
+                "prioridad": alert.get("prioridad",""),
+                "ubicacion": alert.get("direccion", ""),
+                "url": alert.get("direccion_open_maps", ""),
+                "elementos_necesarios": alert.get("implementos_necesarios", []),
+                "instrucciones": alert.get("recomendaciones", [])
+            }
+        else:
+            message_data = {
+                "action": "generic",
+                "message": "notificación genérica",
+            }
+            
+        return message_data
+
+   
     async def stop_whatsapp_processing(self):
         """Detener el procesamiento de la cola de WhatsApp"""
         # Detener workers de Redis si existen

@@ -218,7 +218,7 @@ class MQTTMessageHandler:
             }
             
         return message_data
-
+  
     def _send_location_personalized_message(self, numeros_data: list, tipo_alarma_info: Dict, hardware_location: Dict) -> bool:
         """Enviar mensaje personalizado de ubicación por WhatsApp"""
         if not self.whatsapp_service:
@@ -317,7 +317,7 @@ class MQTTMessageHandler:
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensaje MQTT: {e}")
             return False
-
+   
     def get_statistics(self) -> Dict[str, Any]:
         """Obtener estadísticas del manejador MQTT"""
         return {
