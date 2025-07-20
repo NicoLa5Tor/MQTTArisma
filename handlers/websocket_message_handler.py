@@ -344,34 +344,7 @@ class WebSocketMessageHandler:
         if entry:
             type_message = entry["type"]
             
-            # Procesar selección de alarma (activar)
-            is_alarm = entry[type_message].get("list_reply", False)
-            if is_alarm:
-                # Crear alarma igual que usuarios cached
-                response_alarm = self._create_alarm_in_back(
-                    descripcion=is_alarm["description"],
-                    tipo_alerta=is_alarm["id"],
-                    usuario_id=verify_number.get("id")
-                )
-                if response_alarm:
-                    data_alert = response_alarm.get("alerta", {})
-                    list_users = response_alarm.get("numeros_telefonicos", {})
-                    # Enviar notificación WhatsApp
-                    self._send_create_down_alarma(
-                        alert=data_alert,
-                        list_users=list_users,
-                        data_user={
-                            "name": usuario,
-                            "data": {
-                                "empresa": verify_number.get("empresa", "")
-                            }
-                        }
-                    )
-                    # Enviar a MQTT
-                    topics = response_alarm.get("topics", {})
-                    self._intermediate_to_mqtt(alert=data_alert, topics=topics)
-                return True
-            
+       
             # Procesar desactivación de alarma (apagar)
             is_down_alarm = entry[type_message].get("button_reply", False)
             if is_down_alarm:
