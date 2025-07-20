@@ -69,6 +69,49 @@ class WhatsAppService:
             self.logger.error(f"Error en servicio WhatsApp: {e}")
             return False
     
+    def send_bulk_individual(self, recipients: List[Dict], use_queue: bool = True) -> bool:
+        """
+        Enviar mensajes individuales masivos usando el endpoint send-bulk
+        
+        Args:
+            recipients: Lista de diccionarios con 'phone' y 'message'
+            use_queue: Si usar cola o no (opcional, por defecto True)
+            
+        Returns:
+            bool: True si se envió exitosamente, False en caso contrario
+        """
+        try:
+            if not self.config.enabled:
+                self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
+                return False
+            
+            print(f"📱 Servicio WhatsApp - Enviando mensajes masivos individuales a {len(recipients)} destinatarios...")
+            
+            response = self.client.send_bulk_individual(
+                recipients=recipients,
+                use_queue=use_queue
+            )
+            
+            if response:
+                sent_count = response.get('sent_count', len(recipients))
+                self.stats["individual_messages_sent"] += sent_count
+                self.stats["total_recipients"] += len(recipients)
+                
+                print(f"✅ Mensajes masivos individuales enviados exitosamente")
+                self.logger.info(f"Mensajes masivos individuales enviados a {len(recipients)} destinatarios")
+                return True
+            else:
+                self.stats["errors"] += 1
+                print(f"❌ Error enviando mensajes masivos individuales")
+                self.logger.error(f"Error enviando mensajes masivos individuales a {len(recipients)} destinatarios")
+                return False
+                
+        except Exception as e:
+            self.stats["errors"] += 1
+            print(f"💥 Error en servicio WhatsApp masivo individual: {e}")
+            self.logger.error(f"Error en servicio WhatsApp masivo individual: {e}")
+            return False
+    
     def send_broadcast_message(self, phones: List[str], header_type: str, header_content: str,
                              body_text: str, button_text: str, button_url: str,
                              footer_text: str, use_queue: bool = True) -> bool:

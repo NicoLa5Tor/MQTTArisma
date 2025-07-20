@@ -25,6 +25,9 @@ class WebSocketMessageHandler:
         self.whatsapp_processed_count = 0
         self.whatsapp_error_count = 0
         
+        # Usar settings en lugar de .env directo (igual que en MQTT handler)
+        self.pattern_topic = config.mqtt.topic if config else "empresas"
+        
         # MQTT Publisher OPCIONAL (solo para envío desde WhatsApp)
         self.mqtt_publisher = None
         if enable_mqtt_publisher and config:
@@ -224,7 +227,7 @@ class WebSocketMessageHandler:
         number = cached_info["phone"]
         user = cached_info["name"]
         type_message = entry["type"]
-        print(f"el entry es {entry}")
+        #print(f"el entry es {entry}")
         is_alarm = entry[type_message].get("list_reply", False)
         if is_alarm:
             #print("entra a lista y el cache es:")
@@ -242,7 +245,7 @@ class WebSocketMessageHandler:
                 list_users=list_users,
                 data_user=cached_info
             )
-            # print(json.dumps(response_alarm,indent=4))
+           # print(json.dumps(entry,indent=4))
             topics = response_alarm.get("topics",{})
             self._intermediate_to_mqtt(alert=data_alert,topics=topics)
             return
@@ -250,11 +253,45 @@ class WebSocketMessageHandler:
         is_down_alarm = entry[type_message].get("button_reply", False)
         if is_down_alarm:
             self.logger.info("Procesando apagar alarma")
-            # Aquí puedes agregar lógica para apagar alarmas
-            
-        # Enviar lista de alarmas
-        self._send_create_alarma(number=number, usuario=user, is_in_cached=True)
+            #print(f"es para apagar {json.dumps(entry,indent=4)}")
 
+            response = self._desactivate_alarm_to_back(entry=is_down_alarm,cached=cached_info)
+            
+            if response and response.get('success'):
+                # Si se desactivó exitosamente, enviar confirmación personalizada
+                self._send_alarm_deactivation_success_message(number, user, response)
+                
+                # También enviar comando de desactivación a los dispositivos MQTT
+                topics = response.get("topics", [])
+                prioridad = response.get("prioridad", "media")
+                if topics:
+                    self._send_deactivation_to_mqtt(topics=topics, prioridad=prioridad)
+                
+                return  # No enviar lista de alarmas después de desactivar
+            else:
+                # Si falló, enviar mensaje de error personalizado 
+                self._send_alarm_deactivation_error_message(number, user, response)
+                return  # No enviar lista de alarmas si hubo error
+            
+        # Enviar lista de alarmas solo si NO es una desactivación
+        self._send_create_alarma(number=number, usuario=user, is_in_cached=True)
+    def _desactivate_alarm_to_back(self,entry: Dict, cached:Dict) ->Optional[Dict]:
+        try:
+
+            alert_id = entry["id"]
+            user_id = cached["data"]["id"]
+            print(alert_id+"+"+user_id)
+           # print(json.dumps(entry,indent=4))
+            response = self.backend_client.deactivate_user_alert(
+                alert_id = alert_id,
+                desactivado_por_id = user_id,
+                desactivado_por_tipo = "usuario"
+            )
+            return response
+        except Exception as ex:
+            self.logger.error(f"Error al tratar de desactivar alerta {ex}")
+            return None
+      
     def _process_new_number_sync(self, number: str, entry: Dict = None) -> Optional[bool]:
         """Procesar nuevo número (versión síncrona para Redis)"""
         if not self.backend_client:
@@ -450,21 +487,19 @@ class WebSocketMessageHandler:
 
     def _send_create_down_alarma(self, list_users: list, alert: Dict, data_user: Dict = {}) -> bool:
         """Crear notificación de alarma por WhatsApp"""
-        if not self.whatsapp_service:
-            self.logger.warning("⚠️ WhatsApp service no disponible")
+        if not self.whatsapp_service or not self.backend_client:
+            self.logger.warning("⚠️ WhatsApp service o backend client no disponibles")
             return False
             
         try:
             #print(f"La alerta es {json.dumps(data_user,indent=4)}")
             id_alert = alert["alert_id"]
             image = alert["imagen_base64"]
-            # print("busca el nombre")
             alert_name = alert["nombre"]
-            # print("encuentra el nombre")
             empresa = data_user["data"]["empresa"]
             recipients = []
-            footer = f"Creada por {data_user["name"]}\nSistema RESCUE"
-            #print("pasa hasta el footer")
+            footer = f"Creada por {data_user['name']}\nSistema RESCUE"
+            
             for item in list_users:
                 nombre = str(item["nombre"])
                 body_text = f"¡Hola {nombre.split()[0].upper()}!.\nAlerta de {alert_name} en {empresa}."
@@ -489,7 +524,7 @@ class WebSocketMessageHandler:
                 recipients=recipients,
                 use_queue=True
             )
-            self.logger.info(f"Alarma {id_alert} enviada")
+            self.logger.info(f"✅ Alarma {id_alert} enviada a {len(recipients)} usuarios")
             return True
             
         except Exception as e:
@@ -498,9 +533,10 @@ class WebSocketMessageHandler:
    
     def _intermediate_to_mqtt(self,topics,alert) -> None:
         try:
-            print(json.dumps(alert,indent=4))
+            #print(json.dumps(alert,indent=4))
             #enviar alerta a mqtt
             for topic in topics:
+                topic = self.pattern_topic + "/" + topic
                 message_hardware = self._select_data_hardware(alert=alert,topic=topic)
                 self._send_mqtt_message(message_data=message_hardware,topic=topic)
 
@@ -531,7 +567,49 @@ class WebSocketMessageHandler:
             
         return message_data
 
-   
+    def _send_deactivation_to_mqtt(self, topics: list, prioridad: str) -> None:
+        """Enviar comandos de desactivación MQTT a dispositivos hardware"""
+        try:
+            self.logger.info(f"🔄 Enviando comandos de desactivación MQTT a {len(topics)} dispositivos")
+            
+            for topic in topics:
+                # Agregar pattern_topic igual que en activación
+                full_topic = self.pattern_topic + "/" + topic
+                
+                # Crear mensaje de desactivación según el tipo de dispositivo
+                deactivation_message = self._create_deactivation_message(topic=topic, prioridad=prioridad)
+                
+                # Enviar mensaje MQTT con el topic completo
+                success = self._send_mqtt_message(message_data=deactivation_message, topic=full_topic)
+                
+                if success:
+                    self.logger.info(f"✅ Dispositivo desactivado: {topic.split('/')[-1]} ({topic.split('/')[-2]})")
+                else:
+                    self.logger.error(f"❌ Error desactivando dispositivo: {topic}")
+                    
+        except Exception as ex:
+            self.logger.error(f"❌ Error enviando comandos de desactivación MQTT: {ex}")
+    
+    def _create_deactivation_message(self, topic: str, prioridad: str) -> Dict:
+        """Crear mensaje de desactivación específico según el tipo de dispositivo"""
+        if "SEMAFORO" in topic:
+            # Para semáforos: solo tipo_alarma NORMAL
+            return {
+                "tipo_alarma": "NORMAL"
+            }
+        elif "TELEVISOR" in topic:
+            # Para televisores: tipo_alarma NORMAL + prioridad del response
+            return {
+                "tipo_alarma": "NORMAL",
+                "prioridad": prioridad.upper()
+            }
+        else:
+            # Para dispositivos genéricos
+            return {
+                "tipo_alarma": "NORMAL",
+                "action": "deactivate"
+            }
+
     async def stop_whatsapp_processing(self):
         """Detener el procesamiento de la cola de WhatsApp"""
         # Detener workers de Redis si existen
@@ -564,3 +642,145 @@ class WebSocketMessageHandler:
         
         self.logger.info(f"🗑️ Cola de WhatsApp limpiada: {cleared_count} mensajes eliminados")
         return cleared_count
+    
+    def _send_alarm_deactivation_success_message(self, phone: str, user: str, response: Dict) -> bool:
+        """Enviar mensaje personalizado de éxito en desactivación de alarma usando send_bulk_individual"""
+        try:
+            if not self.whatsapp_service:
+                return False
+            
+            # Obtener información adicional de la respuesta
+            fecha_desactivacion = response.get('desactivado_por', {}).get('fecha_desactivacion', '')
+            numeros_telefonicos = response.get('numeros_telefonicos', [])
+            
+            # Preparar mensajes personalizados para todos los usuarios
+            recipients = []
+            for contact in numeros_telefonicos:
+                phone_number = contact.get('numero', '')
+                nombre = contact.get('nombre', '')
+                
+                # Determinar si es quien desactivó la alarma o es otra persona
+                if phone_number == phone:
+                    # Mensaje para quien desactivó
+                    success_message = f"✅ ¡Perfecto {nombre.split()[0].upper()}!"
+                    success_message += f"\n\n🎯 Alarma desactivada exitosamente"
+                    success_message += f"\n🕐 Fecha: {fecha_desactivacion.split('T')[0] if fecha_desactivacion else 'Ahora'}"
+                    success_message += f"\n👤 Desactivada por: TI"
+                    success_message += f"\n\n🛡️ El sistema RESCUE ha registrado tu acción"
+                    success_message += f"\n🚨 ¡Gracias por mantener la seguridad!"
+                    success_message += f"\n\n📱 Sistema RESCUE - Siempre Vigilante"
+                else:
+                    # Mensaje para otros usuarios
+                    success_message = f"ℹ️ ¡Hola {nombre.split()[0].upper()}!"
+                    success_message += f"\n\n✅ La alarma ha sido DESACTIVADA"
+                    success_message += f"\n👤 Desactivada por: {user}"
+                    success_message += f"\n🕐 Momento: Ahora mismo"
+                    success_message += f"\n\n🛡️ El sistema vuelve a estar en estado normal"
+                    success_message += f"\n📱 Notificación automática del Sistema RESCUE"
+                
+                recipients.append({
+                    "phone": phone_number,
+                    "message": success_message
+                })
+            
+            # Enviar usando el cliente de WhatsApp para envío masivo
+            if recipients:
+                response_bulk = self.whatsapp_service.send_bulk_individual(
+                    recipients=recipients,
+                    use_queue=True
+                )
+                
+                if response_bulk:
+                    self.logger.info(f"✅ Notificación de desactivación exitosa enviada a {len(recipients)} usuarios")
+                    return True
+                else:
+                    self.logger.error(f"❌ Error enviando notificación masiva de desactivación exitosa")
+                    # Fallback al método individual
+                    if self.whatsapp_service:
+                        simple_message = f"✅ Alarma desactivada exitosamente por {user}.\n\nGracias por usar el Sistema RESCUE 🚨"
+                        self.whatsapp_service.send_individual_message(phone=phone, message=simple_message)
+                    return False
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando mensaje de éxito de desactivación: {e}")
+            return False
+    
+    def _send_alarm_deactivation_error_message(self, phone: str, user: str, response: Optional[Dict]) -> bool:
+        """Enviar mensaje personalizado de error en desactivación de alarma"""
+        try:
+            if not self.whatsapp_service:
+                return False
+            
+            # Siempre enviar mensaje de alarma ya desactivada (sin importar el tipo de error)
+            error_message = f"ℹ️ ¡Hola {user.split()[0].upper()}!"
+            error_message += f"\n\nℹ️ Esta alarma ya fue DESACTIVADA anteriormente"
+            
+            # Obtener información de quién la desactivó si está disponible
+            if response and response.get('desactivado_por', {}):
+                desactivado_por = response.get('desactivado_por', {})
+                fecha = desactivado_por.get('fecha_desactivacion', '')
+                fecha_formato = fecha.split('T')[0] if fecha else 'Fecha desconocida'
+                error_message += f"\n\n📅 Desactivada el: {fecha_formato}"
+                error_message += f"\n👤 Por otro usuario del sistema"
+            
+            error_message += f"\n\n✅ ESTADO: La alarma ya está INACTIVA"
+            error_message += f"\n🛡️ No hay riesgo activo en el sistema"
+            error_message += f"\n\n👍 Gracias por tu atención a la seguridad"
+            
+            error_message += f"\n\n📱 Sistema RESCUE - Soporte Técnico"
+            
+            self.whatsapp_service.send_individual_message(
+                phone=phone,
+                message=error_message
+            )
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando mensaje de error de desactivación: {e}")
+            return False
+    
+    def _send_bulk_deactivation_notification(self, numeros_telefonicos: list, deactivated_by: str, response: Dict, exclude_phone: str) -> bool:
+        """Enviar notificación masiva a otros usuarios sobre desactivación de alarma"""
+        try:
+            # Preparar lista de destinatarios (excluir quien desactivó)
+            recipients = []
+            for contact in numeros_telefonicos:
+                phone = contact.get('numero', '')
+                nombre = contact.get('nombre', '')
+                
+                # Excluir el número de quien desactivó la alarma
+                if phone != exclude_phone:
+                    notification_message = f"ℹ️ ¡Hola {nombre.split()[0].upper()}!"
+                    notification_message += f"\n\n✅ La alarma ha sido DESACTIVADA"
+                    notification_message += f"\n👤 Desactivada por: {deactivated_by}"
+                    notification_message += f"\n🕐 Momento: Ahora mismo"
+                    notification_message += f"\n\n🛡️ El sistema vuelve a estar en estado normal"
+                    notification_message += f"\n📱 Notificación automática del Sistema RESCUE"
+                    
+                    recipients.append({
+                        "phone": phone,
+                        "message": notification_message
+                    })
+            
+            # Enviar usando el cliente de WhatsApp para envío masivo si hay destinatarios
+            if recipients:
+                response = self.whatsapp_service.send_bulk_individual(
+                    recipients=recipients,
+                    use_queue=True
+                )
+                
+                if response:
+                    self.logger.info(f"✅ Notificación de desactivación enviada a {len(recipients)} usuarios")
+                    return True
+                else:
+                    self.logger.error(f"❌ Error enviando notificación masiva de desactivación")
+                    return False
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando notificación masiva de desactivación: {e}")
+            return False

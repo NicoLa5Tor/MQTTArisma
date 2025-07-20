@@ -761,3 +761,1115 @@
 2025-07-20 02:04:30,104 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 1
 2025-07-20 02:04:30,104 - mqtt_service - INFO -   • Errores totales: 0
 2025-07-20 02:04:30,104 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-20 02:08:00,840 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-07-20 02:08:00,840 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-07-20 02:08:00,840 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-07-20 02:08:00,840 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-07-20 02:08:01,507 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-07-20 02:08:01,842 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-07-20 02:08:01,842 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-07-20 02:08:01,842 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 02:08:02,047 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 02:08:02,047 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 02:08:02,047 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 02:08:49,972 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:08:49,973 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente
+2025-07-20 02:08:51,091 - mqtt_service - INFO - 🎉 MENSAJE MQTT #2 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:08:51,091 - mqtt_service - INFO - ✅ Mensaje MQTT #2 procesado exitosamente
+2025-07-20 02:09:24,212 - mqtt_service - INFO - 🎉 MENSAJE MQTT #3 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 02:09:24,212 - mqtt_service - INFO - ✅ Mensaje MQTT #3 procesado exitosamente
+2025-07-20 02:09:24,417 - mqtt_service - INFO - 🎉 MENSAJE MQTT #4 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 02:09:24,417 - mqtt_service - INFO - ✅ Mensaje MQTT #4 procesado exitosamente
+2025-07-20 02:09:45,615 - mqtt_service - INFO - 🎉 MENSAJE MQTT #5 - TOPIC: empresas
+2025-07-20 02:09:45,615 - mqtt_service - INFO - ✅ Mensaje MQTT #5 procesado exitosamente
+2025-07-20 02:09:45,799 - mqtt_service - INFO - 🎉 MENSAJE MQTT #6 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 02:09:45,799 - mqtt_service - INFO - ✅ Mensaje MQTT #6 procesado exitosamente
+2025-07-20 02:09:45,958 - mqtt_service - INFO - 🎉 MENSAJE MQTT #7 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:09:45,959 - mqtt_service - INFO - ✅ Mensaje MQTT #7 procesado exitosamente
+2025-07-20 02:09:45,959 - mqtt_service - INFO - 🎉 MENSAJE MQTT #8 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:09:45,959 - mqtt_service - INFO - ✅ Mensaje MQTT #8 procesado exitosamente
+2025-07-20 02:09:45,960 - mqtt_service - INFO - 🎉 MENSAJE MQTT #9 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/
+2025-07-20 02:09:45,960 - mqtt_service - ERROR - ❌ Error procesando mensaje MQTT #9
+2025-07-20 02:09:45,960 - mqtt_service - INFO - 🎉 MENSAJE MQTT #10 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 02:09:45,960 - mqtt_service - INFO - ✅ Mensaje MQTT #10 procesado exitosamente
+2025-07-20 02:09:50,008 - mqtt_service - INFO - 🎉 MENSAJE MQTT #11 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:09:50,008 - mqtt_service - INFO - ✅ Mensaje MQTT #11 procesado exitosamente
+2025-07-20 02:09:51,054 - mqtt_service - INFO - 🎉 MENSAJE MQTT #12 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:09:51,054 - mqtt_service - INFO - ✅ Mensaje MQTT #12 procesado exitosamente
+2025-07-20 02:10:02,529 - mqtt_service - INFO - 🎉 MENSAJE MQTT #13 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 02:10:02,529 - mqtt_service - INFO - ✅ Mensaje MQTT #13 procesado exitosamente
+2025-07-20 02:10:02,938 - mqtt_service - INFO - 🎉 MENSAJE MQTT #14 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 02:10:02,938 - mqtt_service - INFO - ✅ Mensaje MQTT #14 procesado exitosamente
+2025-07-20 02:10:50,066 - mqtt_service - INFO - 🎉 MENSAJE MQTT #15 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:10:50,066 - mqtt_service - INFO - ✅ Mensaje MQTT #15 procesado exitosamente
+2025-07-20 02:10:51,068 - mqtt_service - INFO - 🎉 MENSAJE MQTT #16 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:10:51,068 - mqtt_service - INFO - ✅ Mensaje MQTT #16 procesado exitosamente
+2025-07-20 02:11:50,102 - mqtt_service - INFO - 🎉 MENSAJE MQTT #17 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:11:50,102 - mqtt_service - INFO - ✅ Mensaje MQTT #17 procesado exitosamente
+2025-07-20 02:11:51,105 - mqtt_service - INFO - 🎉 MENSAJE MQTT #18 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:11:51,105 - mqtt_service - INFO - ✅ Mensaje MQTT #18 procesado exitosamente
+2025-07-20 02:12:50,138 - mqtt_service - INFO - 🎉 MENSAJE MQTT #19 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:12:50,138 - mqtt_service - INFO - ✅ Mensaje MQTT #19 procesado exitosamente
+2025-07-20 02:12:51,162 - mqtt_service - INFO - 🎉 MENSAJE MQTT #20 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:12:51,162 - mqtt_service - INFO - ✅ Mensaje MQTT #20 procesado exitosamente
+2025-07-20 02:13:50,174 - mqtt_service - INFO - 🎉 MENSAJE MQTT #21 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:13:50,174 - mqtt_service - INFO - ✅ Mensaje MQTT #21 procesado exitosamente
+2025-07-20 02:13:51,403 - mqtt_service - INFO - 🎉 MENSAJE MQTT #22 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:13:51,403 - mqtt_service - INFO - ✅ Mensaje MQTT #22 procesado exitosamente
+2025-07-20 02:14:50,211 - mqtt_service - INFO - 🎉 MENSAJE MQTT #23 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:14:50,211 - mqtt_service - INFO - ✅ Mensaje MQTT #23 procesado exitosamente
+2025-07-20 02:14:51,235 - mqtt_service - INFO - 🎉 MENSAJE MQTT #24 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:14:51,235 - mqtt_service - INFO - ✅ Mensaje MQTT #24 procesado exitosamente
+2025-07-20 02:15:50,247 - mqtt_service - INFO - 🎉 MENSAJE MQTT #25 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:15:50,247 - mqtt_service - INFO - ✅ Mensaje MQTT #25 procesado exitosamente
+2025-07-20 02:15:51,271 - mqtt_service - INFO - 🎉 MENSAJE MQTT #26 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:15:51,271 - mqtt_service - INFO - ✅ Mensaje MQTT #26 procesado exitosamente
+2025-07-20 02:16:50,488 - mqtt_service - INFO - 🎉 MENSAJE MQTT #27 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:16:50,488 - mqtt_service - INFO - ✅ Mensaje MQTT #27 procesado exitosamente
+2025-07-20 02:16:51,310 - mqtt_service - INFO - 🎉 MENSAJE MQTT #28 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:16:51,310 - mqtt_service - INFO - ✅ Mensaje MQTT #28 procesado exitosamente
+2025-07-20 02:17:50,300 - mqtt_service - INFO - 🎉 MENSAJE MQTT #29 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:17:50,301 - mqtt_service - INFO - ✅ Mensaje MQTT #29 procesado exitosamente
+2025-07-20 02:17:51,527 - mqtt_service - INFO - 🎉 MENSAJE MQTT #30 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:17:51,527 - mqtt_service - INFO - ✅ Mensaje MQTT #30 procesado exitosamente
+2025-07-20 02:18:50,333 - mqtt_service - INFO - 🎉 MENSAJE MQTT #31 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:18:50,333 - mqtt_service - INFO - ✅ Mensaje MQTT #31 procesado exitosamente
+2025-07-20 02:18:51,380 - mqtt_service - INFO - 🎉 MENSAJE MQTT #32 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:18:51,380 - mqtt_service - INFO - ✅ Mensaje MQTT #32 procesado exitosamente
+2025-07-20 02:19:50,391 - mqtt_service - INFO - 🎉 MENSAJE MQTT #33 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:19:50,392 - mqtt_service - INFO - ✅ Mensaje MQTT #33 procesado exitosamente
+2025-07-20 02:19:51,417 - mqtt_service - INFO - 🎉 MENSAJE MQTT #34 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:19:51,417 - mqtt_service - INFO - ✅ Mensaje MQTT #34 procesado exitosamente
+2025-07-20 02:20:50,365 - mqtt_service - INFO - 🎉 MENSAJE MQTT #35 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:20:50,365 - mqtt_service - INFO - ✅ Mensaje MQTT #35 procesado exitosamente
+2025-07-20 02:20:51,452 - mqtt_service - INFO - 🎉 MENSAJE MQTT #36 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:20:51,452 - mqtt_service - INFO - ✅ Mensaje MQTT #36 procesado exitosamente
+2025-07-20 02:21:50,464 - mqtt_service - INFO - 🎉 MENSAJE MQTT #37 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:21:50,464 - mqtt_service - INFO - ✅ Mensaje MQTT #37 procesado exitosamente
+2025-07-20 02:21:51,448 - mqtt_service - INFO - 🎉 MENSAJE MQTT #38 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:21:51,448 - mqtt_service - INFO - ✅ Mensaje MQTT #38 procesado exitosamente
+2025-07-20 02:22:50,501 - mqtt_service - INFO - 🎉 MENSAJE MQTT #39 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:22:50,501 - mqtt_service - INFO - ✅ Mensaje MQTT #39 procesado exitosamente
+2025-07-20 02:22:51,525 - mqtt_service - INFO - 🎉 MENSAJE MQTT #40 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:22:51,525 - mqtt_service - INFO - ✅ Mensaje MQTT #40 procesado exitosamente
+2025-07-20 02:23:47,727 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 02:23:47,728 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 02:23:47,883 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 02:23:47,883 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 02:23:47,935 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-20 02:23:47,999 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 02:23:47,999 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 02:23:47,999 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-20 02:23:48,298 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-20 02:23:48,299 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-20 02:23:48,299 - mqtt_service - INFO -   • Total de mensajes recibidos: 40
+2025-07-20 02:23:48,299 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2025-07-20 02:23:48,299 - mqtt_service - INFO -   • Errores totales: 1
+2025-07-20 02:23:48,299 - mqtt_service - INFO -   • Tasa de éxito final: 0.0%
+2025-07-20 02:23:48,299 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 02:23:48,299 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-20 02:23:48,300 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-20 02:23:48,300 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-20 02:23:48,300 - mqtt_service - INFO -   • Total de mensajes recibidos: 40
+2025-07-20 02:23:48,300 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2025-07-20 02:23:48,300 - mqtt_service - INFO -   • Errores totales: 1
+2025-07-20 02:23:48,300 - mqtt_service - INFO -   • Tasa de éxito final: 0.0%
+2025-07-20 02:23:51,625 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-07-20 02:23:51,626 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-07-20 02:23:51,626 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-07-20 02:23:51,626 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-07-20 02:23:52,272 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-07-20 02:23:52,586 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-07-20 02:23:52,586 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-07-20 02:23:52,586 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 02:23:52,790 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 02:23:52,791 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 02:23:52,791 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 02:23:58,121 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/
+2025-07-20 02:23:58,122 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente
+2025-07-20 02:23:58,323 - mqtt_service - INFO - 🎉 MENSAJE MQTT #2 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 02:23:58,323 - mqtt_service - INFO - ✅ Mensaje MQTT #2 procesado exitosamente
+2025-07-20 02:23:58,528 - mqtt_service - INFO - 🎉 MENSAJE MQTT #3 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 02:23:58,528 - mqtt_service - INFO - ✅ Mensaje MQTT #3 procesado exitosamente
+2025-07-20 02:24:50,574 - mqtt_service - INFO - 🎉 MENSAJE MQTT #4 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:24:50,574 - mqtt_service - INFO - ✅ Mensaje MQTT #4 procesado exitosamente
+2025-07-20 02:24:51,597 - mqtt_service - INFO - 🎉 MENSAJE MQTT #5 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:24:51,597 - mqtt_service - INFO - ✅ Mensaje MQTT #5 procesado exitosamente
+2025-07-20 02:25:50,609 - mqtt_service - INFO - 🎉 MENSAJE MQTT #6 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:25:50,609 - mqtt_service - INFO - ✅ Mensaje MQTT #6 procesado exitosamente
+2025-07-20 02:25:51,633 - mqtt_service - INFO - 🎉 MENSAJE MQTT #7 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:25:51,633 - mqtt_service - INFO - ✅ Mensaje MQTT #7 procesado exitosamente
+2025-07-20 02:26:50,645 - mqtt_service - INFO - 🎉 MENSAJE MQTT #8 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:26:50,645 - mqtt_service - INFO - ✅ Mensaje MQTT #8 procesado exitosamente
+2025-07-20 02:26:51,669 - mqtt_service - INFO - 🎉 MENSAJE MQTT #9 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:26:51,669 - mqtt_service - INFO - ✅ Mensaje MQTT #9 procesado exitosamente
+2025-07-20 02:27:50,681 - mqtt_service - INFO - 🎉 MENSAJE MQTT #10 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:27:50,681 - mqtt_service - INFO - ✅ Mensaje MQTT #10 procesado exitosamente
+2025-07-20 02:27:51,705 - mqtt_service - INFO - 🎉 MENSAJE MQTT #11 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:27:51,706 - mqtt_service - INFO - ✅ Mensaje MQTT #11 procesado exitosamente
+2025-07-20 02:28:50,606 - mqtt_service - INFO - 🎉 MENSAJE MQTT #12 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:28:50,607 - mqtt_service - INFO - ✅ Mensaje MQTT #12 procesado exitosamente
+2025-07-20 02:28:51,615 - mqtt_service - INFO - 🎉 MENSAJE MQTT #13 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:28:51,615 - mqtt_service - INFO - ✅ Mensaje MQTT #13 procesado exitosamente
+2025-07-20 02:29:50,754 - mqtt_service - INFO - 🎉 MENSAJE MQTT #14 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:29:50,754 - mqtt_service - INFO - ✅ Mensaje MQTT #14 procesado exitosamente
+2025-07-20 02:29:51,778 - mqtt_service - INFO - 🎉 MENSAJE MQTT #15 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:29:51,778 - mqtt_service - INFO - ✅ Mensaje MQTT #15 procesado exitosamente
+2025-07-20 02:30:50,791 - mqtt_service - INFO - 🎉 MENSAJE MQTT #16 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:30:50,791 - mqtt_service - INFO - ✅ Mensaje MQTT #16 procesado exitosamente
+2025-07-20 02:30:51,815 - mqtt_service - INFO - 🎉 MENSAJE MQTT #17 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:30:51,815 - mqtt_service - INFO - ✅ Mensaje MQTT #17 procesado exitosamente
+2025-07-20 02:31:50,757 - mqtt_service - INFO - 🎉 MENSAJE MQTT #18 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:31:50,757 - mqtt_service - INFO - ✅ Mensaje MQTT #18 procesado exitosamente
+2025-07-20 02:31:52,056 - mqtt_service - INFO - 🎉 MENSAJE MQTT #19 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:31:52,057 - mqtt_service - INFO - ✅ Mensaje MQTT #19 procesado exitosamente
+2025-07-20 02:32:50,863 - mqtt_service - INFO - 🎉 MENSAJE MQTT #20 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:32:50,863 - mqtt_service - INFO - ✅ Mensaje MQTT #20 procesado exitosamente
+2025-07-20 02:32:51,887 - mqtt_service - INFO - 🎉 MENSAJE MQTT #21 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:32:51,887 - mqtt_service - INFO - ✅ Mensaje MQTT #21 procesado exitosamente
+2025-07-20 02:33:51,106 - mqtt_service - INFO - 🎉 MENSAJE MQTT #22 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:33:51,107 - mqtt_service - INFO - ✅ Mensaje MQTT #22 procesado exitosamente
+2025-07-20 02:33:51,925 - mqtt_service - INFO - 🎉 MENSAJE MQTT #23 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:33:51,926 - mqtt_service - INFO - ✅ Mensaje MQTT #23 procesado exitosamente
+2025-07-20 02:34:50,935 - mqtt_service - INFO - 🎉 MENSAJE MQTT #24 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:34:50,935 - mqtt_service - INFO - ✅ Mensaje MQTT #24 procesado exitosamente
+2025-07-20 02:34:51,880 - mqtt_service - INFO - 🎉 MENSAJE MQTT #25 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:34:51,880 - mqtt_service - INFO - ✅ Mensaje MQTT #25 procesado exitosamente
+2025-07-20 02:35:50,962 - mqtt_service - INFO - 🎉 MENSAJE MQTT #26 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:35:50,962 - mqtt_service - INFO - ✅ Mensaje MQTT #26 procesado exitosamente
+2025-07-20 02:35:51,986 - mqtt_service - INFO - 🎉 MENSAJE MQTT #27 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:35:51,987 - mqtt_service - INFO - ✅ Mensaje MQTT #27 procesado exitosamente
+2025-07-20 02:36:32,976 - mqtt_service - INFO - 🎉 MENSAJE MQTT #28 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/
+2025-07-20 02:36:32,976 - mqtt_service - INFO - ✅ Mensaje MQTT #28 procesado exitosamente
+2025-07-20 02:36:33,181 - mqtt_service - INFO - 🎉 MENSAJE MQTT #29 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 02:36:33,181 - mqtt_service - INFO - ✅ Mensaje MQTT #29 procesado exitosamente
+2025-07-20 02:36:34,000 - mqtt_service - INFO - 🎉 MENSAJE MQTT #30 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 02:36:34,001 - mqtt_service - INFO - ✅ Mensaje MQTT #30 procesado exitosamente
+2025-07-20 02:36:50,996 - mqtt_service - INFO - 🎉 MENSAJE MQTT #31 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:36:50,996 - mqtt_service - INFO - ✅ Mensaje MQTT #31 procesado exitosamente
+2025-07-20 02:36:52,032 - mqtt_service - INFO - 🎉 MENSAJE MQTT #32 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:36:52,032 - mqtt_service - INFO - ✅ Mensaje MQTT #32 procesado exitosamente
+2025-07-20 02:37:42,826 - mqtt_service - INFO - 🎉 MENSAJE MQTT #33 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/
+2025-07-20 02:37:42,827 - mqtt_service - INFO - ✅ Mensaje MQTT #33 procesado exitosamente
+2025-07-20 02:37:43,015 - mqtt_service - INFO - 🎉 MENSAJE MQTT #34 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 02:37:43,016 - mqtt_service - INFO - ✅ Mensaje MQTT #34 procesado exitosamente
+2025-07-20 02:37:43,259 - mqtt_service - INFO - 🎉 MENSAJE MQTT #35 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 02:37:43,259 - mqtt_service - INFO - ✅ Mensaje MQTT #35 procesado exitosamente
+2025-07-20 02:37:50,954 - mqtt_service - INFO - 🎉 MENSAJE MQTT #36 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:37:50,954 - mqtt_service - INFO - ✅ Mensaje MQTT #36 procesado exitosamente
+2025-07-20 02:37:51,946 - mqtt_service - INFO - 🎉 MENSAJE MQTT #37 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:37:51,946 - mqtt_service - INFO - ✅ Mensaje MQTT #37 procesado exitosamente
+2025-07-20 02:38:32,435 - mqtt_service - INFO - 🎉 MENSAJE MQTT #38 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/
+2025-07-20 02:38:32,436 - mqtt_service - INFO - ✅ Mensaje MQTT #38 procesado exitosamente
+2025-07-20 02:38:32,638 - mqtt_service - INFO - 🎉 MENSAJE MQTT #39 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 02:38:32,639 - mqtt_service - INFO - ✅ Mensaje MQTT #39 procesado exitosamente
+2025-07-20 02:38:32,843 - mqtt_service - INFO - 🎉 MENSAJE MQTT #40 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 02:38:32,844 - mqtt_service - INFO - ✅ Mensaje MQTT #40 procesado exitosamente
+2025-07-20 02:38:51,026 - mqtt_service - INFO - 🎉 MENSAJE MQTT #41 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:38:51,026 - mqtt_service - INFO - ✅ Mensaje MQTT #41 procesado exitosamente
+2025-07-20 02:38:52,105 - mqtt_service - INFO - 🎉 MENSAJE MQTT #42 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:38:52,105 - mqtt_service - INFO - ✅ Mensaje MQTT #42 procesado exitosamente
+2025-07-20 02:39:44,764 - mqtt_service - INFO - 🎉 MENSAJE MQTT #43 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/
+2025-07-20 02:39:44,764 - mqtt_service - INFO - ✅ Mensaje MQTT #43 procesado exitosamente
+2025-07-20 02:39:44,969 - mqtt_service - INFO - 🎉 MENSAJE MQTT #44 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 02:39:44,969 - mqtt_service - INFO - ✅ Mensaje MQTT #44 procesado exitosamente
+2025-07-20 02:39:45,174 - mqtt_service - INFO - 🎉 MENSAJE MQTT #45 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 02:39:45,174 - mqtt_service - INFO - ✅ Mensaje MQTT #45 procesado exitosamente
+2025-07-20 02:39:51,116 - mqtt_service - INFO - 🎉 MENSAJE MQTT #46 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:39:51,116 - mqtt_service - INFO - ✅ Mensaje MQTT #46 procesado exitosamente
+2025-07-20 02:39:52,133 - mqtt_service - INFO - 🎉 MENSAJE MQTT #47 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:39:52,133 - mqtt_service - INFO - ✅ Mensaje MQTT #47 procesado exitosamente
+2025-07-20 02:40:51,133 - mqtt_service - INFO - 🎉 MENSAJE MQTT #48 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:40:51,134 - mqtt_service - INFO - ✅ Mensaje MQTT #48 procesado exitosamente
+2025-07-20 02:40:52,176 - mqtt_service - INFO - 🎉 MENSAJE MQTT #49 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:40:52,177 - mqtt_service - INFO - ✅ Mensaje MQTT #49 procesado exitosamente
+2025-07-20 02:41:51,188 - mqtt_service - INFO - 🎉 MENSAJE MQTT #50 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:41:51,188 - mqtt_service - INFO - ✅ Mensaje MQTT #50 procesado exitosamente
+2025-07-20 02:41:52,213 - mqtt_service - INFO - 🎉 MENSAJE MQTT #51 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:41:52,213 - mqtt_service - INFO - ✅ Mensaje MQTT #51 procesado exitosamente
+2025-07-20 02:43:57,673 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 02:43:57,673 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 02:43:59,053 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 02:43:59,054 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 02:43:59,054 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 02:44:09,503 - mqtt_service - INFO - 🎉 MENSAJE MQTT #52 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/
+2025-07-20 02:44:09,505 - mqtt_service - INFO - ✅ Mensaje MQTT #52 procesado exitosamente
+2025-07-20 02:44:09,709 - mqtt_service - INFO - 🎉 MENSAJE MQTT #53 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 02:44:09,709 - mqtt_service - INFO - ✅ Mensaje MQTT #53 procesado exitosamente
+2025-07-20 02:44:09,914 - mqtt_service - INFO - 🎉 MENSAJE MQTT #54 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 02:44:09,914 - mqtt_service - INFO - ✅ Mensaje MQTT #54 procesado exitosamente
+2025-07-20 02:44:51,283 - mqtt_service - INFO - 🎉 MENSAJE MQTT #55 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:44:51,283 - mqtt_service - INFO - ✅ Mensaje MQTT #55 procesado exitosamente
+2025-07-20 02:44:52,123 - mqtt_service - INFO - 🎉 MENSAJE MQTT #56 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:44:52,123 - mqtt_service - INFO - ✅ Mensaje MQTT #56 procesado exitosamente
+2025-07-20 02:45:51,339 - mqtt_service - INFO - 🎉 MENSAJE MQTT #57 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:45:51,339 - mqtt_service - INFO - ✅ Mensaje MQTT #57 procesado exitosamente
+2025-07-20 02:45:52,159 - mqtt_service - INFO - 🎉 MENSAJE MQTT #58 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:45:52,159 - mqtt_service - INFO - ✅ Mensaje MQTT #58 procesado exitosamente
+2025-07-20 02:46:09,576 - mqtt_service - INFO - 🎉 MENSAJE MQTT #59 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/
+2025-07-20 02:46:09,576 - mqtt_service - INFO - ✅ Mensaje MQTT #59 procesado exitosamente
+2025-07-20 02:46:20,845 - mqtt_service - INFO - 🎉 MENSAJE MQTT #60 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/
+2025-07-20 02:46:20,846 - mqtt_service - INFO - ✅ Mensaje MQTT #60 procesado exitosamente
+2025-07-20 02:46:21,029 - mqtt_service - INFO - 🎉 MENSAJE MQTT #61 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 02:46:21,029 - mqtt_service - INFO - ✅ Mensaje MQTT #61 procesado exitosamente
+2025-07-20 02:46:21,213 - mqtt_service - INFO - 🎉 MENSAJE MQTT #62 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 02:46:21,213 - mqtt_service - INFO - ✅ Mensaje MQTT #62 procesado exitosamente
+2025-07-20 02:46:51,376 - mqtt_service - INFO - 🎉 MENSAJE MQTT #63 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:46:51,376 - mqtt_service - INFO - ✅ Mensaje MQTT #63 procesado exitosamente
+2025-07-20 02:46:52,195 - mqtt_service - INFO - 🎉 MENSAJE MQTT #64 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:46:52,195 - mqtt_service - INFO - ✅ Mensaje MQTT #64 procesado exitosamente
+2025-07-20 02:47:51,411 - mqtt_service - INFO - 🎉 MENSAJE MQTT #65 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:47:51,412 - mqtt_service - INFO - ✅ Mensaje MQTT #65 procesado exitosamente
+2025-07-20 02:47:52,231 - mqtt_service - INFO - 🎉 MENSAJE MQTT #66 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:47:52,231 - mqtt_service - INFO - ✅ Mensaje MQTT #66 procesado exitosamente
+2025-07-20 02:48:51,447 - mqtt_service - INFO - 🎉 MENSAJE MQTT #67 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:48:51,447 - mqtt_service - INFO - ✅ Mensaje MQTT #67 procesado exitosamente
+2025-07-20 02:48:52,267 - mqtt_service - INFO - 🎉 MENSAJE MQTT #68 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:48:52,268 - mqtt_service - INFO - ✅ Mensaje MQTT #68 procesado exitosamente
+2025-07-20 02:49:59,680 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-07-20 02:50:01,114 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 02:50:01,115 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 02:50:01,115 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 02:50:51,519 - mqtt_service - INFO - 🎉 MENSAJE MQTT #69 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:50:51,520 - mqtt_service - INFO - ✅ Mensaje MQTT #69 procesado exitosamente
+2025-07-20 02:50:52,442 - mqtt_service - INFO - 🎉 MENSAJE MQTT #70 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:50:52,442 - mqtt_service - INFO - ✅ Mensaje MQTT #70 procesado exitosamente
+2025-07-20 02:51:51,454 - mqtt_service - INFO - 🎉 MENSAJE MQTT #71 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:51:51,454 - mqtt_service - INFO - ✅ Mensaje MQTT #71 procesado exitosamente
+2025-07-20 02:51:52,375 - mqtt_service - INFO - 🎉 MENSAJE MQTT #72 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:51:52,375 - mqtt_service - INFO - ✅ Mensaje MQTT #72 procesado exitosamente
+2025-07-20 02:52:51,403 - mqtt_service - INFO - 🎉 MENSAJE MQTT #73 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:52:51,403 - mqtt_service - INFO - ✅ Mensaje MQTT #73 procesado exitosamente
+2025-07-20 02:52:52,390 - mqtt_service - INFO - 🎉 MENSAJE MQTT #74 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:52:52,390 - mqtt_service - INFO - ✅ Mensaje MQTT #74 procesado exitosamente
+2025-07-20 02:53:51,433 - mqtt_service - INFO - 🎉 MENSAJE MQTT #75 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:53:51,433 - mqtt_service - INFO - ✅ Mensaje MQTT #75 procesado exitosamente
+2025-07-20 02:53:52,394 - mqtt_service - INFO - 🎉 MENSAJE MQTT #76 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:53:52,395 - mqtt_service - INFO - ✅ Mensaje MQTT #76 procesado exitosamente
+2025-07-20 02:54:51,664 - mqtt_service - INFO - 🎉 MENSAJE MQTT #77 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:54:51,665 - mqtt_service - INFO - ✅ Mensaje MQTT #77 procesado exitosamente
+2025-07-20 02:54:52,484 - mqtt_service - INFO - 🎉 MENSAJE MQTT #78 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:54:52,484 - mqtt_service - INFO - ✅ Mensaje MQTT #78 procesado exitosamente
+2025-07-20 02:57:02,870 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 02:57:02,870 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 02:57:04,235 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 02:57:04,235 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 02:57:04,235 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 02:57:51,571 - mqtt_service - INFO - 🎉 MENSAJE MQTT #79 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:57:51,571 - mqtt_service - INFO - ✅ Mensaje MQTT #79 procesado exitosamente
+2025-07-20 02:57:52,532 - mqtt_service - INFO - 🎉 MENSAJE MQTT #80 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:57:52,533 - mqtt_service - INFO - ✅ Mensaje MQTT #80 procesado exitosamente
+2025-07-20 02:58:51,809 - mqtt_service - INFO - 🎉 MENSAJE MQTT #81 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:58:51,809 - mqtt_service - INFO - ✅ Mensaje MQTT #81 procesado exitosamente
+2025-07-20 02:58:52,628 - mqtt_service - INFO - 🎉 MENSAJE MQTT #82 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:58:52,628 - mqtt_service - INFO - ✅ Mensaje MQTT #82 procesado exitosamente
+2025-07-20 02:59:51,639 - mqtt_service - INFO - 🎉 MENSAJE MQTT #83 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 02:59:51,639 - mqtt_service - INFO - ✅ Mensaje MQTT #83 procesado exitosamente
+2025-07-20 02:59:52,664 - mqtt_service - INFO - 🎉 MENSAJE MQTT #84 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 02:59:52,664 - mqtt_service - INFO - ✅ Mensaje MQTT #84 procesado exitosamente
+2025-07-20 03:00:51,676 - mqtt_service - INFO - 🎉 MENSAJE MQTT #85 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:00:51,676 - mqtt_service - INFO - ✅ Mensaje MQTT #85 procesado exitosamente
+2025-07-20 03:00:52,803 - mqtt_service - INFO - 🎉 MENSAJE MQTT #86 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:00:52,803 - mqtt_service - INFO - ✅ Mensaje MQTT #86 procesado exitosamente
+2025-07-20 03:01:51,712 - mqtt_service - INFO - 🎉 MENSAJE MQTT #87 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:01:51,712 - mqtt_service - INFO - ✅ Mensaje MQTT #87 procesado exitosamente
+2025-07-20 03:01:52,736 - mqtt_service - INFO - 🎉 MENSAJE MQTT #88 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:01:52,736 - mqtt_service - INFO - ✅ Mensaje MQTT #88 procesado exitosamente
+2025-07-20 03:01:57,039 - mqtt_service - INFO - 🎉 MENSAJE MQTT #89 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:01:57,040 - mqtt_service - INFO - ✅ Mensaje MQTT #89 procesado exitosamente
+2025-07-20 03:01:57,244 - mqtt_service - INFO - 🎉 MENSAJE MQTT #90 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:01:57,245 - mqtt_service - INFO - ✅ Mensaje MQTT #90 procesado exitosamente
+2025-07-20 03:04:05,584 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:04:05,585 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:04:06,947 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 03:04:06,947 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 03:04:06,947 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 03:04:51,820 - mqtt_service - INFO - 🎉 MENSAJE MQTT #91 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:04:51,820 - mqtt_service - INFO - ✅ Mensaje MQTT #91 procesado exitosamente
+2025-07-20 03:04:52,810 - mqtt_service - INFO - 🎉 MENSAJE MQTT #92 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:04:52,810 - mqtt_service - INFO - ✅ Mensaje MQTT #92 procesado exitosamente
+2025-07-20 03:05:51,857 - mqtt_service - INFO - 🎉 MENSAJE MQTT #93 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:05:51,857 - mqtt_service - INFO - ✅ Mensaje MQTT #93 procesado exitosamente
+2025-07-20 03:05:52,883 - mqtt_service - INFO - 🎉 MENSAJE MQTT #94 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:05:52,884 - mqtt_service - INFO - ✅ Mensaje MQTT #94 procesado exitosamente
+2025-07-20 03:06:51,882 - mqtt_service - INFO - 🎉 MENSAJE MQTT #95 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:06:51,882 - mqtt_service - INFO - ✅ Mensaje MQTT #95 procesado exitosamente
+2025-07-20 03:06:52,840 - mqtt_service - INFO - 🎉 MENSAJE MQTT #96 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:06:52,840 - mqtt_service - INFO - ✅ Mensaje MQTT #96 procesado exitosamente
+2025-07-20 03:07:20,374 - mqtt_service - INFO - 🎉 MENSAJE MQTT #97 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:07:20,374 - mqtt_service - INFO - ✅ Mensaje MQTT #97 procesado exitosamente
+2025-07-20 03:07:20,580 - mqtt_service - INFO - 🎉 MENSAJE MQTT #98 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:07:20,580 - mqtt_service - INFO - ✅ Mensaje MQTT #98 procesado exitosamente
+2025-07-20 03:07:51,922 - mqtt_service - INFO - 🎉 MENSAJE MQTT #99 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:07:51,922 - mqtt_service - INFO - ✅ Mensaje MQTT #99 procesado exitosamente
+2025-07-20 03:07:52,893 - mqtt_service - INFO - 🎉 MENSAJE MQTT #100 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:07:52,894 - mqtt_service - INFO - ✅ Mensaje MQTT #100 procesado exitosamente
+2025-07-20 03:07:53,139 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:07:53,139 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:07:53,139 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:07:53,139 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:07:53,139 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:07:53,140 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:07:53,140 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:07:54,140 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:07:54,140 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:07:54,141 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:07:54,141 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:07:54,141 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:07:54,141 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:07:54,141 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:07:55,141 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:07:55,142 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:07:55,142 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:07:55,142 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:07:55,142 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:07:55,142 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:07:55,142 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:07:56,143 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:07:56,143 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:07:56,143 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:07:56,143 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:07:56,144 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:07:56,144 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:07:56,144 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:07:57,144 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:07:57,145 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:07:57,145 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:07:57,145 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:07:57,145 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:07:57,145 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:07:57,145 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:07:58,145 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:07:58,146 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:07:58,146 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:07:58,146 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:07:58,146 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:07:58,146 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:07:58,146 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:07:59,147 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:07:59,147 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:07:59,147 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:07:59,148 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:07:59,148 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:07:59,148 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:07:59,148 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:00,148 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:00,148 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:00,148 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:00,148 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:00,149 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:00,149 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:00,149 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:01,149 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:01,150 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:01,150 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:01,150 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:01,150 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:01,150 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:01,150 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:02,150 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:02,151 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:02,151 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:02,151 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:02,151 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:02,151 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:02,151 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:03,152 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:03,152 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:03,152 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:03,152 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:03,152 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:03,153 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:03,153 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:04,153 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:04,154 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:04,154 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:04,154 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:04,154 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:04,154 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:04,154 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:05,155 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:05,155 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:05,155 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:05,155 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:05,156 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:05,156 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:05,156 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:06,156 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:06,157 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:06,157 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:06,157 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:06,157 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:06,157 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:06,157 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:07,158 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:07,158 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:07,158 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:07,159 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:07,159 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:07,159 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:07,159 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:08,159 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:08,160 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:08,160 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:08,160 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:08,160 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:08,160 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:08,160 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:09,160 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:09,161 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:09,161 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:09,161 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:09,161 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:09,161 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:09,161 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:10,162 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:10,162 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:10,162 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:10,162 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:10,162 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:10,163 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:10,163 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:11,163 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:11,163 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:11,163 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:11,163 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:11,164 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:11,164 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:11,164 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:12,164 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:12,165 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:12,165 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:12,165 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:12,165 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:12,165 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:12,165 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:13,166 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:13,166 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:13,166 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:13,166 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:13,166 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:13,166 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:13,166 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:14,167 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:14,167 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:14,167 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:14,167 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:14,167 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:14,167 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:14,167 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:15,168 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:15,168 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:15,168 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:15,168 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:15,168 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:15,169 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:15,169 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:16,169 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:16,169 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:16,169 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:16,169 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:16,169 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:16,169 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:16,169 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:17,169 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:17,170 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:17,170 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:17,170 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:17,170 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:17,170 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:17,170 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:18,170 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:18,170 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:18,170 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:18,171 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:18,171 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:18,171 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:18,171 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:19,171 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:19,172 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:19,172 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:19,172 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:19,172 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:19,172 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:19,172 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:20,173 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:20,173 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:20,173 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:20,173 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:20,173 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:20,173 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:20,173 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:21,174 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:21,174 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:21,174 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:21,174 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:21,175 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:21,175 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:21,175 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:22,175 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:22,175 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:22,176 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:22,176 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:22,176 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:22,176 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:22,176 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:23,177 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:23,177 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:23,177 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:23,177 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:23,177 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:23,177 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:23,178 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:24,178 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:24,179 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:24,179 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:24,179 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:24,179 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:24,179 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:24,179 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:25,180 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:25,180 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:25,180 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:25,181 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:25,181 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:25,181 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:25,181 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:26,181 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:26,182 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:26,182 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:26,182 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:26,182 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:26,182 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:26,182 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:27,183 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:27,183 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:27,183 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:27,183 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:27,184 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:27,184 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:27,184 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:28,184 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:28,185 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:28,185 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:28,185 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:28,185 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:28,185 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:28,185 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:29,185 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:29,186 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:29,186 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:29,186 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:29,186 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:29,186 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:29,187 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:30,187 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:30,188 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:30,188 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:30,188 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:30,188 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:30,188 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:30,188 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:31,189 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:31,189 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:31,189 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:31,189 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:31,189 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:31,190 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:31,190 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:32,190 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:32,191 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:32,191 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:32,191 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:32,191 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:32,191 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:32,191 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:33,191 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:33,192 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:33,192 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:33,192 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:33,192 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:33,192 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:33,192 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:34,193 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:34,193 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:34,193 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:34,193 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:34,194 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:34,194 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:34,194 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:35,194 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:35,195 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:35,195 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:35,195 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:35,195 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:35,195 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:35,195 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:36,195 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:36,196 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:36,196 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:36,196 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:36,196 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:36,196 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:36,196 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:37,197 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:37,197 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:37,197 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:37,197 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:37,198 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:37,198 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:37,198 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:38,199 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:38,199 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:38,199 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:38,199 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:38,199 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:38,199 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:38,200 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:39,200 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:39,200 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:39,201 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:39,201 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:39,201 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:39,201 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:39,201 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:40,201 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:40,202 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:40,202 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:40,202 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:40,202 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:40,202 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:40,202 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:41,202 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:41,203 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:41,203 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:41,203 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:41,203 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:41,203 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:41,203 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:42,204 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:42,204 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:42,204 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:42,204 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:42,204 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:42,205 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:42,205 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:43,205 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:43,205 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:43,206 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:43,206 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:43,206 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:43,206 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:43,206 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:44,206 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:44,207 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:44,207 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:44,207 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:44,207 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:44,207 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:44,207 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:45,208 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:45,208 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:45,208 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:45,208 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:45,208 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:45,209 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:45,209 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:46,209 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:46,209 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:46,209 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:46,210 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:46,210 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:46,210 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:46,210 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:47,210 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:47,210 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:47,210 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:47,211 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:47,211 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:47,211 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:47,211 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:48,211 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:48,211 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:48,211 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:48,211 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:48,212 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:48,212 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:48,212 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:49,212 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:49,212 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:49,212 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:49,213 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:49,213 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:49,213 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:49,213 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:50,213 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:50,214 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:50,214 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:50,214 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:50,214 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:50,214 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:50,214 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:51,215 - mqtt_service - INFO - 📊 Estadísticas del servicio MQTT:
+2025-07-20 03:08:51,215 - mqtt_service - INFO -   • Mensajes procesados: 100
+2025-07-20 03:08:51,215 - mqtt_service - INFO -   • Estado del receptor: Conectado
+2025-07-20 03:08:51,215 - mqtt_service - INFO -   • Estado del publisher: Conectado
+2025-07-20 03:08:51,215 - mqtt_service - INFO -   • Mensajes exitosos: 8
+2025-07-20 03:08:51,215 - mqtt_service - INFO -   • Errores: 0
+2025-07-20 03:08:51,215 - mqtt_service - INFO -   • Tasa de éxito: 100.0%
+2025-07-20 03:08:51,965 - mqtt_service - INFO - 🎉 MENSAJE MQTT #101 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:08:51,965 - mqtt_service - INFO - ✅ Mensaje MQTT #101 procesado exitosamente
+2025-07-20 03:08:52,989 - mqtt_service - INFO - 🎉 MENSAJE MQTT #102 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:08:52,989 - mqtt_service - INFO - ✅ Mensaje MQTT #102 procesado exitosamente
+2025-07-20 03:11:08,453 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:11:08,453 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:11:09,800 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 03:11:09,800 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 03:11:09,800 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 03:11:52,074 - mqtt_service - INFO - 🎉 MENSAJE MQTT #103 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:11:52,074 - mqtt_service - INFO - ✅ Mensaje MQTT #103 procesado exitosamente
+2025-07-20 03:11:53,098 - mqtt_service - INFO - 🎉 MENSAJE MQTT #104 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:11:53,098 - mqtt_service - INFO - ✅ Mensaje MQTT #104 procesado exitosamente
+2025-07-20 03:11:55,761 - mqtt_service - INFO - 🎉 MENSAJE MQTT #105 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:11:55,761 - mqtt_service - INFO - ✅ Mensaje MQTT #105 procesado exitosamente
+2025-07-20 03:11:55,923 - mqtt_service - INFO - 🎉 MENSAJE MQTT #106 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:11:55,923 - mqtt_service - INFO - ✅ Mensaje MQTT #106 procesado exitosamente
+2025-07-20 03:12:52,109 - mqtt_service - INFO - 🎉 MENSAJE MQTT #107 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:12:52,109 - mqtt_service - INFO - ✅ Mensaje MQTT #107 procesado exitosamente
+2025-07-20 03:12:53,133 - mqtt_service - INFO - 🎉 MENSAJE MQTT #108 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:12:53,134 - mqtt_service - INFO - ✅ Mensaje MQTT #108 procesado exitosamente
+2025-07-20 03:13:52,145 - mqtt_service - INFO - 🎉 MENSAJE MQTT #109 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:13:52,145 - mqtt_service - INFO - ✅ Mensaje MQTT #109 procesado exitosamente
+2025-07-20 03:13:53,170 - mqtt_service - INFO - 🎉 MENSAJE MQTT #110 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:13:53,170 - mqtt_service - INFO - ✅ Mensaje MQTT #110 procesado exitosamente
+2025-07-20 03:14:52,181 - mqtt_service - INFO - 🎉 MENSAJE MQTT #111 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:14:52,182 - mqtt_service - INFO - ✅ Mensaje MQTT #111 procesado exitosamente
+2025-07-20 03:14:53,206 - mqtt_service - INFO - 🎉 MENSAJE MQTT #112 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:14:53,206 - mqtt_service - INFO - ✅ Mensaje MQTT #112 procesado exitosamente
+2025-07-20 03:15:52,220 - mqtt_service - INFO - 🎉 MENSAJE MQTT #113 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:15:52,220 - mqtt_service - INFO - ✅ Mensaje MQTT #113 procesado exitosamente
+2025-07-20 03:15:53,242 - mqtt_service - INFO - 🎉 MENSAJE MQTT #114 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:15:53,242 - mqtt_service - INFO - ✅ Mensaje MQTT #114 procesado exitosamente
+2025-07-20 03:18:03,794 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:18:03,794 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:18:05,343 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 03:18:05,344 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 03:18:05,344 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 03:18:45,501 - mqtt_service - INFO - 🎉 MENSAJE MQTT #115 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:18:45,502 - mqtt_service - INFO - ✅ Mensaje MQTT #115 procesado exitosamente
+2025-07-20 03:18:46,341 - mqtt_service - INFO - 🎉 MENSAJE MQTT #116 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:18:46,341 - mqtt_service - INFO - ✅ Mensaje MQTT #116 procesado exitosamente
+2025-07-20 03:19:45,512 - mqtt_service - INFO - 🎉 MENSAJE MQTT #117 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:19:45,512 - mqtt_service - INFO - ✅ Mensaje MQTT #117 procesado exitosamente
+2025-07-20 03:19:46,377 - mqtt_service - INFO - 🎉 MENSAJE MQTT #118 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:19:46,377 - mqtt_service - INFO - ✅ Mensaje MQTT #118 procesado exitosamente
+2025-07-20 03:19:52,477 - mqtt_service - INFO - 🎉 MENSAJE MQTT #119 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:19:52,478 - mqtt_service - INFO - ✅ Mensaje MQTT #119 procesado exitosamente
+2025-07-20 03:19:52,683 - mqtt_service - INFO - 🎉 MENSAJE MQTT #120 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:19:52,683 - mqtt_service - INFO - ✅ Mensaje MQTT #120 procesado exitosamente
+2025-07-20 03:20:45,537 - mqtt_service - INFO - 🎉 MENSAJE MQTT #121 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:20:45,537 - mqtt_service - INFO - ✅ Mensaje MQTT #121 procesado exitosamente
+2025-07-20 03:20:46,425 - mqtt_service - INFO - 🎉 MENSAJE MQTT #122 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:20:46,426 - mqtt_service - INFO - ✅ Mensaje MQTT #122 procesado exitosamente
+2025-07-20 03:21:45,573 - mqtt_service - INFO - 🎉 MENSAJE MQTT #123 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:21:45,573 - mqtt_service - INFO - ✅ Mensaje MQTT #123 procesado exitosamente
+2025-07-20 03:21:46,575 - mqtt_service - INFO - 🎉 MENSAJE MQTT #124 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:21:46,575 - mqtt_service - INFO - ✅ Mensaje MQTT #124 procesado exitosamente
+2025-07-20 03:22:45,581 - mqtt_service - INFO - 🎉 MENSAJE MQTT #125 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:22:45,581 - mqtt_service - INFO - ✅ Mensaje MQTT #125 procesado exitosamente
+2025-07-20 03:22:46,605 - mqtt_service - INFO - 🎉 MENSAJE MQTT #126 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:22:46,606 - mqtt_service - INFO - ✅ Mensaje MQTT #126 procesado exitosamente
+2025-07-20 03:25:07,027 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:25:07,028 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:25:08,528 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 03:25:08,529 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 03:25:08,529 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 03:25:45,573 - mqtt_service - INFO - 🎉 MENSAJE MQTT #127 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:25:45,573 - mqtt_service - INFO - ✅ Mensaje MQTT #127 procesado exitosamente
+2025-07-20 03:25:46,466 - mqtt_service - INFO - 🎉 MENSAJE MQTT #128 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:25:46,466 - mqtt_service - INFO - ✅ Mensaje MQTT #128 procesado exitosamente
+2025-07-20 03:26:45,554 - mqtt_service - INFO - 🎉 MENSAJE MQTT #129 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:26:45,554 - mqtt_service - INFO - ✅ Mensaje MQTT #129 procesado exitosamente
+2025-07-20 03:26:46,651 - mqtt_service - INFO - 🎉 MENSAJE MQTT #130 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:26:46,651 - mqtt_service - INFO - ✅ Mensaje MQTT #130 procesado exitosamente
+2025-07-20 03:27:45,619 - mqtt_service - INFO - 🎉 MENSAJE MQTT #131 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:27:45,620 - mqtt_service - INFO - ✅ Mensaje MQTT #131 procesado exitosamente
+2025-07-20 03:27:46,643 - mqtt_service - INFO - 🎉 MENSAJE MQTT #132 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:27:46,644 - mqtt_service - INFO - ✅ Mensaje MQTT #132 procesado exitosamente
+2025-07-20 03:28:45,542 - mqtt_service - INFO - 🎉 MENSAJE MQTT #133 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:28:45,542 - mqtt_service - INFO - ✅ Mensaje MQTT #133 procesado exitosamente
+2025-07-20 03:28:46,466 - mqtt_service - INFO - 🎉 MENSAJE MQTT #134 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:28:46,466 - mqtt_service - INFO - ✅ Mensaje MQTT #134 procesado exitosamente
+2025-07-20 03:29:45,634 - mqtt_service - INFO - 🎉 MENSAJE MQTT #135 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:29:45,634 - mqtt_service - INFO - ✅ Mensaje MQTT #135 procesado exitosamente
+2025-07-20 03:29:46,502 - mqtt_service - INFO - 🎉 MENSAJE MQTT #136 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:29:46,502 - mqtt_service - INFO - ✅ Mensaje MQTT #136 procesado exitosamente
+2025-07-20 03:30:19,840 - mqtt_service - INFO - 🎉 MENSAJE MQTT #137 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:30:19,841 - mqtt_service - INFO - ✅ Mensaje MQTT #137 procesado exitosamente
+2025-07-20 03:30:20,002 - mqtt_service - INFO - 🎉 MENSAJE MQTT #138 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:30:20,003 - mqtt_service - INFO - ✅ Mensaje MQTT #138 procesado exitosamente
+2025-07-20 03:32:11,132 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:32:11,132 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:32:12,492 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 03:32:12,492 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 03:32:12,492 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 03:32:45,673 - mqtt_service - INFO - 🎉 MENSAJE MQTT #139 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:32:45,673 - mqtt_service - INFO - ✅ Mensaje MQTT #139 procesado exitosamente
+2025-07-20 03:32:46,491 - mqtt_service - INFO - 🎉 MENSAJE MQTT #140 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:32:46,491 - mqtt_service - INFO - ✅ Mensaje MQTT #140 procesado exitosamente
+2025-07-20 03:33:18,815 - mqtt_service - INFO - 🎉 MENSAJE MQTT #141 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:33:18,815 - mqtt_service - INFO - ✅ Mensaje MQTT #141 procesado exitosamente
+2025-07-20 03:33:19,020 - mqtt_service - INFO - 🎉 MENSAJE MQTT #142 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:33:19,020 - mqtt_service - INFO - ✅ Mensaje MQTT #142 procesado exitosamente
+2025-07-20 03:33:45,630 - mqtt_service - INFO - 🎉 MENSAJE MQTT #143 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:33:45,630 - mqtt_service - INFO - ✅ Mensaje MQTT #143 procesado exitosamente
+2025-07-20 03:33:46,449 - mqtt_service - INFO - 🎉 MENSAJE MQTT #144 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:33:46,449 - mqtt_service - INFO - ✅ Mensaje MQTT #144 procesado exitosamente
+2025-07-20 03:34:45,624 - mqtt_service - INFO - 🎉 MENSAJE MQTT #145 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:34:45,624 - mqtt_service - INFO - ✅ Mensaje MQTT #145 procesado exitosamente
+2025-07-20 03:34:46,648 - mqtt_service - INFO - 🎉 MENSAJE MQTT #146 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:34:46,648 - mqtt_service - INFO - ✅ Mensaje MQTT #146 procesado exitosamente
+2025-07-20 03:35:45,632 - mqtt_service - INFO - 🎉 MENSAJE MQTT #147 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:35:45,632 - mqtt_service - INFO - ✅ Mensaje MQTT #147 procesado exitosamente
+2025-07-20 03:35:46,462 - mqtt_service - INFO - 🎉 MENSAJE MQTT #148 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:35:46,462 - mqtt_service - INFO - ✅ Mensaje MQTT #148 procesado exitosamente
+2025-07-20 03:36:37,241 - mqtt_service - INFO - 🎉 MENSAJE MQTT #149 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:36:37,241 - mqtt_service - INFO - ✅ Mensaje MQTT #149 procesado exitosamente
+2025-07-20 03:36:37,382 - mqtt_service - INFO - 🎉 MENSAJE MQTT #150 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:36:37,382 - mqtt_service - INFO - ✅ Mensaje MQTT #150 procesado exitosamente
+2025-07-20 03:36:45,638 - mqtt_service - INFO - 🎉 MENSAJE MQTT #151 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:36:45,638 - mqtt_service - INFO - ✅ Mensaje MQTT #151 procesado exitosamente
+2025-07-20 03:36:46,442 - mqtt_service - INFO - 🎉 MENSAJE MQTT #152 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:36:46,442 - mqtt_service - INFO - ✅ Mensaje MQTT #152 procesado exitosamente
+2025-07-20 03:39:15,880 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:39:15,880 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:39:17,160 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 03:39:17,161 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 03:39:17,161 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 03:39:45,619 - mqtt_service - INFO - 🎉 MENSAJE MQTT #153 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:39:45,619 - mqtt_service - INFO - ✅ Mensaje MQTT #153 procesado exitosamente
+2025-07-20 03:39:46,028 - mqtt_service - INFO - 🎉 MENSAJE MQTT #154 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:39:46,029 - mqtt_service - INFO - ✅ Mensaje MQTT #154 procesado exitosamente
+2025-07-20 03:39:46,233 - mqtt_service - INFO - 🎉 MENSAJE MQTT #155 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:39:46,233 - mqtt_service - INFO - ✅ Mensaje MQTT #155 procesado exitosamente
+2025-07-20 03:39:46,438 - mqtt_service - INFO - 🎉 MENSAJE MQTT #156 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:39:46,438 - mqtt_service - INFO - ✅ Mensaje MQTT #156 procesado exitosamente
+2025-07-20 03:40:45,499 - mqtt_service - INFO - 🎉 MENSAJE MQTT #157 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:40:45,499 - mqtt_service - INFO - ✅ Mensaje MQTT #157 procesado exitosamente
+2025-07-20 03:40:46,378 - mqtt_service - INFO - 🎉 MENSAJE MQTT #158 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:40:46,379 - mqtt_service - INFO - ✅ Mensaje MQTT #158 procesado exitosamente
+2025-07-20 03:41:44,150 - mqtt_service - INFO - 🎉 MENSAJE MQTT #159 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:41:44,150 - mqtt_service - INFO - ✅ Mensaje MQTT #159 procesado exitosamente
+2025-07-20 03:41:44,356 - mqtt_service - INFO - 🎉 MENSAJE MQTT #160 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:41:44,356 - mqtt_service - INFO - ✅ Mensaje MQTT #160 procesado exitosamente
+2025-07-20 03:41:45,488 - mqtt_service - INFO - 🎉 MENSAJE MQTT #161 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:41:45,489 - mqtt_service - INFO - ✅ Mensaje MQTT #161 procesado exitosamente
+2025-07-20 03:41:46,375 - mqtt_service - INFO - 🎉 MENSAJE MQTT #162 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:41:46,375 - mqtt_service - INFO - ✅ Mensaje MQTT #162 procesado exitosamente
+2025-07-20 03:42:45,576 - mqtt_service - INFO - 🎉 MENSAJE MQTT #163 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:42:45,576 - mqtt_service - INFO - ✅ Mensaje MQTT #163 procesado exitosamente
+2025-07-20 03:42:46,395 - mqtt_service - INFO - 🎉 MENSAJE MQTT #164 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:42:46,395 - mqtt_service - INFO - ✅ Mensaje MQTT #164 procesado exitosamente
+2025-07-20 03:43:45,605 - mqtt_service - INFO - 🎉 MENSAJE MQTT #165 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:43:45,605 - mqtt_service - INFO - ✅ Mensaje MQTT #165 procesado exitosamente
+2025-07-20 03:43:46,426 - mqtt_service - INFO - 🎉 MENSAJE MQTT #166 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:43:46,426 - mqtt_service - INFO - ✅ Mensaje MQTT #166 procesado exitosamente
+2025-07-20 03:43:59,551 - mqtt_service - INFO - 🎉 MENSAJE MQTT #167 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:43:59,551 - mqtt_service - INFO - ✅ Mensaje MQTT #167 procesado exitosamente
+2025-07-20 03:43:59,758 - mqtt_service - INFO - 🎉 MENSAJE MQTT #168 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:43:59,758 - mqtt_service - INFO - ✅ Mensaje MQTT #168 procesado exitosamente
+2025-07-20 03:46:20,194 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:46:20,194 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:46:21,485 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 03:46:21,486 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 03:46:21,486 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 03:46:45,720 - mqtt_service - INFO - 🎉 MENSAJE MQTT #169 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:46:45,720 - mqtt_service - INFO - ✅ Mensaje MQTT #169 procesado exitosamente
+2025-07-20 03:46:46,546 - mqtt_service - INFO - 🎉 MENSAJE MQTT #170 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:46:46,546 - mqtt_service - INFO - ✅ Mensaje MQTT #170 procesado exitosamente
+2025-07-20 03:47:45,634 - mqtt_service - INFO - 🎉 MENSAJE MQTT #171 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:47:45,634 - mqtt_service - INFO - ✅ Mensaje MQTT #171 procesado exitosamente
+2025-07-20 03:47:46,512 - mqtt_service - INFO - 🎉 MENSAJE MQTT #172 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:47:46,513 - mqtt_service - INFO - ✅ Mensaje MQTT #172 procesado exitosamente
+2025-07-20 03:48:45,686 - mqtt_service - INFO - 🎉 MENSAJE MQTT #173 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:48:45,686 - mqtt_service - INFO - ✅ Mensaje MQTT #173 procesado exitosamente
+2025-07-20 03:48:46,526 - mqtt_service - INFO - 🎉 MENSAJE MQTT #174 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:48:46,527 - mqtt_service - INFO - ✅ Mensaje MQTT #174 procesado exitosamente
+2025-07-20 03:49:45,698 - mqtt_service - INFO - 🎉 MENSAJE MQTT #175 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:49:45,698 - mqtt_service - INFO - ✅ Mensaje MQTT #175 procesado exitosamente
+2025-07-20 03:49:46,517 - mqtt_service - INFO - 🎉 MENSAJE MQTT #176 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:49:46,517 - mqtt_service - INFO - ✅ Mensaje MQTT #176 procesado exitosamente
+2025-07-20 03:50:45,596 - mqtt_service - INFO - 🎉 MENSAJE MQTT #177 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:50:45,596 - mqtt_service - INFO - ✅ Mensaje MQTT #177 procesado exitosamente
+2025-07-20 03:50:46,461 - mqtt_service - INFO - 🎉 MENSAJE MQTT #178 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:50:46,461 - mqtt_service - INFO - ✅ Mensaje MQTT #178 procesado exitosamente
+2025-07-20 03:51:00,952 - mqtt_service - INFO - 🎉 MENSAJE MQTT #179 - TOPIC: empresas
+2025-07-20 03:51:00,952 - mqtt_service - INFO - ✅ Mensaje MQTT #179 procesado exitosamente
+2025-07-20 03:51:01,074 - mqtt_service - INFO - 🎉 MENSAJE MQTT #180 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:51:01,074 - mqtt_service - INFO - ✅ Mensaje MQTT #180 procesado exitosamente
+2025-07-20 03:51:01,074 - mqtt_service - INFO - 🎉 MENSAJE MQTT #181 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:51:01,074 - mqtt_service - INFO - ✅ Mensaje MQTT #181 procesado exitosamente
+2025-07-20 03:51:01,074 - mqtt_service - INFO - 🎉 MENSAJE MQTT #182 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:51:01,075 - mqtt_service - INFO - ✅ Mensaje MQTT #182 procesado exitosamente
+2025-07-20 03:51:01,075 - mqtt_service - INFO - 🎉 MENSAJE MQTT #183 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/
+2025-07-20 03:51:01,075 - mqtt_service - ERROR - ❌ Error procesando mensaje MQTT #183
+2025-07-20 03:51:01,075 - mqtt_service - INFO - 🎉 MENSAJE MQTT #184 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:51:01,075 - mqtt_service - INFO - ✅ Mensaje MQTT #184 procesado exitosamente
+2025-07-20 03:53:24,382 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:53:24,382 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 16
+2025-07-20 03:53:25,886 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 03:53:25,887 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 03:53:25,887 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 03:53:45,739 - mqtt_service - INFO - 🎉 MENSAJE MQTT #185 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:53:45,739 - mqtt_service - INFO - ✅ Mensaje MQTT #185 procesado exitosamente
+2025-07-20 03:53:46,575 - mqtt_service - INFO - 🎉 MENSAJE MQTT #186 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:53:46,576 - mqtt_service - INFO - ✅ Mensaje MQTT #186 procesado exitosamente
+2025-07-20 03:54:45,629 - mqtt_service - INFO - 🎉 MENSAJE MQTT #187 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:54:45,629 - mqtt_service - INFO - ✅ Mensaje MQTT #187 procesado exitosamente
+2025-07-20 03:54:46,670 - mqtt_service - INFO - 🎉 MENSAJE MQTT #188 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:54:46,670 - mqtt_service - INFO - ✅ Mensaje MQTT #188 procesado exitosamente
+2025-07-20 03:55:16,081 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 03:55:16,081 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:55:16,248 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 03:55:16,249 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:55:16,384 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 03:55:16,384 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:55:16,707 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-20 03:55:17,199 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-20 03:55:17,199 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-20 03:55:17,199 - mqtt_service - INFO -   • Total de mensajes recibidos: 188
+2025-07-20 03:55:17,199 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 8
+2025-07-20 03:55:17,199 - mqtt_service - INFO -   • Errores totales: 1
+2025-07-20 03:55:17,199 - mqtt_service - INFO -   • Tasa de éxito final: 87.5%
+2025-07-20 03:55:17,199 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:55:17,199 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-20 03:55:17,199 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-20 03:55:17,199 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-20 03:55:17,200 - mqtt_service - INFO -   • Total de mensajes recibidos: 188
+2025-07-20 03:55:17,200 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 8
+2025-07-20 03:55:17,200 - mqtt_service - INFO -   • Errores totales: 1
+2025-07-20 03:55:17,200 - mqtt_service - INFO -   • Tasa de éxito final: 87.5%
+2025-07-20 03:55:18,647 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-07-20 03:55:18,647 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-07-20 03:55:18,647 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-07-20 03:55:18,648 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-07-20 03:55:19,232 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-07-20 03:55:19,568 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-07-20 03:55:19,568 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-07-20 03:55:19,568 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 03:55:19,771 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 03:55:19,771 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 03:55:19,772 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 03:55:28,784 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas
+2025-07-20 03:55:28,785 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente
+2025-07-20 03:55:28,988 - mqtt_service - INFO - 🎉 MENSAJE MQTT #2 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:55:28,988 - mqtt_service - INFO - ✅ Mensaje MQTT #2 procesado exitosamente
+2025-07-20 03:55:28,989 - mqtt_service - INFO - 🎉 MENSAJE MQTT #3 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:55:28,989 - mqtt_service - INFO - ✅ Mensaje MQTT #3 procesado exitosamente
+2025-07-20 03:55:40,255 - mqtt_service - INFO - 🎉 MENSAJE MQTT #4 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:55:40,255 - mqtt_service - INFO - ✅ Mensaje MQTT #4 procesado exitosamente
+2025-07-20 03:55:40,405 - mqtt_service - INFO - 🎉 MENSAJE MQTT #5 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:55:40,405 - mqtt_service - INFO - ✅ Mensaje MQTT #5 procesado exitosamente
+2025-07-20 03:55:45,783 - mqtt_service - INFO - 🎉 MENSAJE MQTT #6 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:55:45,784 - mqtt_service - INFO - ✅ Mensaje MQTT #6 procesado exitosamente
+2025-07-20 03:55:46,603 - mqtt_service - INFO - 🎉 MENSAJE MQTT #7 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:55:46,603 - mqtt_service - INFO - ✅ Mensaje MQTT #7 procesado exitosamente
+2025-07-20 03:56:45,776 - mqtt_service - INFO - 🎉 MENSAJE MQTT #8 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:56:45,776 - mqtt_service - INFO - ✅ Mensaje MQTT #8 procesado exitosamente
+2025-07-20 03:56:46,819 - mqtt_service - INFO - 🎉 MENSAJE MQTT #9 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:56:46,819 - mqtt_service - INFO - ✅ Mensaje MQTT #9 procesado exitosamente
+2025-07-20 03:56:56,240 - mqtt_service - INFO - 🎉 MENSAJE MQTT #10 - TOPIC: empresas
+2025-07-20 03:56:56,240 - mqtt_service - INFO - ✅ Mensaje MQTT #10 procesado exitosamente
+2025-07-20 03:56:56,423 - mqtt_service - INFO - 🎉 MENSAJE MQTT #11 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:56:56,423 - mqtt_service - INFO - ✅ Mensaje MQTT #11 procesado exitosamente
+2025-07-20 03:56:56,650 - mqtt_service - INFO - 🎉 MENSAJE MQTT #12 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:56:56,650 - mqtt_service - INFO - ✅ Mensaje MQTT #12 procesado exitosamente
+2025-07-20 03:56:56,650 - mqtt_service - INFO - 🎉 MENSAJE MQTT #13 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:56:56,650 - mqtt_service - INFO - ✅ Mensaje MQTT #13 procesado exitosamente
+2025-07-20 03:56:56,651 - mqtt_service - INFO - 🎉 MENSAJE MQTT #14 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:56:56,651 - mqtt_service - INFO - ✅ Mensaje MQTT #14 procesado exitosamente
+2025-07-20 03:57:45,803 - mqtt_service - INFO - 🎉 MENSAJE MQTT #15 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:57:45,803 - mqtt_service - INFO - ✅ Mensaje MQTT #15 procesado exitosamente
+2025-07-20 03:57:46,622 - mqtt_service - INFO - 🎉 MENSAJE MQTT #16 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:57:46,622 - mqtt_service - INFO - ✅ Mensaje MQTT #16 procesado exitosamente
+2025-07-20 03:57:57,371 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 03:57:57,371 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:57:57,484 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 03:57:57,484 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:57:57,609 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 03:57:57,609 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:57:57,637 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-20 03:57:57,698 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 03:57:57,699 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:57:57,699 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-20 03:57:57,725 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-20 03:57:57,726 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-20 03:57:57,726 - mqtt_service - INFO -   • Total de mensajes recibidos: 16
+2025-07-20 03:57:57,726 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2025-07-20 03:57:57,726 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-20 03:57:57,726 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-20 03:57:57,726 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:57:57,726 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-20 03:57:57,726 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-20 03:57:57,726 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-20 03:57:57,727 - mqtt_service - INFO -   • Total de mensajes recibidos: 16
+2025-07-20 03:57:57,727 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2025-07-20 03:57:57,727 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-20 03:57:57,727 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-20 03:57:59,378 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-07-20 03:57:59,378 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-07-20 03:57:59,378 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-07-20 03:57:59,378 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-07-20 03:57:59,827 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-07-20 03:58:00,141 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-07-20 03:58:00,141 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-07-20 03:58:00,141 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 03:58:00,344 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-20 03:58:00,345 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-20 03:58:00,345 - mqtt_service - INFO - 🔍 Suscrito a: empresas/#
+2025-07-20 03:58:18,164 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:58:18,165 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente
+2025-07-20 03:58:18,369 - mqtt_service - INFO - 🎉 MENSAJE MQTT #2 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:58:18,370 - mqtt_service - INFO - ✅ Mensaje MQTT #2 procesado exitosamente
+2025-07-20 03:58:22,456 - mqtt_service - INFO - 🎉 MENSAJE MQTT #3 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester
+2025-07-20 03:58:22,456 - mqtt_service - INFO - ✅ Mensaje MQTT #3 procesado exitosamente
+2025-07-20 03:58:22,671 - mqtt_service - INFO - 🎉 MENSAJE MQTT #4 - TOPIC: empresas/NicolasEmpresa/Secundaria/TELEVISOR/Nicols
+2025-07-20 03:58:22,671 - mqtt_service - INFO - ✅ Mensaje MQTT #4 procesado exitosamente
+2025-07-20 03:58:45,813 - mqtt_service - INFO - 🎉 MENSAJE MQTT #5 - TOPIC: empresas/NicolasEmpresa/Secundaria/SEMAFORO/pruebastester/10.214.29.14
+2025-07-20 03:58:45,813 - mqtt_service - INFO - ✅ Mensaje MQTT #5 procesado exitosamente
+2025-07-20 03:58:46,633 - mqtt_service - INFO - 🎉 MENSAJE MQTT #6 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware/10.214.29.153
+2025-07-20 03:58:46,633 - mqtt_service - INFO - ✅ Mensaje MQTT #6 procesado exitosamente
+2025-07-20 03:59:16,982 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 03:59:16,982 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:59:17,129 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 03:59:17,129 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:59:17,261 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-20 03:59:17,261 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:59:17,811 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-20 03:59:17,954 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-20 03:59:17,954 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-20 03:59:17,954 - mqtt_service - INFO -   • Total de mensajes recibidos: 6
+2025-07-20 03:59:17,955 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2025-07-20 03:59:17,955 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-20 03:59:17,955 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-20 03:59:17,955 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-20 03:59:17,955 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-20 03:59:17,955 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-20 03:59:17,955 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-20 03:59:17,955 - mqtt_service - INFO -   • Total de mensajes recibidos: 6
+2025-07-20 03:59:17,956 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2025-07-20 03:59:17,956 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-20 03:59:17,956 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%

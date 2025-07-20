@@ -309,6 +309,13 @@ class BackendClient:
             
             response = self.put(endpoint, data=data)
             
+            # Debug: mostrar respuesta completa para diagnosticar error 400
+            if response:
+                status_code = response.get('_status_code', 200)
+                print(f"📊 Respuesta completa (status {status_code}):")
+                print(f"   📝 Data enviada: {json.dumps(data, indent=2)}")
+                print(f"   🔍 Respuesta: {json.dumps(response, indent=2)}")
+            
             if response and response.get('success'):
                 print(f"✅ Alerta desactivada exitosamente:")
                 print(f"   🆔 ID de alerta: {alert_id}")
@@ -322,7 +329,8 @@ class BackendClient:
                 return response
             else:
                 error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
-                print(f"❌ Error desactivando alerta: {error_msg}")
+                status_code = response.get('_status_code', 'N/A') if response else 'N/A'
+                print(f"❌ Error desactivando alerta (status {status_code}): {error_msg}")
                 return None
                 
         except Exception as e:

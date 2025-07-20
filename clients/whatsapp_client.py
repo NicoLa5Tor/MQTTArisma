@@ -113,6 +113,43 @@ class WhatsAppClient:
             self.logger.error(f"Error enviando mensaje individual: {e}")
             return None
     
+    def send_bulk_individual(self, recipients: List[Dict], use_queue: bool = True) -> Optional[Dict]:
+        """
+        Enviar mensajes individuales masivos usando el endpoint send-bulk
+        
+        Args:
+            recipients: Lista de diccionarios con 'phone' y 'message'
+            use_queue: Si usar cola o no (opcional, por defecto True)
+            
+        Returns:
+            Dict con la respuesta de la API o None si hay error
+        """
+        try:
+            data = {
+                "recipients": recipients,
+                "use_queue": use_queue
+            }
+            
+            print(f"📱 Enviando mensajes individuales masivos:")
+            print(f"   📞 Destinatarios: {len(recipients)}")
+            print(f"   🔄 Usar cola: {use_queue}")
+            
+            response = self.post('/api/send-bulk', data=data)
+            
+            if response:
+                sent_count = response.get('sent_count', len(recipients))
+                print(f"✅ Mensajes masivos enviados exitosamente:")
+                print(f"   📤 Enviados: {sent_count}/{len(recipients)}")
+                return response
+            else:
+                print(f"❌ Error enviando mensajes masivos")
+                return None
+                
+        except Exception as e:
+            print(f"💥 Error enviando mensajes masivos: {e}")
+            self.logger.error(f"Error enviando mensajes masivos: {e}")
+            return None
+    
     def send_broadcast_message(self, phones: List[str], header_type: str, header_content: str, 
                              body_text: str, button_text: str, button_url: str, 
                              footer_text: str, use_queue: bool = True) -> Optional[Dict]:
