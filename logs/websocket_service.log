@@ -1,0 +1,1292 @@
+2025-07-19 23:22:08,882 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-19 23:22:08,882 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-19 23:22:08,882 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-19 23:22:08,882 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-19 23:22:08,894 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-19 23:22:08,895 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-19 23:22:08,895 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-19 23:22:38,924 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:22:38,924 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-19 23:22:38,924 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:22:38,924 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:22:38,924 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:22:38,925 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:23:08,927 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:23:08,927 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-19 23:23:08,927 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:23:08,928 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:23:08,928 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:23:08,928 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:23:38,956 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:23:38,956 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-19 23:23:38,956 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:23:38,956 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:23:38,956 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:23:38,956 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:24:08,986 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:24:08,986 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-19 23:24:08,986 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:24:08,986 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:24:08,986 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:24:08,986 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:24:38,998 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:24:38,998 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-19 23:24:38,998 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:24:38,999 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:24:38,999 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:24:38,999 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:25:03,044 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:25:03,044 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-19 23:25:03,171 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:25:03,290 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:25:05,254 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-19 23:25:05,254 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-19 23:25:05,255 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-19 23:25:05,255 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-19 23:25:05,265 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-19 23:25:05,265 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-19 23:25:05,265 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-19 23:25:32,499 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:25:32,500 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-19 23:25:32,728 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:25:32,832 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:25:34,319 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-19 23:25:34,320 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-19 23:25:34,320 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-19 23:25:34,320 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-19 23:25:34,331 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-19 23:25:34,331 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-19 23:25:34,331 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-19 23:26:04,352 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:26:04,353 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:26:04,353 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:26:04,353 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:26:04,353 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:26:04,353 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:26:10,622 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:26:10,623 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-19 23:26:10,754 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:26:10,878 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:26:12,600 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-19 23:26:12,600 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-19 23:26:12,600 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-19 23:26:12,601 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-19 23:26:12,615 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-19 23:26:12,615 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-19 23:26:12,616 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-19 23:26:42,642 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:26:42,642 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:26:42,642 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:26:42,642 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:26:42,642 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:26:42,642 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:26:43,790 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:26:43,791 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-19 23:26:43,937 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:26:44,046 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:26:45,259 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-19 23:26:45,259 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-19 23:26:45,260 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-19 23:26:45,260 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-19 23:26:45,270 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-19 23:26:45,270 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-19 23:26:45,270 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-19 23:27:15,292 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:27:15,292 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:27:15,293 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:27:15,293 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:27:15,293 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:27:15,293 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:27:45,323 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:27:45,323 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:27:45,323 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:27:45,323 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:27:45,323 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:27:45,323 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:28:15,354 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:28:15,354 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:28:15,354 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:28:15,354 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:28:15,354 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:28:15,355 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:28:45,382 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:28:45,383 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:28:45,383 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:28:45,383 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:28:45,383 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:28:45,383 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:29:15,412 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:29:15,412 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:29:15,412 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:29:15,412 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:29:15,413 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:29:15,413 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:29:45,442 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:29:45,442 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:29:45,443 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:29:45,443 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:29:45,443 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:29:45,443 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:30:15,472 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:30:15,473 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:30:15,473 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:30:15,473 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:30:15,473 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:30:15,473 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:30:45,502 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:30:45,503 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:30:45,503 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:30:45,503 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:30:45,503 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:30:45,503 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:31:15,532 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:31:15,533 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:31:15,533 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:31:15,533 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:31:15,533 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:31:15,533 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:31:29,598 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:31:29,598 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-19 23:31:29,735 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:31:29,855 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:44:14,741 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-19 23:44:14,741 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-19 23:44:14,742 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-19 23:44:14,742 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-19 23:44:14,751 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-19 23:44:14,752 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-19 23:44:14,752 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-19 23:44:44,756 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:44:44,756 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:44:44,756 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:44:44,756 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:44:44,756 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:44:44,756 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:44:56,286 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:44:56,287 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-19 23:44:56,430 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:44:56,555 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:45:18,879 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-19 23:45:18,879 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-19 23:45:18,880 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-19 23:45:18,880 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-19 23:45:18,890 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-19 23:45:18,891 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-19 23:45:18,891 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-19 23:45:48,898 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:45:48,899 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:45:48,899 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:45:48,899 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:45:48,899 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:45:48,899 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:46:18,930 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:46:18,930 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:46:18,930 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:46:18,930 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:46:18,930 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:46:18,930 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:46:48,940 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:46:48,941 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:46:48,941 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:46:48,941 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:46:48,941 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:46:48,941 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:47:18,957 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:47:18,957 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:47:18,957 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:47:18,957 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:47:18,957 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:47:18,957 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:47:45,353 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:47:45,353 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-19 23:47:45,498 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:47:45,603 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:47:47,009 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-19 23:47:47,009 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-19 23:47:47,009 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-19 23:47:47,009 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-19 23:47:47,021 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-19 23:47:47,021 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-19 23:47:47,021 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-19 23:48:17,029 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:48:17,029 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:48:17,029 - websocket_service - INFO -   • Errores: 3
+2025-07-19 23:48:17,030 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:48:17,030 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:48:17,030 - websocket_service - INFO -   • Tasa de error: 300.0%
+2025-07-19 23:48:47,038 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:48:47,039 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:48:47,039 - websocket_service - INFO -   • Errores: 3
+2025-07-19 23:48:47,039 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:48:47,039 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:48:47,039 - websocket_service - INFO -   • Tasa de error: 300.0%
+2025-07-19 23:49:17,069 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:49:17,069 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:49:17,069 - websocket_service - INFO -   • Errores: 3
+2025-07-19 23:49:17,069 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:49:17,069 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:49:17,069 - websocket_service - INFO -   • Tasa de error: 300.0%
+2025-07-19 23:49:47,099 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:49:47,099 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:49:47,099 - websocket_service - INFO -   • Errores: 3
+2025-07-19 23:49:47,099 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:49:47,099 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:49:47,099 - websocket_service - INFO -   • Tasa de error: 300.0%
+2025-07-19 23:50:17,130 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:50:17,130 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:50:17,130 - websocket_service - INFO -   • Errores: 3
+2025-07-19 23:50:17,130 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:50:17,130 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:50:17,131 - websocket_service - INFO -   • Tasa de error: 300.0%
+2025-07-19 23:50:21,463 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:50:21,464 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-19 23:50:21,612 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:50:21,729 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-19 23:50:23,124 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-19 23:50:23,124 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-19 23:50:23,124 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-19 23:50:23,124 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-19 23:50:23,134 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-19 23:50:23,134 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-19 23:50:23,134 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-19 23:50:53,155 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:50:53,156 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:50:53,156 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:50:53,156 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:50:53,156 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:50:53,156 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:51:23,185 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:51:23,186 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:51:23,186 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:51:23,186 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:51:23,186 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:51:23,187 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:51:53,217 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:51:53,217 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:51:53,217 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:51:53,217 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:51:53,218 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:51:53,218 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:52:23,229 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:52:23,230 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:52:23,230 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:52:23,230 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:52:23,230 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:52:23,230 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:52:53,261 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:52:53,261 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:52:53,261 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:52:53,261 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:52:53,261 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:52:53,261 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:53:23,289 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:53:23,289 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:53:23,289 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:53:23,289 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:53:23,289 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:53:23,289 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:53:53,319 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:53:53,320 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:53:53,320 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:53:53,320 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:53:53,320 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:53:53,320 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:54:23,350 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:54:23,351 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:54:23,351 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:54:23,351 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:54:23,351 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:54:23,351 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:54:53,381 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:54:53,382 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:54:53,382 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:54:53,382 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:54:53,382 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:54:53,382 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:55:23,413 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:55:23,413 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:55:23,413 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:55:23,414 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:55:23,414 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:55:23,414 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:55:53,435 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:55:53,436 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:55:53,436 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:55:53,436 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:55:53,436 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:55:53,436 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:56:23,442 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:56:23,442 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:56:23,443 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:56:23,443 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:56:23,443 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:56:23,443 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:56:53,472 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:56:53,472 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:56:53,473 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:56:53,473 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:56:53,473 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:56:53,473 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:57:23,502 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:57:23,502 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:57:23,502 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:57:23,503 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:57:23,503 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:57:23,503 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:57:53,532 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:57:53,532 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:57:53,532 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:57:53,532 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:57:53,532 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:57:53,532 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:58:23,563 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:58:23,563 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:58:23,563 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:58:23,563 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:58:23,563 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:58:23,563 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:58:53,593 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:58:53,593 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:58:53,594 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:58:53,594 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:58:53,594 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:58:53,594 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:59:23,604 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:59:23,605 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:59:23,605 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:59:23,605 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:59:23,605 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:59:23,605 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-19 23:59:53,636 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-19 23:59:53,636 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-19 23:59:53,636 - websocket_service - INFO -   • Errores: 0
+2025-07-19 23:59:53,636 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-19 23:59:53,636 - websocket_service - INFO -   • Procesando: No
+2025-07-19 23:59:53,636 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:00:23,667 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:00:23,667 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:00:23,667 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:00:23,667 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:00:23,667 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:00:23,667 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:00:53,696 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:00:53,696 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:00:53,696 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:00:53,696 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:00:53,696 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:00:53,697 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:01:23,725 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:01:23,726 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:01:23,726 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:01:23,726 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:01:23,726 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:01:23,726 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:01:53,755 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:01:53,756 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:01:53,756 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:01:53,756 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:01:53,756 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:01:53,756 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:02:23,767 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:02:23,767 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:02:23,767 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:02:23,767 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:02:23,767 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:02:23,768 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:02:53,796 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:02:53,796 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:02:53,796 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:02:53,796 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:02:53,797 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:02:53,797 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:03:23,827 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:03:23,827 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:03:23,828 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:03:23,828 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:03:23,828 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:03:23,828 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:03:53,843 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:03:53,843 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:03:53,843 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:03:53,843 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:03:53,843 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:03:53,843 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:04:23,852 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:04:23,853 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:04:23,853 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:04:23,853 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:04:23,853 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:04:23,853 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:04:53,864 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:04:53,864 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:04:53,864 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:04:53,864 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:04:53,864 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:04:53,865 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:05:23,895 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:05:23,895 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:05:23,896 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:05:23,896 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:05:23,896 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:05:23,896 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:05:53,909 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:05:53,909 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:05:53,909 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:05:53,909 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:05:53,909 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:05:53,909 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:06:23,940 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:06:23,940 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:06:23,940 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:06:23,941 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:06:23,941 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:06:23,941 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:06:53,970 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:06:53,970 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:06:53,970 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:06:53,970 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:06:53,970 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:06:53,970 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:07:23,999 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:07:23,999 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:07:23,999 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:07:23,999 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:07:23,999 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:07:23,999 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:07:54,007 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:07:54,007 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:07:54,007 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:07:54,007 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:07:54,007 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:07:54,007 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:08:24,035 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:08:24,036 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:08:24,036 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:08:24,036 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:08:24,036 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:08:24,036 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:08:54,065 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:08:54,066 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:08:54,066 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:08:54,066 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:08:54,066 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:08:54,066 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:09:24,068 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:09:24,068 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:09:24,068 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:09:24,068 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:09:24,068 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:09:24,068 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:09:54,099 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:09:54,099 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:09:54,099 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:09:54,100 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:09:54,100 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:09:54,100 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:10:24,129 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:10:24,129 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:10:24,129 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:10:24,129 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:10:24,129 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:10:24,129 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:10:54,159 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:10:54,159 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:10:54,159 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:10:54,159 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:10:54,159 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:10:54,160 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:11:24,189 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:11:24,189 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:11:24,189 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:11:24,189 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:11:24,189 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:11:24,189 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:11:54,219 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:11:54,219 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:11:54,219 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:11:54,219 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:11:54,220 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:11:54,220 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:12:24,249 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:12:24,249 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:12:24,249 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:12:24,249 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:12:24,249 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:12:24,249 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:12:48,676 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:12:48,677 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 00:12:48,828 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:12:48,966 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:30:50,162 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 00:30:50,162 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 00:30:50,163 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 00:30:50,163 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 00:30:50,172 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 00:30:50,172 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 00:30:50,172 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 00:31:20,180 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:31:20,181 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:31:20,181 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:31:20,181 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:31:20,181 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:31:20,181 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:31:50,211 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:31:50,212 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:31:50,212 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:31:50,212 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:31:50,212 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:31:50,212 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:32:20,243 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:32:20,243 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:32:20,243 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:32:20,244 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:32:20,244 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:32:20,244 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:32:50,275 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:32:50,275 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:32:50,275 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:32:50,275 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:32:50,275 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:32:50,275 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:33:20,306 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:33:20,306 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:33:20,306 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:33:20,306 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:33:20,306 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:33:20,306 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:33:50,335 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:33:50,336 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:33:50,336 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:33:50,336 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:33:50,336 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:33:50,336 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:34:20,365 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:34:20,366 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:34:20,366 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:34:20,366 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:34:20,366 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:34:20,366 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:34:35,042 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:34:35,043 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 00:34:35,261 - websocket_service - INFO - 📊 Estadísticas finales WebSocket:
+2025-07-20 00:34:35,261 - websocket_service - INFO -   • Total de mensajes procesados: 1
+2025-07-20 00:34:35,261 - websocket_service - INFO -   • Total de errores: 0
+2025-07-20 00:34:35,261 - websocket_service - INFO -   • Mensajes pendientes: 0
+2025-07-20 00:34:35,261 - websocket_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-20 00:34:35,262 - websocket_service - INFO - ✅ WebSocket Server detenido
+2025-07-20 00:34:37,020 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 00:34:37,020 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 00:34:37,020 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 00:34:37,020 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 00:34:37,029 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 00:34:37,030 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 00:34:37,030 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 00:35:07,053 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:35:07,053 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:35:07,053 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:35:07,053 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:35:07,053 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:35:07,053 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:35:37,081 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:35:37,081 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:35:37,081 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:35:37,082 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:35:37,082 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:35:37,082 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:36:07,112 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:36:07,113 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:36:07,113 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:36:07,113 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:36:07,113 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:36:07,113 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:36:29,883 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:36:29,883 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 00:36:31,512 - websocket_service - INFO - 📊 Estadísticas finales WebSocket:
+2025-07-20 00:36:31,512 - websocket_service - INFO -   • Total de mensajes procesados: 1
+2025-07-20 00:36:31,512 - websocket_service - INFO -   • Total de errores: 0
+2025-07-20 00:36:31,512 - websocket_service - INFO -   • Mensajes pendientes: 0
+2025-07-20 00:36:31,512 - websocket_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-20 00:36:31,512 - websocket_service - INFO - ✅ WebSocket Server detenido
+2025-07-20 00:36:33,215 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 00:36:33,216 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 00:36:33,216 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 00:36:33,217 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 00:36:33,226 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 00:36:33,226 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 00:36:33,226 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 00:37:03,237 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:37:03,237 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:37:03,237 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:37:03,237 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:37:03,237 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:37:03,237 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:37:33,248 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:37:33,248 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:37:33,248 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:37:33,248 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:37:33,248 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:37:33,248 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:37:55,278 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:37:55,279 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 00:37:55,491 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:37:56,998 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 00:37:56,998 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 00:37:56,998 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 00:37:56,998 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 00:37:57,010 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 00:37:57,010 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 00:37:57,010 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 00:38:27,029 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:38:27,029 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:38:27,029 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:38:27,029 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:38:27,030 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:38:27,030 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:38:57,061 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:38:57,061 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:38:57,061 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:38:57,061 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:38:57,062 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:38:57,062 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:39:27,067 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:39:27,068 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:39:27,068 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:39:27,068 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:39:27,068 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:39:27,068 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:39:57,069 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:39:57,070 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:39:57,070 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:39:57,070 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:39:57,070 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:39:57,070 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:40:27,072 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:40:27,073 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:40:27,073 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:40:27,073 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:40:27,073 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:40:27,073 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:40:57,091 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:40:57,091 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:40:57,091 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:40:57,091 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:40:57,092 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:40:57,092 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:41:27,112 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:41:27,112 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:41:27,112 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:41:27,113 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:41:27,113 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:41:27,113 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:41:57,140 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:41:57,140 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:41:57,140 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:41:57,140 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:41:57,141 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:41:57,141 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:42:27,171 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:42:27,172 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:42:27,172 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:42:27,172 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:42:27,172 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:42:27,172 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:42:57,202 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:42:57,202 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:42:57,202 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:42:57,202 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:42:57,202 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:42:57,203 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:43:27,222 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:43:27,222 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:43:27,223 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:43:27,223 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:43:27,223 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:43:27,223 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:43:57,250 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:43:57,250 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:43:57,250 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:43:57,250 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:43:57,251 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:43:57,251 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:44:27,282 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:44:27,282 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:44:27,282 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:44:27,282 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:44:27,282 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:44:27,283 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:44:57,307 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:44:57,307 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:44:57,307 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:44:57,307 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:44:57,307 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:44:57,308 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:45:27,321 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:45:27,321 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:45:27,321 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:45:27,321 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:45:27,321 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:45:27,321 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:45:57,352 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:45:57,352 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:45:57,353 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:45:57,353 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:45:57,353 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:45:57,353 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:46:27,382 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:46:27,382 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:46:27,383 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:46:27,383 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:46:27,383 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:46:27,383 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:46:57,406 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:46:57,406 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:46:57,406 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:46:57,406 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:46:57,406 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:46:57,407 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:47:08,684 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:47:08,685 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 00:47:08,853 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:47:20,263 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 00:47:20,263 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 00:47:20,263 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 00:47:20,263 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 00:47:20,273 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 00:47:20,274 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 00:47:20,274 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 00:47:50,288 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:47:50,289 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:47:50,289 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:47:50,289 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:47:50,289 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:47:50,289 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:48:20,318 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:48:20,319 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:48:20,319 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:48:20,319 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:48:20,320 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:48:20,320 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:48:50,348 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:48:50,348 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:48:50,349 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:48:50,349 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:48:50,349 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:48:50,349 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:49:20,378 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:49:20,378 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:49:20,379 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:49:20,379 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:49:20,379 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:49:20,379 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:49:50,408 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:49:50,408 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:49:50,409 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:49:50,409 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:49:50,409 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:49:50,409 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:50:20,438 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:50:20,439 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:50:20,439 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:50:20,439 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:50:20,439 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:50:20,439 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:50:50,468 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:50:50,469 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:50:50,469 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:50:50,469 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:50:50,469 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:50:50,469 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:51:20,498 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:51:20,498 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:51:20,499 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:51:20,499 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:51:20,499 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:51:20,499 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:51:23,503 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:51:23,504 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 00:51:23,625 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:51:25,640 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 00:51:25,640 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 00:51:25,641 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 00:51:25,641 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 00:51:25,652 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 00:51:25,652 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 00:51:25,652 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 00:51:55,661 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:51:55,661 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:51:55,661 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:51:55,662 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:51:55,662 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:51:55,662 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:52:25,670 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:52:25,670 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:52:25,670 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:52:25,670 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:52:25,670 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:52:25,670 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:52:55,673 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:52:55,673 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:52:55,673 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:52:55,673 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:52:55,673 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:52:55,673 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:53:25,702 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:53:25,702 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 00:53:25,702 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:53:25,702 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:53:25,702 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:53:25,702 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:53:55,725 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:53:55,726 - websocket_service - INFO -   • Mensajes procesados: 2
+2025-07-20 00:53:55,726 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:53:55,726 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:53:55,727 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:53:55,727 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:53:56,721 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:53:56,722 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 00:53:56,876 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 00:54:33,269 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 00:54:33,270 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 00:54:33,270 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 00:54:33,270 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 00:54:33,280 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 00:54:33,281 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 00:54:33,281 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 00:55:03,306 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:55:03,306 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:55:03,306 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:55:03,306 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:55:03,307 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:55:03,307 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:55:33,337 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:55:33,338 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:55:33,338 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:55:33,338 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:55:33,338 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:55:33,338 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:56:03,365 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:56:03,366 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:56:03,366 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:56:03,366 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:56:03,366 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:56:03,366 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:56:33,395 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:56:33,396 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:56:33,396 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:56:33,396 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:56:33,396 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:56:33,396 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:57:03,402 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:57:03,402 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:57:03,402 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:57:03,402 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:57:03,402 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:57:03,402 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:57:33,433 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:57:33,433 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:57:33,433 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:57:33,434 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:57:33,434 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:57:33,434 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:58:03,465 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:58:03,465 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:58:03,465 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:58:03,465 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:58:03,465 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:58:03,465 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:58:33,495 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:58:33,495 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:58:33,496 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:58:33,496 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:58:33,496 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:58:33,496 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:59:03,526 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:59:03,527 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:59:03,527 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:59:03,527 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:59:03,527 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:59:03,527 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 00:59:33,558 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 00:59:33,558 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 00:59:33,558 - websocket_service - INFO -   • Errores: 0
+2025-07-20 00:59:33,558 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 00:59:33,558 - websocket_service - INFO -   • Procesando: No
+2025-07-20 00:59:33,558 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:00:03,589 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:00:03,589 - websocket_service - INFO -   • Mensajes procesados: 0
+2025-07-20 01:00:03,589 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:00:03,589 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:00:03,589 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:00:03,590 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:00:33,596 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:00:33,596 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:00:33,596 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:00:33,596 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:00:33,597 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:00:33,597 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:01:03,625 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:01:03,626 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:01:03,626 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:01:03,626 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:01:03,626 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:01:03,626 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:01:33,641 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:01:33,641 - websocket_service - INFO -   • Mensajes procesados: 3
+2025-07-20 01:01:33,641 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:01:33,641 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:01:33,641 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:01:33,641 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:02:03,646 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:02:03,647 - websocket_service - INFO -   • Mensajes procesados: 3
+2025-07-20 01:02:03,647 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:02:03,647 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:02:03,647 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:02:03,647 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:02:33,675 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:02:33,675 - websocket_service - INFO -   • Mensajes procesados: 3
+2025-07-20 01:02:33,675 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:02:33,675 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:02:33,676 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:02:33,676 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:03:03,705 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:03:03,705 - websocket_service - INFO -   • Mensajes procesados: 3
+2025-07-20 01:03:03,705 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:03:03,705 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:03:03,706 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:03:03,706 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:03:33,735 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:03:33,735 - websocket_service - INFO -   • Mensajes procesados: 3
+2025-07-20 01:03:33,735 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:03:33,736 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:03:33,736 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:03:33,736 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:03:35,676 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:03:35,677 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 01:03:37,279 - websocket_service - INFO - 📊 Estadísticas finales WebSocket:
+2025-07-20 01:03:37,279 - websocket_service - INFO -   • Total de mensajes procesados: 3
+2025-07-20 01:03:37,279 - websocket_service - INFO -   • Total de errores: 0
+2025-07-20 01:03:37,279 - websocket_service - INFO -   • Mensajes pendientes: 0
+2025-07-20 01:03:37,279 - websocket_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-20 01:03:37,279 - websocket_service - INFO - ✅ WebSocket Server detenido
+2025-07-20 01:03:40,182 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 01:03:40,182 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 01:03:40,182 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 01:03:40,182 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 01:03:40,192 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 01:03:40,192 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 01:03:40,192 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 01:04:10,202 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:04:10,202 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:04:10,202 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:04:10,202 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:04:10,202 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:04:10,203 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:04:40,209 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:04:40,209 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:04:40,209 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:04:40,209 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:04:40,210 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:04:40,210 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:05:10,240 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:05:10,240 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:05:10,240 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:05:10,241 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:05:10,241 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:05:10,241 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:05:40,272 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:05:40,272 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:05:40,273 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:05:40,273 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:05:40,273 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:05:40,273 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:06:10,289 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:06:10,290 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:06:10,290 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:06:10,290 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:06:10,290 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:06:10,290 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:06:40,318 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:06:40,318 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:06:40,318 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:06:40,319 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:06:40,319 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:06:40,319 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:07:10,349 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:07:10,349 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:07:10,349 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:07:10,349 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:07:10,349 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:07:10,350 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:07:12,364 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:07:12,364 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 01:07:12,506 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:07:12,645 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:07:14,480 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 01:07:14,480 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 01:07:14,480 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 01:07:14,480 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 01:07:14,491 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 01:07:14,491 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 01:07:14,491 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 01:07:44,508 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:07:44,509 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:07:44,509 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:07:44,509 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:07:44,509 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:07:44,509 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:08:14,539 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:08:14,539 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:08:14,539 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:08:14,539 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:08:14,539 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:08:14,539 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:08:33,019 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:08:33,020 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 01:08:33,221 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:08:36,497 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 01:08:36,497 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 01:08:36,497 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 01:08:36,497 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 01:08:36,507 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 01:08:36,508 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 01:08:36,508 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 01:09:06,532 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:09:06,533 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:09:06,533 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:09:06,533 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:09:06,533 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:09:06,533 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:09:36,562 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:09:36,562 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:09:36,562 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:09:36,562 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:09:36,562 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:09:36,562 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:10:06,593 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:10:06,593 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:10:06,593 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:10:06,593 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:10:06,593 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:10:06,594 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:10:09,951 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:10:09,952 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 01:10:10,099 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:10:12,785 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 01:10:12,786 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 01:10:12,786 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 01:10:12,786 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 01:10:12,796 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 01:10:12,797 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 01:10:12,797 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 01:10:42,814 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:10:42,814 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:10:42,814 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:10:42,815 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:10:42,815 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:10:42,815 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:11:12,820 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:11:12,820 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:11:12,820 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:11:12,820 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:11:12,820 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:11:12,820 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:11:42,848 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:11:42,849 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:11:42,849 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:11:42,849 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:11:42,849 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:11:42,849 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:11:59,666 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:11:59,667 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 01:11:59,979 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:12:00,170 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:12:01,554 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 01:12:01,554 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 01:12:01,555 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 01:12:01,555 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 01:12:01,564 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 01:12:01,565 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 01:12:01,565 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 01:12:31,588 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:12:31,588 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:12:31,589 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:12:31,589 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:12:31,589 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:12:31,589 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:13:01,619 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:13:01,619 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:13:01,620 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:13:01,620 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:13:01,620 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:13:01,620 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:13:09,818 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:13:09,818 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 01:13:09,968 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:13:10,091 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:13:51,005 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 01:13:51,006 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 01:13:51,006 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 01:13:51,006 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 01:13:51,016 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 01:13:51,016 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 01:13:51,016 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 01:14:21,035 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:14:21,035 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:14:21,035 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:14:21,035 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:14:21,035 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:14:21,035 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:14:27,068 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:14:27,068 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 01:14:27,204 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:14:29,701 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 01:14:29,702 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 01:14:29,702 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 01:14:29,702 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 01:14:29,712 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 01:14:29,712 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 01:14:29,712 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 01:14:48,942 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:14:48,943 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 01:14:49,090 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:14:49,238 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:14:56,168 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 01:14:56,168 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 01:14:56,169 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 01:14:56,169 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 01:14:56,179 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 01:14:56,179 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 01:14:56,179 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 01:15:26,199 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:15:26,199 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:15:26,199 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:15:26,199 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:15:26,200 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:15:26,200 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:15:56,228 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:15:56,228 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:15:56,229 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:15:56,229 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:15:56,229 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:15:56,229 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:16:26,245 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:16:26,246 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:16:26,246 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:16:26,246 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:16:26,246 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:16:26,246 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:16:47,558 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:16:47,558 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 01:16:47,704 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:16:47,786 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:16:49,337 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 01:16:49,337 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 01:16:49,338 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 01:16:49,338 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 01:16:49,348 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 01:16:49,349 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 01:16:49,349 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 01:17:19,368 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:17:19,368 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:17:19,368 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:17:19,368 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:17:19,368 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:17:19,368 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:17:36,926 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:17:36,927 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 01:17:37,205 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:17:37,399 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:17:39,247 - websocket_service - INFO - 🚀 Iniciando servicio WebSocket independiente...
+2025-07-20 01:17:39,248 - websocket_service - INFO - 📡 Servidor: ws://localhost:8080
+2025-07-20 01:17:39,248 - websocket_service - INFO - 📱 SOLO procesamiento de WhatsApp
+2025-07-20 01:17:39,248 - websocket_service - INFO - ❌ SIN dependencias de MQTT
+2025-07-20 01:17:39,260 - websocket_service - INFO - ✅ Servicio WebSocket iniciado correctamente
+2025-07-20 01:17:39,260 - websocket_service - INFO - 📱 Esperando mensajes de WhatsApp...
+2025-07-20 01:17:39,260 - websocket_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-20 01:18:09,282 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:18:09,282 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:18:09,282 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:18:09,282 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:18:09,282 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:18:09,283 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:18:39,312 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:18:39,312 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:18:39,312 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:18:39,312 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:18:39,312 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:18:39,312 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:19:09,341 - websocket_service - INFO - 📊 Estadísticas WebSocket - WhatsApp:
+2025-07-20 01:19:09,342 - websocket_service - INFO -   • Mensajes procesados: 1
+2025-07-20 01:19:09,342 - websocket_service - INFO -   • Errores: 0
+2025-07-20 01:19:09,342 - websocket_service - INFO -   • Cola actual: 0/1000
+2025-07-20 01:19:09,342 - websocket_service - INFO -   • Procesando: No
+2025-07-20 01:19:09,342 - websocket_service - INFO -   • Tasa de error: 0.0%
+2025-07-20 01:19:30,737 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:19:30,737 - websocket_service - INFO - 🛑 Deteniendo servicio WebSocket...
+2025-07-20 01:19:30,851 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!
+2025-07-20 01:19:30,985 - websocket_service - INFO - 
+¡Recibida señal de terminación para servicio WebSocket!

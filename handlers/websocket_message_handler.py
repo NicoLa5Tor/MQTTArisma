@@ -196,15 +196,28 @@ class WebSocketMessageHandler:
         """Procesar mensaje de número guardado"""
         if not cached_info or not self.whatsapp_service:
             return
-            
         number = cached_info["phone"]
         user = cached_info["name"]
         type_message = entry["type"]
-        
+        print(f"el entry es {entry}")
         is_alarm = entry[type_message].get("list_reply", False)
         if is_alarm:
+            #print("entra a lista y el cache es:")
             self.logger.info("Procesando selección de alarma")
-            alarm_id = is_alarm["id"]
+            #print(json.dumps(cached_info,indent=4))
+            response_alarm = self._create_alarm_in_back(
+                descripcion=is_alarm["description"],
+                tipo_alerta=is_alarm["id"],
+                usuario_id=cached_info['data']["id"]
+            )
+            data_alert = response_alarm.get("alerta",{})
+            list_users = response_alarm.get("numeros_telefonicos",{})
+            self._send_create_down_alarma(
+                alert=data_alert,
+                list_users=list_users,
+                data_user=cached_info
+            )
+            # print(json.dumps(response_alarm,indent=4))
             return
             
         is_down_alarm = entry[type_message].get("button_reply", False)
@@ -341,6 +354,21 @@ class WebSocketMessageHandler:
             self.logger.error(f"❌ Error creando alarma: {e}")
             return False
 
+    def _create_alarm_in_back(self,usuario_id: str, tipo_alerta: str, descripcion: str) -> Dict:
+        prioridad = "media"
+        try:
+            response = self.backend_client.create_user_alert(
+                usuario_id = usuario_id,
+                tipo_alerta = tipo_alerta, 
+                descripcion = descripcion, 
+                prioridad = prioridad
+            )
+            self.logger.info(f"Alerta {tipo_alerta}, creada por {usuario_id}")
+            return response
+        except Exception as ex:
+            self.logger.error(f"Error al tratar de crear la alerta (websocket service): {ex}")
+            return None
+
     def get_whatsapp_statistics(self) -> Dict[str, Any]:
         """Obtener estadísticas del procesador de WhatsApp"""
         return {
@@ -351,7 +379,55 @@ class WebSocketMessageHandler:
             "queue_max_size": self.whatsapp_queue.maxsize,
             "is_processing": self.is_processing
         }
-
+    
+    def _send_create_down_alarma(self, list_users: list, alert: Dict, data_user: Dict = {}) -> bool:
+        """Crear notificación de alarma por WhatsApp"""
+        if not self.whatsapp_service:
+            self.logger.warning("⚠️ WhatsApp service no disponible")
+            return False
+            
+        try:
+            #print(f"La alerta es {json.dumps(data_user,indent=4)}")
+            id_alert = alert["alert_id"]
+            image = alert["imagen_base64"]
+            # print("busca el nombre")
+            alert_name = alert["nombre"]
+            # print("encuentra el nombre")
+            empresa = data_user["data"]["empresa"]
+            recipients = []
+            footer = f"Creada por {data_user["name"]}\nSistema RESCUE"
+            #print("pasa hasta el footer")
+            for item in list_users:
+                nombre = str(item["nombre"])
+                body_text = f"¡Hola {nombre.split()[0].upper()}!.\nAlerta de {alert_name} en {empresa}."
+                data = {
+                    "phone": item.get("numero", ""),
+                    "body_text": body_text
+                }
+                recipients.append(data)
+                
+            buttons = [
+                {
+                    "id": id_alert,
+                    "title": "Apagar alarma"
+                }
+            ]
+            
+            self.whatsapp_service.send_bulk_button_message(
+                header_type="image",
+                header_content=image,
+                buttons=buttons,
+                footer_text=footer,
+                recipients=recipients,
+                use_queue=True
+            )
+            self.logger(f"Alarma {id_alert} enviada")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando notificación de alarma: {e}")
+            return False
+ 
     async def stop_whatsapp_processing(self):
         """Detener el procesamiento de la cola de WhatsApp"""
         # Detener workers de Redis si existen

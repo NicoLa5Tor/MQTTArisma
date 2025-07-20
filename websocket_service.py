@@ -27,7 +27,12 @@ class WebSocketService:
     def __init__(self):
         # Configuración
         self.config = AppConfig()
-        self.logger = setup_logger("websocket_service", self.config.log_level)
+        # Logger con archivo separado para poder hacer tail -f
+        self.logger = setup_logger(
+            "websocket_service", 
+            self.config.log_level,
+            log_file="logs/websocket_service.log"
+        )
         
         # Clientes independientes para WebSocket
         self.backend_client = BackendClient(self.config.backend)
