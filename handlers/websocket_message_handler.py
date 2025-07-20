@@ -5,6 +5,7 @@ Solo procesa mensajes entrantes de WhatsApp desde webhooks
 import json
 import logging
 import asyncio
+import time
 from asyncio import Queue
 from typing import Dict, Any, Optional
 from utils.redis_queue_manager import RedisQueueManager
@@ -238,13 +239,48 @@ class WebSocketMessageHandler:
                 tipo_alerta=is_alarm["id"],
                 usuario_id=cached_info['data']["id"]
             )
+            
+            # DEBUG: Imprimir toda la respuesta del backend
+            print("\n=== DEBUG RESPONSE_ALARM ===")
+            print(json.dumps(response_alarm, indent=4))
+            print("=== END DEBUG RESPONSE_ALARM ===")
+            
             data_alert = response_alarm.get("alerta",{})
             list_users = response_alarm.get("numeros_telefonicos",{})
+            hardware_location = response_alarm.get("hardware_ubicacion", {})
+            
+            # DEBUG: Imprimir datos extraídos
+            print("\n=== DEBUG DATOS EXTRAIDOS ===")
+            print(f"data_alert: {json.dumps(data_alert, indent=2)}")
+            print(f"list_users: {json.dumps(list_users, indent=2)}")
+            print(f"hardware_location: {json.dumps(hardware_location, indent=2)}")
+            print("=== END DEBUG DATOS EXTRAIDOS ===")
+            
             self._send_create_down_alarma(
                 alert=data_alert,
                 list_users=list_users,
                 data_user=cached_info
             )
+            
+            # DEBUG: Verificar condición para enviar ubicación
+            print(f"\n=== DEBUG CONDICION UBICACION ===")
+            print(f"list_users exists: {bool(list_users)}")
+            print(f"hardware_location exists: {bool(hardware_location)}")
+            print(f"data_alert has direccion_url: {bool(data_alert.get('direccion_url'))}")
+            print(f"Enviando ubicación: {bool(list_users and data_alert.get('direccion_url'))}")
+            print("=== END DEBUG CONDICION UBICACION ===")
+            
+            # Enviar mensaje de ubicación después de crear la alerta - usar data_alert
+            if list_users and data_alert.get('direccion_url'):
+                time.sleep(1)  # Esperar 1 segundo para que se envíe primero la alerta
+                self._send_location_personalized_message(
+                    numeros_data=list_users,
+                    tipo_alarma_info=data_alert,
+                    hardware_location=data_alert  # Usar data_alert como hardware_location
+                )
+            else:
+                print("⚠️ NO se envió mensaje de ubicación - faltan datos")
+            
            # print(json.dumps(entry,indent=4))
             topics = response_alarm.get("topics",{})
             self._intermediate_to_mqtt(alert=data_alert,topics=topics)
@@ -350,11 +386,24 @@ class WebSocketMessageHandler:
             if is_down_alarm:
                 self.logger.info("Procesando apagar alarma (usuario nuevo)")
                 
+                # DEBUG: Imprimir datos del usuario nuevo
+                print(f"\n=== DEBUG USUARIO NUEVO DESACTIVACION ===")
+                print(f"Usuario: {usuario}")
+                print(f"Numero: {number}")
+                print(f"verify_number: {json.dumps(verify_number, indent=2)}")
+                print(f"is_down_alarm: {json.dumps(is_down_alarm, indent=2)}")
+                print("=== END DEBUG USUARIO NUEVO DESACTIVACION ===")
+                
                 # Desactivar alarma igual que usuarios cached
                 response = self._desactivate_alarm_to_back(
                     entry=is_down_alarm,
                     cached={"data": {"id": verify_number.get("id")}}
                 )
+                
+                # DEBUG: Imprimir respuesta de desactivación
+                print(f"\n=== DEBUG RESPONSE DESACTIVACION USUARIO NUEVO ===")
+                print(f"Response: {json.dumps(response, indent=2)}")
+                print("=== END DEBUG RESPONSE DESACTIVACION USUARIO NUEVO ===")
                 
                 if response and response.get('success'):
                     # Si se desactivó exitosamente, enviar confirmación personalizada
@@ -367,6 +416,7 @@ class WebSocketMessageHandler:
                         self._send_deactivation_to_mqtt(topics=topics, prioridad=prioridad)
                 else:
                     # Si falló, enviar mensaje de error personalizado 
+                    print("⚠️ Desactivación falló, enviando mensaje de error")
                     self._send_alarm_deactivation_error_message(number, usuario, response)
                 
                 return True
@@ -805,4 +855,60 @@ class WebSocketMessageHandler:
             
         except Exception as e:
             self.logger.error(f"❌ Error enviando notificación masiva de desactivación: {e}")
+            return False
+    
+    def _send_location_personalized_message(self, numeros_data: list, tipo_alarma_info: Dict, hardware_location: Dict) -> bool:
+        """Enviar mensaje personalizado de ubicación por WhatsApp"""
+        print("\n=== DEBUG SEND_LOCATION_PERSONALIZED_MESSAGE ===")
+        print(f"numeros_data: {json.dumps(numeros_data, indent=2)}")
+        print(f"tipo_alarma_info: {json.dumps(tipo_alarma_info, indent=2)}")
+        print(f"hardware_location: {json.dumps(hardware_location, indent=2)}")
+        
+        if not self.whatsapp_service:
+            self.logger.warning("⚠️ WhatsApp service no disponible")
+            print("❌ WhatsApp service NO disponible")
+            return False
+            
+        try:
+            url_maps = hardware_location.get("direccion_url", "")
+            print(f"URL Maps extraída: '{url_maps}'")
+            
+            recipients = []
+            
+            for item in numeros_data:
+                nombre = str(item.get("nombre", ""))
+                data_item = {
+                    "phone": item["numero"],
+                    "body_text": f"¡HOLA {nombre.split()[0].upper()}!.\nRESCUE TE AYUDA A LLEGAR A LA EMERGENCIA"
+                }
+                recipients.append(data_item)
+            
+            print(f"Recipients preparados: {json.dumps(recipients, indent=2)}")
+            
+            header_content = f"¡RESCUE SYSTEM UBICACIÓN!"
+            
+            print(f"Enviando mensaje de ubicación con:")
+            print(f"  - Header: {header_content}")
+            print(f"  - URL: {url_maps}")
+            print(f"  - Recipients: {len(recipients)}")
+            
+            result = self.whatsapp_service.send_personalized_broadcast(
+                recipients=recipients,
+                header_type="text",
+                header_content=header_content,
+                button_url=url_maps,
+                footer_text="Equipo RESCUE",
+                button_text="Google Maps",
+                use_queue=True
+            )
+            
+            print(f"Resultado del envío: {result}")
+            print("=== END DEBUG SEND_LOCATION_PERSONALIZED_MESSAGE ===")
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando mensaje de ubicación: {e}")
+            print(f"❌ EXCEPCION en _send_location_personalized_message: {e}")
+            print("=== END DEBUG SEND_LOCATION_PERSONALIZED_MESSAGE ===")
             return False

@@ -126,7 +126,7 @@ class MQTTMessageHandler:
                 return False
             
             response = self.backend_client.send_alarm_data(mqtt_data, token)
-            
+            #print(json.dumps(response,indent=4))
             if response:
                 self._handle_alarm_notifications(response, mqtt_data)
                 return True
@@ -152,9 +152,11 @@ class MQTTMessageHandler:
                 
                 if list_users and tipo_alarma_info:
                     # Crear notificación de alarma
-                    self._send_create_down_alarma(list_users=list_users, alert=tipo_alarma_info)
+                    alert_id = response.get("alert_id","")
+                    self._send_create_down_alarma(list_users=list_users,
+                                                  alert=tipo_alarma_info,
+                                                  alert_id=alert_id)
                     time.sleep(1)
-                    
                     # Enviar mensaje personalizado de ubicación
                     self._send_location_personalized_message(
                         hardware_location=hardware_location,
@@ -254,14 +256,15 @@ class MQTTMessageHandler:
             self.logger.error(f"❌ Error enviando mensaje de ubicación: {e}")
             return False
 
-    def _send_create_down_alarma(self, list_users: list, alert: Dict, data_user: Dict = {}) -> bool:
+    def _send_create_down_alarma(self, list_users: list, alert: Dict, data_user: Dict = {},alert_id = str) -> bool:
         """Crear notificación de alarma por WhatsApp"""
         if not self.whatsapp_service:
             self.logger.warning("⚠️ WhatsApp service no disponible")
             return False
             
         try:
-            id_alert = alert["id"]
+           # print(json.dumps(alert,indent=4))
+            id_alert = alert_id
             image = alert["imagen_base64"]
             alert_name = alert["nombre"]
             empresa = "en " + data_user.get("empresa", "la empresa")
