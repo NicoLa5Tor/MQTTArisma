@@ -51,12 +51,13 @@ class WhatsAppConfig:
 
 @dataclass
 class WebSocketConfig:
-    """Configuración para servidor WebSocket"""
+    """Configuración para servidor WebSocket - INDEPENDIENTE de MQTT"""
     host: str = os.getenv("WEBSOCKET_HOST", "localhost")
     port: int = int(os.getenv("WEBSOCKET_PORT", "8080"))
     ping_interval: int = int(os.getenv("WEBSOCKET_PING_INTERVAL", "30"))
     ping_timeout: int = int(os.getenv("WEBSOCKET_PING_TIMEOUT", "10"))
     enabled: bool = True
+    # NOTA: WebSocket NO tiene dependencias MQTT
 
 
 @dataclass

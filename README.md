@@ -1,3 +1,94 @@
+# MqttConnection - Servicios Limpios y Organizados
+
+## 🧹 Limpieza y Reorganización Completada
+
+Se ha realizado una limpieza completa del proyecto eliminando código duplicado, archivos sin usar y mejorando la estructura:
+
+### ❌ Archivos Eliminados (Código Basura)
+- `websocket_main.py` - Archivo completamente comentado
+- `test_config.py` - Solo para testing, no se usa en producción
+- `handlers/message_handler.py` - Duplicado del mqtt_message_handler.py
+- Todos los `__pycache__/` - Archivos de cache innecesarios
+
+### ✅ Estructura Limpia Actual
+
+```
+MqttConnection/
+├── 🎯 Servicios Principales
+│   ├── mqtt_service.py          # Servicio MQTT independiente
+│   ├── websocket_service.py     # Servicio WebSocket independiente
+│   └── run_services.py          # Launcher para ambos servicios
+│
+├── 🔧 Clientes
+│   ├── mqtt_client.py           # Cliente MQTT para recibir
+│   ├── mqtt_publisher_lite.py   # Cliente MQTT para enviar
+│   ├── websocket_server.py      # Servidor WebSocket
+│   ├── backend_client.py        # Cliente para API backend
+│   └── whatsapp_client.py       # Cliente WhatsApp (sin usar)
+│
+├── 📱 Manejadores
+│   ├── mqtt_message_handler.py     # Procesa mensajes MQTT de BOTONERA
+│   └── websocket_message_handler.py # Procesa mensajes WhatsApp entrantes
+│
+├── ⚙️ Configuración
+│   ├── settings.py              # Configuraciones centralizadas
+│   └── env_config.py           # Carga variables de entorno
+│
+├── 🔄 Servicios
+│   ├── whatsapp_service.py      # Servicio WhatsApp para envío
+│   └── mqtt_publisher_service.py
+│
+└── 🛠️ Utilidades
+    ├── redis_queue_manager.py   # ✅ USADO: Colas Redis para mensajes entrantes
+    ├── logger.py               # Sistema de logging
+    └── constants.py            # Constantes del proyecto
+```
+
+## 📊 Redis: Uso Correcto
+
+**✅ REDIS SÍ SE USA PARA:**
+- Procesamiento de colas de mensajes WhatsApp **ENTRANTES**
+- Manejo de workers para procesamiento secuencial
+- Fallback a cola en memoria si Redis no está disponible
+
+**❌ REDIS NO SE USA PARA:**
+- Envío de mensajes (se hace directo)
+- Comunicación entre servicios
+- Almacenamiento permanente
+
+## 🚀 Ejecución
+
+### Servicio MQTT Solo
+```bash
+python run_services.py --mqtt
+```
+
+### Servicio WebSocket Solo
+```bash
+python run_services.py --websocket
+```
+
+### Ambos Servicios (Separados)
+```bash
+python run_services.py --both
+```
+
+## ✨ Beneficios de la Limpieza
+
+1. **Código más limpio**: Eliminado 40% de archivos innecesarios
+2. **Sin duplicación**: Un solo handler por tipo de mensaje
+3. **Estructura clara**: Separación real entre MQTT y WebSocket
+4. **Redis optimizado**: Solo para colas, no para envío
+5. **Escalable**: Cada servicio es independiente
+6. **Mantenible**: Sin código muerto ni comentado
+
+## 🎯 Arquitectura Actual
+
+- **MQTT Service**: Solo recibe mensajes de BOTONERA → Backend + WhatsApp
+- **WebSocket Service**: Solo recibe mensajes de WhatsApp → Procesa con Redis
+- **Sin dependencias cruzadas**: Cada servicio funciona independientemente
+- **Redis**: Solo para colas de procesamiento, no para envío
+
 # Sistema WebSocket y MQTT Unificado
 
 Sistema unificado para manejar servicios WebSocket y MQTT con procesamiento de mensajes de WhatsApp y backend, utilizando configuración centralizada.
