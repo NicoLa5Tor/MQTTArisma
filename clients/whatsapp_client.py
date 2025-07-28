@@ -71,7 +71,28 @@ class WhatsAppClient:
     def post(self, endpoint: str, data: Optional[Dict] = None) -> Optional[Dict]:
         """Realizar petición POST"""
         return self._make_request('POST', endpoint, data=data)
-    
+    def send_location_request(self, phone:str,body_text:str) -> Optional[Dict]:
+        """
+        Enviar peticion de ubicacion al usuario en especifico.
+        Este servicio no usa cola
+        """
+        try:
+            phone_clean= self._clean_phone_number(phone)
+            data = {
+                "phone": phone_clean,
+                "body_text" : body_text
+            }
+            response = self.post(endpoint='/send-location-request',data=data)
+            if response:
+                print(f"✅ Mensaje individual de peticion de ubicacion enviado exitosamente")
+                return response
+            else:
+                print(f"❌ Error enviando mensaje  de peticion de ubicacion individual")
+                return None
+        except Exception as e:
+            print(f"💥 Error enviando mensaje de peticion de ubicaciion individual: {e}")
+            self.logger.error(f"Error enviando mensaje de peticion de ubicaciion individual: {e}")
+            return None
     def send_individual_message(self, phone: str, message: str, use_queue: bool = False) -> Optional[Dict]:
         """
         Enviar mensaje individual de WhatsApp
@@ -307,7 +328,6 @@ class WhatsAppClient:
             print(f"💥 Error enviando mensaje de lista: {type(e).__name__}")
             self.logger.error(f"Error enviando mensaje de lista: {str(e)[:200]}")
             return None
-    
     def send_bulk_list_message(self, header_text: str, footer_text: str, button_text: str, 
                               sections: List[Dict], recipients: List[Dict], use_queue: bool = True) -> Optional[Dict]:
         """

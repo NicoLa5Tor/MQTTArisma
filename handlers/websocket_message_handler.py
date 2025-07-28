@@ -11,6 +11,7 @@ from typing import Dict, Any, Optional
 from utils.redis_queue_manager import RedisQueueManager
 from clients.mqtt_publisher_lite import MQTTPublisherLite
 from config.settings import MQTTConfig
+from handlers.empresa_alert_handler import EmpresaAlertHandler
 
 
 class WebSocketMessageHandler:
@@ -52,6 +53,15 @@ class WebSocketMessageHandler:
                 self.logger.error(f"❌ Error iniciando MQTT Publisher: {e}")
                 self.mqtt_publisher = None
         
+        # Handler específico para alertas desactivadas por empresa
+        self.empresa_handler = None
+        if enable_mqtt_publisher and config:
+            self.empresa_handler = EmpresaAlertHandler(
+                whatsapp_service=whatsapp_service,
+                config=config,
+                enable_mqtt_publisher=enable_mqtt_publisher
+            )
+        
         # Sistema de colas Redis para mensajes de WhatsApp ENTRANTES
         self.redis_queue = None
         if whatsapp_service:
@@ -75,6 +85,19 @@ class WebSocketMessageHandler:
     async def queue_whatsapp_message(self, message: str) -> bool:
         """Agregar mensaje de WhatsApp a la cola para procesamiento"""
         try:
+            # Primero verificar si es un mensaje de empresa
+            try:
+                json_message = json.loads(message)
+                message_type = json_message.get("type")
+                
+                if message_type == "alert_deactivated_by_empresa":
+                    self.logger.info("🏢 Detectado mensaje de desactivación por empresa")
+                    return await self._handle_empresa_message(json_message)
+            except (json.JSONDecodeError, KeyError):
+                # Si no es JSON válido o no tiene type, procesar como mensaje normal
+                pass
+            
+            # Procesar como mensaje normal de WhatsApp
             # Usar Redis si está disponible
             if self.redis_queue and self.redis_queue.is_healthy():
                 return self.redis_queue.add_message(message)
@@ -129,7 +152,13 @@ class WebSocketMessageHandler:
             # Parsear JSON
             json_message = json.loads(message)
             
-            # Validar estructura del mensaje antes de procesar
+            # PRIMERO: Verificar si es un mensaje de empresa
+            message_type = json_message.get("type")
+            if message_type == "alert_deactivated_by_empresa":
+                self.logger.info("🏢 Detectado mensaje de desactivación por empresa (Redis)")
+                return self._handle_empresa_message_sync(json_message)
+            
+            # Validar estructura del mensaje antes de procesar como WhatsApp webhook
             if (not self._is_valid_whatsapp_webhook(json_message)):
                 return True  # No es un error, simplemente ignoramos
             
@@ -175,7 +204,14 @@ class WebSocketMessageHandler:
             # Parsear JSON
             json_message = json.loads(message)
             
-            # Validar estructura del mensaje antes de procesar
+            # PRIMERO: Verificar si es un mensaje de empresa
+            message_type = json_message.get("type")
+            if message_type == "alert_deactivated_by_empresa":
+                self.logger.info("🏢 Detectado mensaje de desactivación por empresa (cola memoria)")
+                await self._handle_empresa_message(json_message)
+                return
+            
+            # Validar estructura del mensaje antes de procesar como WhatsApp webhook
             if not self._is_valid_whatsapp_webhook(json_message):
                 return
                 
@@ -527,7 +563,7 @@ class WebSocketMessageHandler:
     
     def get_whatsapp_statistics(self) -> Dict[str, Any]:
         """Obtener estadísticas del procesador de WhatsApp"""
-        return {
+        stats = {
             "processed_messages": self.whatsapp_processed_count,
             "error_count": self.whatsapp_error_count,
             "error_rate": round(self.whatsapp_error_count / max(self.whatsapp_processed_count, 1) * 100, 2),
@@ -535,6 +571,13 @@ class WebSocketMessageHandler:
             "queue_max_size": self.whatsapp_queue.maxsize,
             "is_processing": self.is_processing
         }
+        
+        # Agregar estadísticas del handler de empresa si está disponible
+        if self.empresa_handler:
+            empresa_stats = self.empresa_handler.get_statistics()
+            stats["empresa_handler"] = empresa_stats
+        
+        return stats
     
     def _send_mqtt_message(self, topic: str, message_data: Dict, qos: int = 0) -> bool:
         """Enviar mensajes MQTT a un topic específico"""
@@ -622,7 +665,7 @@ class WebSocketMessageHandler:
             message_data = {
                 "tipo_alarma": alarm_color,
             }
-        elif "TELEVISOR" in topic:
+        elif "PANTALLA" in topic:
             message_data = {
                 "tipo_alarma": alarm_color,
                 "prioridad": alert.get("prioridad",""),
@@ -669,7 +712,7 @@ class WebSocketMessageHandler:
             return {
                 "tipo_alarma": "NORMAL"
             }
-        elif "TELEVISOR" in topic:
+        elif "PANTALLA" in topic:
             # Para televisores: tipo_alarma NORMAL + prioridad del response
             return {
                 "tipo_alarma": "NORMAL",
@@ -682,11 +725,63 @@ class WebSocketMessageHandler:
                 "action": "deactivate"
             }
 
+    def _handle_empresa_message_sync(self, message_data: Dict) -> bool:
+        """Manejar mensaje de desactivación por empresa (versión síncrona para Redis)"""
+        try:
+            if not self.empresa_handler:
+                self.logger.error("❌ Empresa handler no disponible")
+                return False
+            
+            # Procesar con el handler específico de empresa
+            success = self.empresa_handler.process_empresa_deactivation(message_data)
+            
+            if success:
+                self.whatsapp_processed_count += 1
+                self.logger.info("✅ Mensaje de empresa procesado exitosamente")
+            else:
+                self.whatsapp_error_count += 1
+                self.logger.error("❌ Error procesando mensaje de empresa")
+                
+            return success
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error manejando mensaje de empresa: {e}")
+            self.whatsapp_error_count += 1
+            return False
+
+    async def _handle_empresa_message(self, message_data: Dict) -> bool:
+        """Manejar mensaje de desactivación por empresa (versión asíncrona)"""
+        try:
+            if not self.empresa_handler:
+                self.logger.error("❌ Empresa handler no disponible")
+                return False
+            
+            # Procesar con el handler específico de empresa
+            success = self.empresa_handler.process_empresa_deactivation(message_data)
+            
+            if success:
+                self.whatsapp_processed_count += 1
+                self.logger.info("✅ Mensaje de empresa procesado exitosamente")
+            else:
+                self.whatsapp_error_count += 1
+                self.logger.error("❌ Error procesando mensaje de empresa")
+                
+            return success
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error manejando mensaje de empresa: {e}")
+            self.whatsapp_error_count += 1
+            return False
+
     async def stop_whatsapp_processing(self):
         """Detener el procesamiento de la cola de WhatsApp"""
         # Detener workers de Redis si existen
         if self.redis_queue:
             self.redis_queue.stop_workers()
+        
+        # Detener empresa handler si existe
+        if self.empresa_handler:
+            self.empresa_handler.stop()
         
         # Detener cola en memoria si existe
         if hasattr(self, '_queue_task') and self._queue_task and not self._queue_task.done():
@@ -734,21 +829,20 @@ class WebSocketMessageHandler:
                 # Determinar si es quien desactivó la alarma o es otra persona
                 if phone_number == phone:
                     # Mensaje para quien desactivó
-                    success_message = f"✅ ¡Perfecto {nombre.split()[0].upper()}!"
-                    success_message += f"\n\n🎯 Alarma desactivada exitosamente"
-                    success_message += f"\n🕐 Fecha: {fecha_desactivacion.split('T')[0] if fecha_desactivacion else 'Ahora'}"
-                    success_message += f"\n👤 Desactivada por: TI"
-                    success_message += f"\n\n🛡️ El sistema RESCUE ha registrado tu acción"
-                    success_message += f"\n🚨 ¡Gracias por mantener la seguridad!"
-                    success_message += f"\n\n📱 Sistema RESCUE - Siempre Vigilante"
+                    success_message = f"¡Perfecto {nombre.split()[0].upper()}!"
+                    success_message += f"\n\nAlarma desactivada exitosamente"
+                    success_message += f"\nFecha: {fecha_desactivacion.split('T')[0] if fecha_desactivacion else 'Ahora'}"
+                    success_message += f"\n\nEl sistema RESCUE ha registrado tu acción"
+                    success_message += f"\n¡Gracias por mantener la seguridad!"
+                    success_message += f"\n\nSistema RESCUE - Siempre Vigilante"
                 else:
                     # Mensaje para otros usuarios
-                    success_message = f"ℹ️ ¡Hola {nombre.split()[0].upper()}!"
-                    success_message += f"\n\n✅ La alarma ha sido DESACTIVADA"
-                    success_message += f"\n👤 Desactivada por: {user}"
-                    success_message += f"\n🕐 Momento: Ahora mismo"
-                    success_message += f"\n\n🛡️ El sistema vuelve a estar en estado normal"
-                    success_message += f"\n📱 Notificación automática del Sistema RESCUE"
+                    success_message = f"¡Hola {nombre.split()[0].upper()}!"
+                    success_message += f"\n\nLa alarma ha sido DESACTIVADA"
+                    success_message += f"\nDesactivada por: {user}"
+                    success_message += f"\nMomento: Ahora mismo"
+                    success_message += f"\n\nEl sistema vuelve a estar en estado normal"
+                    success_message += f"\nEQUIPO RESCUE"
                 
                 recipients.append({
                     "phone": phone_number,
@@ -786,22 +880,22 @@ class WebSocketMessageHandler:
                 return False
             
             # Siempre enviar mensaje de alarma ya desactivada (sin importar el tipo de error)
-            error_message = f"ℹ️ ¡Hola {user.split()[0].upper()}!"
-            error_message += f"\n\nℹ️ Esta alarma ya fue DESACTIVADA anteriormente"
+            error_message = f"¡Hola {user.split()[0].upper()}!"
+            error_message += f"\n\nℹEsta alarma ya fue DESACTIVADA anteriormente"
             
             # Obtener información de quién la desactivó si está disponible
             if response and response.get('desactivado_por', {}):
                 desactivado_por = response.get('desactivado_por', {})
                 fecha = desactivado_por.get('fecha_desactivacion', '')
                 fecha_formato = fecha.split('T')[0] if fecha else 'Fecha desconocida'
-                error_message += f"\n\n📅 Desactivada el: {fecha_formato}"
-                error_message += f"\n👤 Por otro usuario del sistema"
+                error_message += f"\n\nDesactivada el: {fecha_formato}"
+                error_message += f"\nPor otro usuario del sistema"
             
-            error_message += f"\n\n✅ ESTADO: La alarma ya está INACTIVA"
-            error_message += f"\n🛡️ No hay riesgo activo en el sistema"
-            error_message += f"\n\n👍 Gracias por tu atención a la seguridad"
+            error_message += f"\n\nESTADO: La alarma ya está INACTIVA"
+            error_message += f"\nNo hay riesgo activo en el sistema"
+            error_message += f"\n\nGracias por tu atención a la seguridad"
             
-            error_message += f"\n\n📱 Sistema RESCUE - Soporte Técnico"
+            error_message += f"\n\nEQUIPO RESCUE"
             
             self.whatsapp_service.send_individual_message(
                 phone=phone,
@@ -825,12 +919,12 @@ class WebSocketMessageHandler:
                 
                 # Excluir el número de quien desactivó la alarma
                 if phone != exclude_phone:
-                    notification_message = f"ℹ️ ¡Hola {nombre.split()[0].upper()}!"
-                    notification_message += f"\n\n✅ La alarma ha sido DESACTIVADA"
-                    notification_message += f"\n👤 Desactivada por: {deactivated_by}"
-                    notification_message += f"\n🕐 Momento: Ahora mismo"
-                    notification_message += f"\n\n🛡️ El sistema vuelve a estar en estado normal"
-                    notification_message += f"\n📱 Notificación automática del Sistema RESCUE"
+                    notification_message = f"ℹ¡Hola {nombre.split()[0].upper()}!"
+                    notification_message += f"\n\nLa alarma ha sido DESACTIVADA"
+                    notification_message += f"\nDesactivada por: {deactivated_by}"
+                    notification_message += f"\nMomento: Ahora mismo"
+                    notification_message += f"\n\nEl sistema vuelve a estar en estado normal"
+                    notification_message += f"\nEQUIPO RESCUE"
                     
                     recipients.append({
                         "phone": phone,

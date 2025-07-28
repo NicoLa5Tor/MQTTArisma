@@ -28,7 +28,38 @@ class WhatsAppService:
             "total_recipients": 0,
             "errors": 0
         }
-    
+    def send_location_request(self,phone:str,body_text:str) -> bool:
+        try:
+            """
+            Enviar mensaje individual de peticion de ubicacion
+            Args:
+            phone: Formato internacional
+            body_text: texto para el envio
+            """
+            if not self.config.enabled:
+                self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
+                return False
+            
+            print(f"📱 Servicio WhatsApp - Enviando mensaje individual...")
+            
+            response = self.client.send_location_request(phone, body_text)
+            
+            if response:
+                self.stats["individual_messages_sent"] += 1
+                self.stats["total_recipients"] += 1
+                
+                print(f"✅ Mensaje individual de peticion de ubicacion enviado exitosamente")
+                self.logger.info(f"Mensaje individual de peticion de ubicacion enviado a {phone}")
+                return True
+            else:
+                self.stats["errors"] += 1
+                print(f"❌ Error enviando mensaje de peticion de ubicacion individual")
+                self.logger.error(f"Error enviando mensaje de peticion de ubicacion individual a {phone}")
+                return False
+                
+        except Exception as e:
+            print(f"💥 Error en servicio WhatsApp: {e}")
+            self.logger.error(f"Error en servicio WhatsApp: {e}")
     def send_individual_message(self, phone: str, message: str, use_queue: bool = False) -> bool:
         """
         Enviar mensaje individual de WhatsApp
@@ -41,6 +72,7 @@ class WhatsAppService:
         Returns:
             bool: True si se envió exitosamente, False en caso contrario
         """
+        
         try:
             if not self.config.enabled:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")

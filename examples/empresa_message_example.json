@@ -1,0 +1,53 @@
+{
+  "type": "alert_deactivated_by_empresa",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "alert": {
+    "id": "ALT-2024-001",
+    "nombre": "Alerta de Incendio - Planta Principal",
+    "empresa": "Empresa ECOES",
+    "sede": "Sede Principal",
+    "prioridad": "critica",
+    "topic": "empresas/sede_principal/incendio/alerta_001",
+    "usuarios": [
+      {
+        "nombre": "Juan Carlos Pérez",
+        "telefono": "+573001234567",
+        "tipo": "contacto_telefono"
+      },
+      {
+        "nombre": "María Isabel González",
+        "telefono": "+573007654321",
+        "tipo": "contacto_telefono"
+      },
+      {
+        "nombre": "Luis Fernando Rodríguez",
+        "telefono": "+573009876543",
+        "tipo": "contacto_telefono"
+      }
+    ],
+    "hardware_vinculado": [
+      {
+        "nombre": "Semáforo Principal Entrada",
+        "id_origen": "SEM_001",
+        "topic": "SEDE_PRINCIPAL/SEMAFORO/SEM_001"
+      },
+      {
+        "nombre": "Televisor Sala de Control",
+        "id_origen": "TV_001",
+        "topic": "SEDE_PRINCIPAL/TELEVISOR/TV_001"
+      },
+      {
+        "nombre": "Semáforo Área Producción",
+        "id_origen": "SEM_002",
+        "topic": "AREA_PRODUCCION/SEMAFORO/SEM_002"
+      }
+    ],
+    "fecha_creacion": "2024-01-15T08:00:00Z",
+    "fecha_desactivacion": "2024-01-15T10:30:00Z",
+    "desactivado_por": {
+      "tipo": "empresa",
+      "id": "empresa_ecoes",
+      "nombre": "Sistema Administrativo ECOES"
+    }
+  }
+}

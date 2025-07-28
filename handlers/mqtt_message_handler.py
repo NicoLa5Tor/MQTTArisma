@@ -204,7 +204,7 @@ class MQTTMessageHandler:
             message_data = {
                 "tipo_alarma": alarm_color,
             }
-        elif "TELEVISOR" in item:
+        elif "PANTALLA" in item:
             message_data = {
                 "tipo_alarma": alarm_color,
                 "prioridad": priority,
