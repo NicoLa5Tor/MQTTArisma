@@ -191,6 +191,35 @@ async def main():
     )
     print(f"   - Bulk button message: {'✅ Éxito' if success else '❌ Error'}")
     
+    # Ejemplo 6: Agregar número al cache y actualizar información (NUEVO)
+    print(f"\n📱 Ejemplo 6: Gestión de Cache de Usuarios")
+    
+    # Agregar número al cache
+    phone_cache = "573123456789"
+    success = whatsapp_service.add_number_to_cache(
+        phone=phone_cache,
+        name="Juan Pérez",
+        data={
+            "email": "juan@email.com",
+            "company": "ECOES Tech",
+            "role": "Developer",
+            "location": "Medellín"
+        }
+    )
+    print(f"   - Agregar número al cache: {'✅ Éxito' if success else '❌ Error'}")
+    
+    # Actualizar información del cache
+    success = whatsapp_service.update_number_cache(
+        phone=phone_cache,
+        data={
+            "email": "nuevo.juan@email.com",
+            "company": "Nueva Empresa ECOES",
+            "last_update": "2024-01-15",
+            "status": "active"
+        }
+    )
+    print(f"   - Actualizar cache: {'✅ Éxito' if success else '❌ Error'}")
+    
     # Mostrar estadísticas finales
     print(f"\n📊 Estadísticas finales:")
     final_status = whatsapp_service.get_simple_status()

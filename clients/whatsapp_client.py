@@ -82,7 +82,7 @@ class WhatsAppClient:
                 "phone": phone_clean,
                 "body_text" : body_text
             }
-            response = self.post(endpoint='/send-location-request',data=data)
+            response = self.post(endpoint='/api/send-location-request',data=data)
             if response:
                 print(f"✅ Mensaje individual de peticion de ubicacion enviado exitosamente")
                 return response
@@ -481,6 +481,44 @@ class WhatsAppClient:
         except Exception as e:
             print(f"💥 Error agregando número al cache: {type(e).__name__}")
             self.logger.error(f"Error agregando número al cache: {str(e)[:200]}")
+            return None
+    
+    def update_number_cache(self, phone: str, data: Dict) -> Optional[Dict]:
+        """
+        Actualizar información del cache de un usuario de WhatsApp
+        
+        Args:
+            phone: Número de teléfono (formato internacional)
+            data: Datos a actualizar en el cache (ej: {"email": "nuevo@email.com", "company": "Nueva Empresa"})
+            
+        Returns:
+            Dict con respuesta de la API o None si hay error
+        """
+        try:
+            # Validar formato del número
+            phone_clean = self._clean_phone_number(phone)
+            
+            payload = {
+                "phone": phone_clean,
+                "data": data
+            }
+            
+            print(f"🔄 Actualizando información del cache:")
+            print(f"   📞 Teléfono: {phone_clean}")
+            print(f"   📋 Datos a actualizar: {data}")
+            
+            response = self._make_request('PATCH', '/api/numbers/update', data=payload)
+            
+            if response:
+                print(f"✅ Información del cache actualizada exitosamente")
+                return response
+            else:
+                print(f"❌ Error actualizando información del cache")
+                return None
+                
+        except Exception as e:
+            print(f"💥 Error actualizando información del cache: {type(e).__name__}")
+            self.logger.error(f"Error actualizando información del cache: {str(e)[:200]}")
             return None
     
     def _clean_phone_number(self, phone: str) -> str:

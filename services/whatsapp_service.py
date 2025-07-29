@@ -443,6 +443,40 @@ class WhatsAppService:
             self.logger.error(f"Error en servicio WhatsApp agregando al cache: {e}")
             return False
     
+    def update_number_cache(self, phone: str, data: Dict) -> bool:
+        """
+        Actualizar información del cache de un usuario de WhatsApp
+        
+        Args:
+            phone: Número de teléfono (formato internacional)
+            data: Datos a actualizar en el cache (ej: {"email": "nuevo@email.com", "company": "Nueva Empresa"})
+            
+        Returns:
+            bool: True si se actualizó exitosamente, False en caso contrario
+        """
+        try:
+            if not self.config.enabled:
+                self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
+                return False
+            
+            print(f"🔄 Servicio WhatsApp - Actualizando información del cache...")
+            
+            response = self.client.update_number_cache(phone, data)
+            
+            if response:
+                print(f"✅ Información del cache actualizada exitosamente")
+                self.logger.info(f"Cache del número {phone} actualizado con datos: {data}")
+                return True
+            else:
+                print(f"❌ Error actualizando información del cache")
+                self.logger.error(f"Error actualizando cache del número {phone}")
+                return False
+                
+        except Exception as e:
+            print(f"💥 Error en servicio WhatsApp actualizando cache: {e}")
+            self.logger.error(f"Error en servicio WhatsApp actualizando cache: {e}")
+            return False
+    
     def process_whatsapp_notification(self, notification: Dict[str, Any]) -> bool:
         """
         Procesar notificación de WhatsApp desde el backend

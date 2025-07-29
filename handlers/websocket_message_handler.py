@@ -12,6 +12,7 @@ from utils.redis_queue_manager import RedisQueueManager
 from clients.mqtt_publisher_lite import MQTTPublisherLite
 from config.settings import MQTTConfig
 from handlers.empresa_alert_handler import EmpresaAlertHandler
+from datetime import datetime, timedelta
 
 
 class WebSocketMessageHandler:
@@ -256,29 +257,38 @@ class WebSocketMessageHandler:
             )
         except (KeyError, IndexError, TypeError):
             return False
-
-    def _process_save_number(self, entry: Dict, cached_info: Dict) -> None:
-        """Procesar mensaje de número guardado"""
-        if not cached_info or not self.whatsapp_service:
-            return
-        number = cached_info["phone"]
-        user = cached_info["name"]
-        type_message = entry["type"]
-        #print(f"el entry es {entry}")
-        is_alarm = entry[type_message].get("list_reply", False)
-        if is_alarm:
-            #print("entra a lista y el cache es:")
-            self.logger.info("Procesando selección de alarma")
-            #print(json.dumps(cached_info,indent=4))
+    def _alarm_back_save(self,entry_alarm:Dict,cached_info:Dict) -> bool:
+        """Guardar la alerta antes de crearla"""
+        try:
+            self.logger.info("Procesando en alarm_back_save")
+            number = cached_info["phone"]
+            new_data = {
+                "alert_active" : False,
+                "info_alert" :{
+                    "type_alert": entry_alarm["id"],
+                    "description": entry_alarm["description"],
+                    "datetime": str(datetime.now())
+                }
+            }
+            # print(json.dumps(cached_info,indent=4))
+            body_message = f"¡{cached_info["name"]}!\nPara crear la alerta de {entry_alarm["title"]}\nPrimero debes proporcionar la ubicación"
+            self.whatsapp_service.update_number_cache(phone=number, data=new_data)
+            self.whatsapp_service.send_location_request(phone=number,body_text=body_message)
+            return True
+        except Exception as ex:
+            self.logger.error(f"Hubo un error en alarm_back_save {ex}")
+            return False
+    
+    def _create_alarm(self,cached_info:Dict) -> bool:
+        try:
+            alert_info = ["info_alert"]
             response_alarm = self._create_alarm_in_back(
-                descripcion=is_alarm["description"],
-                tipo_alerta=is_alarm["id"],
+                descripcion=alert_info["description"],
+                tipo_alerta=alert_info["type_alert"],
                 usuario_id=cached_info['data']["id"]
             )
             
-            # DEBUG: Imprimir toda la respuesta del backend
             print("\n=== DEBUG RESPONSE_ALARM ===")
-            print(json.dumps(response_alarm, indent=4))
             print("=== END DEBUG RESPONSE_ALARM ===")
             
             data_alert = response_alarm.get("alerta",{})
@@ -298,7 +308,6 @@ class WebSocketMessageHandler:
                 data_user=cached_info
             )
             
-            # DEBUG: Verificar condición para enviar ubicación
             print(f"\n=== DEBUG CONDICION UBICACION ===")
             print(f"list_users exists: {bool(list_users)}")
             print(f"hardware_location exists: {bool(hardware_location)}")
@@ -306,7 +315,6 @@ class WebSocketMessageHandler:
             print(f"Enviando ubicación: {bool(list_users and data_alert.get('direccion_url'))}")
             print("=== END DEBUG CONDICION UBICACION ===")
             
-            # Enviar mensaje de ubicación después de crear la alerta - usar data_alert
             if list_users and data_alert.get('direccion_url'):
                 time.sleep(1)  # Esperar 1 segundo para que se envíe primero la alerta
                 self._send_location_personalized_message(
@@ -320,8 +328,49 @@ class WebSocketMessageHandler:
            # print(json.dumps(entry,indent=4))
             topics = response_alarm.get("topics",{})
             self._intermediate_to_mqtt(alert=data_alert,topics=topics)
+            return True
+        except Exception as ex:
+            self.logger.error(f"Error en create_alarm {ex}")
+            return False
+    
+    def _process_save_number(self, entry: Dict, cached_info: Dict) -> None:
+        """Procesar mensaje de número guardado"""
+        if not cached_info or not self.whatsapp_service:
             return
-            
+        number = cached_info["phone"]
+        user = cached_info["name"]
+        type_message = entry["type"]
+        #print(f"el entry es {entry}")
+        is_alarm = entry[type_message].get("list_reply", False)
+        if is_alarm:
+            self._alarm_back_save(entry_alarm=is_alarm,cached_info=cached_info)
+            self.logger.info("Procesando selección de alarma")
+            return
+        #es para crear alarma
+        exist_alert = cached_info["data"]
+        if "alert_active" in exist_alert:
+            alert_create = exist_alert["alert_active"]
+            if alert_create:
+                #esto es porque la alerta ya se creo
+                return
+            else:
+                #No se ha creado la alerma pero ya se escogio
+                fecha_crear_str = exist_alert["info_alert"]["datetime"]
+                fecha_crear = datetime.fromisoformat(fecha_crear_str)
+                ahora = datetime.now()
+
+                if ahora - fecha_crear < timedelta(minutes=5):
+                    #Han pasado menos de 5 minutos
+                    return
+                else:
+                    #Ya pasaron 5 minutos o más
+                    message = f"Lo siento {user}.\nPero excediste el tiempo límite de 5 min."
+                    data_delete = {
+                        "info_alert":"__DELETE__",
+                        "alert_active":"__DELETE__"
+                    }
+                    self.whatsapp_service.update_number_cache(phone=number, data=data_delete)
+                #print(json.dumps(entry,indent=4))
         is_down_alarm = entry[type_message].get("button_reply", False)
         if is_down_alarm:
             self.logger.info("Procesando apagar alarma")
@@ -344,9 +393,8 @@ class WebSocketMessageHandler:
                 # Si falló, enviar mensaje de error personalizado 
                 self._send_alarm_deactivation_error_message(number, user, response)
                 return  # No enviar lista de alarmas si hubo error
-            
         # Enviar lista de alarmas solo si NO es una desactivación
-        self._send_create_alarma(number=number, usuario=user, is_in_cached=True)
+        self._send_create_alarma(number=number, usuario=user, is_in_cached=True,message_time=message)
     def _desactivate_alarm_to_back(self,entry: Dict, cached:Dict) ->Optional[Dict]:
         try:
 
@@ -469,7 +517,7 @@ class WebSocketMessageHandler:
         verify_number = self.backend_client.verify_user_number(number)
         self.logger.info(f"Verificación de número: {verify_number}")
 
-    def _send_create_alarma(self, number, usuario, is_in_cached: bool = False) -> bool:
+    def _send_create_alarma(self, number, usuario, is_in_cached: bool = False,message_time=None) -> bool:
         """Crear y enviar lista de alarmas por WhatsApp"""
         if not self.whatsapp_service:
             self.logger.warning("⚠️ WhatsApp service no disponible")
@@ -508,8 +556,11 @@ class WebSocketMessageHandler:
                     ]
                 }
             ]
-            
-            body_text = f"Hola de nuevo {usuario}.\nUn gusto tenerte de vuelta" if is_in_cached else f"Hola {usuario}.\nBienvenido al Sistema de Alertas RESCUE"
+   
+            if message_time is not None:
+                body_text = message_time
+            else:
+                body_text = f"Hola de nuevo {usuario}.\nUn gusto tenerte de vuelta" if is_in_cached else f"Hola {usuario}.\nBienvenido al Sistema de Alertas RESCUE"
             
             self.whatsapp_service.send_list_message(
                 phone=number,
