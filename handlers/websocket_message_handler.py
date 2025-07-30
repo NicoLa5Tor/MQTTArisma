@@ -391,7 +391,21 @@ class WebSocketMessageHandler:
                                                                       message = "Ahora recibiras mensajes de los miembros del equipo")
                 elif is_list:
                     #Esto es para si es una lista despues de que ya se activo
-                    pass
+                    opcion = is_list["id"]
+                    data_alert = self.backend_client.get_alert_by_id(alert_id = id_alert,user_id=id_user).get("alert",{})
+                    data_user = [u for u in data_alert["numeros_telefonicos"] if u["numero"] == number]
+                    if opcion == "APAGAR":
+                        self._send_create_down_alarma(alert=data_alert,data_user=cached_info,list_users=data_user)
+                    elif opcion == "UBICACION":
+                        self._send_location_personalized_message(numeros_data=data_user,tipo_alarma_info=data_alert)
+                    elif opcion == "EMBARCADO":
+                        data_user_not_you = [u for u in data_alert["numeros_telefonicos"] if u["numero"] != number]
+                        self.backend_client.update_user_status(alert_id=exist_alert["info_alert"]["alert_id"],
+                                                                usuario_id = exist_alert["id"], 
+                                                                embarcado = True)
+                        self.whatsapp_service.update_number_cache(phone = number, data = {"embarcado" : True})
+                        self._send_bulk_team(list_users=data_user_not_you,message="Estoy camino a la emergencia",name_made=user,type_message="text")
+
                 
                 elif isinstance(exist_alert.get("disponible"), bool) and not exist_alert["disponible"]:
                     #quiere decir que mando un mensaje cuando aun no puede hablar 
@@ -404,8 +418,25 @@ class WebSocketMessageHandler:
                     por ahora se procesa solo mensajes de texto"""
                     if type_message:
                         body_text = entry[type_message]["body"]
-                        if body_text.upper() == "OPCIONES":
-                            pass
+                        comandos_opciones = [
+                            "OPCIONES",
+                            "MENU",
+                            "MENÚ",
+                            "OPCION",
+                            "OPCIÓN",
+                            "LISTA",
+                            "LISTADO",
+                            "MOSTRAR",
+                            "MOSTRAR OPCIONES",
+                            "MOSTRAR MENU",
+                            "MOSTRAR MENÚ",
+                            "VER OPCIONES",
+                            "VER MENÚ",
+                            "INSTRUCCIONES",
+                            "AYUDA"
+                        ]
+                        if body_text.upper() in comandos_opciones:
+                            self._send_options_user(number=number,user=user)
                         else:
                             data_alert = self.backend_client.get_alert_by_id(alert_id = id_alert,user_id=id_user).get("alert",{})
                             data_user = [u for u in data_alert["numeros_telefonicos"] if u["numero"] != number]
@@ -577,7 +608,47 @@ class WebSocketMessageHandler:
         self._send_create_alarma(number=number, usuario=usuario)
         return True
 
+    def _send_options_user(self,number : str ,user : str )-> bool:
+        if not self.whatsapp_service:
+            self.logger.warning("⚠️ WhatsApp service no disponible")
+            return False
+        try:
+            sections = [
+                   {
+                    "title": "Servicios técnicos",
+                    "rows": [
+                        {
+                            "id": "APAGAR",
+                            "title": "Apagar Alarma", 
+                            "description": "Al seleccionar esta opción, la alarma en cuestión se apagará."
+                        },
+                       {
+                            "id": "UBICACION",
+                            "title": "Ubicación de la alarma",
+                            "description": "Obtener la ubicación de la alarma"
+                        },
+                        {
+                            "id": "EMBARCADO",
+                            "title": "Embarcarme",
+                            "description": "Indica que ya estás en camino a la emergencia"
+                        }
+                            ]
+                    }
+                 ]
+            body_text = f"{user}\nEstas son las opciones disponibles"
+            self.whatsapp_service.send_list_message(
+                        phone=number,
+                        header_text=body_text,
+                        body_text="Selecciona la opción que deseas",
+                        footer_text="RESCUE SYSTEM",
+                        button_text="Ver opciones",
+                        sections=sections
+                    )
+   
 
+        except Exception  as ex:
+            self.logger.error(f"Error en _send_options_user {ex}")
+            return False
     def _send_create_alarma(self, number, usuario, is_in_cached: bool = False,message_time=None) -> bool:
         """Crear y enviar lista de alarmas por WhatsApp"""
         if not self.whatsapp_service:
@@ -718,7 +789,47 @@ class WebSocketMessageHandler:
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensaje MQTT: {e}")
             return False
-
+    def _send_create_down_alarma(self,list_users: list, alert: Dict, data_user: Dict = {}) -> bool:
+        """Crear notificación de alarma por WhatsApp"""
+        if not self.whatsapp_service:
+            self.logger.warning("⚠️ WhatsApp service no disponible")
+            return False
+        try:
+           # print(json.dumps(alert,indent=4))
+            id_alert = alert["_id"]
+            image = alert["image_alert"]
+            alert_name = alert["nombre_alerta"]
+            empresa = data_user["data"]["empresa"]
+            recipients = []
+            for item in list_users:
+                body_text = f"¡Hola {item['nombre']}!.\nAlerta de {alert_name} {empresa}"
+                data = {
+                    "phone": item.get("numero", ""),
+                    "body_text": body_text
+                }
+                recipients.append(data)
+                
+            buttons = [
+                {
+                    "id": id_alert+"-APAGAR ALARMA",
+                    "title": "Apagar alarma"
+                }
+            ]
+            
+            self.whatsapp_service.send_bulk_button_message(
+                header_type="image",
+                header_content=image,
+                buttons=buttons,
+                footer_text="Sistema RESCUE",
+                recipients=recipients,
+                use_queue=True
+            )
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando notificación de alarma: {e}")
+            return False
     def _send_create_active_user(self, list_users: list, alert: Dict, data_user: Dict = {}) -> bool:
         """Crear notificación de alarma por WhatsApp"""
         if not self.whatsapp_service or not self.backend_client:
