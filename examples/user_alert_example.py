@@ -33,27 +33,39 @@ def test_create_user_alert():
     test_cases = [
         {
             "usuario_id": "user123",
+            "latitud": "6.2442",
+            "longitud": "-75.5812",
             "tipo_alerta": "mantenimiento",
             "descripcion": "Solicitud de mantenimiento preventivo en el área de producción",
-            "prioridad": "baja"
+            "prioridad": "baja",
+            "tipo_creador": "usuario"
         },
         {
             "usuario_id": "user456",
+            "latitud": "6.2518",
+            "longitud": "-75.5635",
             "tipo_alerta": "emergencia",
             "descripcion": "Situación de emergencia detectada en el sector norte",
-            "prioridad": "alta"
+            "prioridad": "alta",
+            "tipo_creador": "usuario"
         },
         {
             "usuario_id": "user789",
+            "latitud": "6.2308",
+            "longitud": "-75.5906",
             "tipo_alerta": "soporte",
             "descripcion": "Solicitud de soporte técnico para resolución de incidente",
-            "prioridad": "media"
+            "prioridad": "media",
+            "tipo_creador": "empresa"
         },
         {
             "usuario_id": "user101",
+            "latitud": "6.2676",
+            "longitud": "-75.5681",
             "tipo_alerta": "seguridad",
             "descripcion": "Alerta de seguridad en el perímetro de la instalación"
             # prioridad no especificada, usará el valor por defecto 'media'
+            # tipo_creador no especificado, usará el valor por defecto 'usuario'
         }
     ]
     
@@ -64,9 +76,12 @@ def test_create_user_alert():
         # Crear alerta
         response = backend_client.create_user_alert(
             usuario_id=test_case["usuario_id"],
+            latitud=test_case["latitud"],
+            longitud=test_case["longitud"],
             tipo_alerta=test_case["tipo_alerta"],
             descripcion=test_case["descripcion"],
-            prioridad=test_case.get("prioridad", "media")  # Usar valor por defecto si no se especifica
+            prioridad=test_case.get("prioridad", "media"),
+            tipo_creador=test_case.get("tipo_creador", "usuario")
         )
         
         if response:
@@ -95,11 +110,14 @@ def test_create_user_alert():
     # Probar desactivación de alerta
     test_deactivate_alert(backend_client)
     
-    print("\n💡 Campos utilizados:")
-    print("   • usuario_id: ID del usuario (obligatorio)")
+    print("\n💡 Campos utilizados para creación de alerta:")
+    print("   • usuario_id: ID del usuario que crea la alerta (obligatorio)")
+    print("   • latitud: Latitud de la ubicación (obligatorio)")
+    print("   • longitud: Longitud de la ubicación (obligatorio)")
     print("   • tipo_alerta: Tipo de alerta (obligatorio)")
     print("   • descripcion: Descripción de la alerta (obligatorio)")
     print("   • prioridad: Prioridad de la alerta (opcional, por defecto 'media')")
+    print("   • tipo_creador: Tipo del creador (opcional, por defecto 'usuario')")
     print("\n💡 Desactivación de alerta:")
     print("   • alert_id: ID de la alerta a desactivar (obligatorio)")
     print("   • desactivado_por_id: ID del usuario que desactiva (obligatorio)")

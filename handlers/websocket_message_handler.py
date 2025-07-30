@@ -93,7 +93,7 @@ class WebSocketMessageHandler:
                 
                 if message_type == "alert_deactivated_by_empresa":
                     self.logger.info("🏢 Detectado mensaje de desactivación por empresa")
-                    return await self._handle_empresa_message(json_message)
+                    return self._handle_empresa_message_sync(json_message)
             except (json.JSONDecodeError, KeyError):
                 # Si no es JSON válido o no tiene type, procesar como mensaje normal
                 pass
@@ -131,7 +131,7 @@ class WebSocketMessageHandler:
                     message = await self.whatsapp_queue.get()
                     
                     # Procesar el mensaje
-                    await self._process_single_whatsapp_message(message)
+                    self._process_single_whatsapp_message_sync(message)
                     
                     # Marcar la tarea como completada
                     self.whatsapp_queue.task_done()
@@ -199,49 +199,6 @@ class WebSocketMessageHandler:
             self.whatsapp_error_count += 1
             return False
 
-    async def _process_single_whatsapp_message(self, message: str) -> None:
-        """Procesar un solo mensaje de WhatsApp (versión asíncrona para fallback)"""
-        try:
-            # Parsear JSON
-            json_message = json.loads(message)
-            
-            # PRIMERO: Verificar si es un mensaje de empresa
-            message_type = json_message.get("type")
-            if message_type == "alert_deactivated_by_empresa":
-                self.logger.info("🏢 Detectado mensaje de desactivación por empresa (cola memoria)")
-                await self._handle_empresa_message(json_message)
-                return
-            
-            # Validar estructura del mensaje antes de procesar como WhatsApp webhook
-            if not self._is_valid_whatsapp_webhook(json_message):
-                return
-                
-            entry = json_message["entry"][0]["changes"][0]["value"]["messages"][0]
-            number_client = entry["from"]
-            type_message = entry["type"]
-            
-            # Validar si el usuario ya existe 
-            save_message = json_message.get("save_number", False)
-            if save_message:
-                # Usuario guardado
-                cached_info = json_message.get("cached_info", {})
-                self._process_save_number(entry=entry, cached_info=cached_info)
-            else:
-                # Usuario nuevo
-                await self._process_new_number(number=number_client)
-                
-            self.logger.info(f"📱 Mensaje WhatsApp #{self.whatsapp_processed_count + 1}:")
-            self.logger.info(f"   📞 Número: {number_client}")
-            self.logger.info(f"   📋 Tipo: {type_message}")
-            
-            self.whatsapp_processed_count += 1
-            
-        except json.JSONDecodeError:
-            self.logger.error(f"❌ Error: Mensaje no es JSON válido")
-            self.whatsapp_error_count += 1
-        except Exception as e:
-            self.logger.error(f"❌ Error procesando mensaje: {e}")
-            self.whatsapp_error_count += 1
 
     def _is_valid_whatsapp_webhook(self, json_message: Dict) -> bool:
         """Validar si el mensaje es un webhook válido de WhatsApp"""
@@ -267,7 +224,8 @@ class WebSocketMessageHandler:
                 "info_alert" :{
                     "type_alert": entry_alarm["id"],
                     "description": entry_alarm["description"],
-                    "datetime": str(datetime.now())
+                    "datetime": str(datetime.now()),
+                    "alert_title": entry_alarm["title"]
                 }
             }
             # print(json.dumps(cached_info,indent=4))
@@ -278,53 +236,92 @@ class WebSocketMessageHandler:
         except Exception as ex:
             self.logger.error(f"Hubo un error en alarm_back_save {ex}")
             return False
-    
-    def _create_alarm(self,cached_info:Dict) -> bool:
+    def _create_bulk_cache(self,alarm_info:Dict,list_users: Dict,cache_creator:Dict) -> None:
         try:
-            alert_info = ["info_alert"]
+            # print(json.dumps(alarm_info,indent=3))
+            # print(json.dumps(list_users,indent=3))
+            data_cache = cache_creator["data"]
+            """
+            Este es un ejemplo del data del cache
+               "data": {
+                    "alert_active": false,
+                    "empresa": "Nicolas Empresa",
+                    "id": "6875e231a37810d0a8dc508e",
+                    "info_alert": {
+                        "alert_title": "Inundaci\u00f3n",
+                        "datetime": "2025-07-29 17:49:28.002298",
+                        "description": "Alerta por inundaci\u00f3n",
+                        "type_alert": "AZUL"
+                    },
+                    "sede": "Secundaria"
+                },
+      
+
+            """
+            for user in list_users:
+                data_user = {
+                    "id" : user["usuario_id"],
+                    "alert_active":True,
+                    "empresa" : data_cache["empresa"],
+                    "disponible" : user["disponible"],
+                    "embarcado" : user["embarcado"],
+                    "info_alert" : {
+                        "alert_id" : alarm_info["_id"]
+                    }
+                }
+                self.whatsapp_service.add_number_to_cache(phone = user["numero"]
+                                                          , name = user["nombre"]
+                                                          , data = data_user)
+        except Exception as ex:
+            self.logger.error(f"Error en _create_bulk_cache {ex}")
+    def _create_alarm(self,cached_info:Dict,ubication:Dict) -> bool:
+        try:
+            #print(json.dumps(ubication,indent=3))
+            alert_info = cached_info["data"]["info_alert"]
             response_alarm = self._create_alarm_in_back(
                 descripcion=alert_info["description"],
+                latitud=str(ubication["latitude"]),
+                longitud=str(ubication["longitude"]),
                 tipo_alerta=alert_info["type_alert"],
-                usuario_id=cached_info['data']["id"]
+                usuario_id=cached_info["data"]["id"]
             )
-            
+           
             print("\n=== DEBUG RESPONSE_ALARM ===")
             print("=== END DEBUG RESPONSE_ALARM ===")
             
-            data_alert = response_alarm.get("alerta",{})
-            list_users = response_alarm.get("numeros_telefonicos",{})
-            hardware_location = response_alarm.get("hardware_ubicacion", {})
+            data_alert = response_alarm.get("alert",{})
+            list_users = data_alert.get("numeros_telefonicos",{})
+         
             
             # DEBUG: Imprimir datos extraídos
             print("\n=== DEBUG DATOS EXTRAIDOS ===")
-            print(f"data_alert: {json.dumps(data_alert, indent=2)}")
-            print(f"list_users: {json.dumps(list_users, indent=2)}")
-            print(f"hardware_location: {json.dumps(hardware_location, indent=2)}")
+            # print(f"data_alert: {json.dumps(data_alert, indent=2)}")
+            # print(f"list_users: {json.dumps(list_users, indent=2)}")
+            # print(f"hardware_location: {json.dumps(hardware_location, indent=2)}")
             print("=== END DEBUG DATOS EXTRAIDOS ===")
-            
-            self._send_create_down_alarma(
+            numero_excluido = cached_info["phone"]
+            usuarios_filtrados = [u for u in list_users if u["numero"] != numero_excluido]
+            self._send_create_active_user(
                 alert=data_alert,
-                list_users=list_users,
+                list_users=usuarios_filtrados,
                 data_user=cached_info
             )
             
             print(f"\n=== DEBUG CONDICION UBICACION ===")
-            print(f"list_users exists: {bool(list_users)}")
-            print(f"hardware_location exists: {bool(hardware_location)}")
-            print(f"data_alert has direccion_url: {bool(data_alert.get('direccion_url'))}")
-            print(f"Enviando ubicación: {bool(list_users and data_alert.get('direccion_url'))}")
+            # print(f"list_users exists: {bool(list_users)}")
+            # print(f"hardware_location exists: {bool(hardware_location)}")
+            # print(f"data_alert has direccion_url: {bool(data_alert.get('direccion_url'))}")
+            # print(f"Enviando ubicación: {bool(list_users and data_alert.get('direccion_url'))}")
             print("=== END DEBUG CONDICION UBICACION ===")
-            
-            if list_users and data_alert.get('direccion_url'):
-                time.sleep(1)  # Esperar 1 segundo para que se envíe primero la alerta
+            #print(json.dumps(response_alarm,indent=4))
+            if list_users:
                 self._send_location_personalized_message(
                     numeros_data=list_users,
                     tipo_alarma_info=data_alert,
-                    hardware_location=data_alert  # Usar data_alert como hardware_location
                 )
             else:
                 print("⚠️ NO se envió mensaje de ubicación - faltan datos")
-            
+            self._create_bulk_cache(list_users=list_users,alarm_info=data_alert,cache_creator=cached_info)
            # print(json.dumps(entry,indent=4))
             topics = response_alarm.get("topics",{})
             self._intermediate_to_mqtt(alert=data_alert,topics=topics)
@@ -332,7 +329,33 @@ class WebSocketMessageHandler:
         except Exception as ex:
             self.logger.error(f"Error en create_alarm {ex}")
             return False
-    
+    def _send_bulk_text_message(self,body:str,list_users: list[Dict],name_made:str) -> bool:
+        try:
+            recipients = []
+            for user in list_users:
+                message = {
+                    "phone":user["numero"],
+                    "message" : f"*{name_made}*\n{body}"
+                }
+                recipients.append(message)
+            self.whatsapp_service.send_bulk_individual(recipients = recipients)
+
+        except Exception as ex:
+            self.logger.error(f"Error en _send_bulk_text_message {ex}")
+            return False
+    def _send_bulk_team(self,type_message:str,name_made:str,list_users:list[Dict],message)-> bool:
+        try:
+            list_validate = [u for u in list_users if u["disponible"]]
+            if not list_validate: 
+                self.logger.info("No hay usuario a quien enviarle informacion")
+                return True
+            match type_message:
+                case "text":
+                    self._send_bulk_text_message(list_users=list_validate,body=message,name_made=name_made)
+            return True
+        except Exception as ex:
+            self.logger.error(f"Error en _send_bulk_team {ex}")
+            return False
     def _process_save_number(self, entry: Dict, cached_info: Dict) -> None:
         """Procesar mensaje de número guardado"""
         if not cached_info or not self.whatsapp_service:
@@ -340,18 +363,56 @@ class WebSocketMessageHandler:
         number = cached_info["phone"]
         user = cached_info["name"]
         type_message = entry["type"]
+        message = None
         #print(f"el entry es {entry}")
-        is_alarm = entry[type_message].get("list_reply", False)
-        if is_alarm:
-            self._alarm_back_save(entry_alarm=is_alarm,cached_info=cached_info)
-            self.logger.info("Procesando selección de alarma")
-            return
+        is_list = entry[type_message].get("list_reply", False)
+        is_button = entry[type_message].get("button_reply", False)
         #es para crear alarma
         exist_alert = cached_info["data"]
         if "alert_active" in exist_alert:
+            id_user = exist_alert["id"]
             alert_create = exist_alert["alert_active"]
             if alert_create:
-                #esto es porque la alerta ya se creo
+                """ esto es porque la alerta ya se creo"""
+                id_alert = exist_alert["info_alert"]["alert_id"]
+                #aqui se valida si es un boton lo que llega
+                if is_button:
+                    type_button = is_button["id"]
+                    #esto valida si es para activacion de un usuario
+                    if type_button == "Activar_User":
+                        self.backend_client.update_user_status( alert_id = id_alert,
+                                                                usuario_id = id_user,
+                                                                disponible = True)
+                        data_update = {
+                            "disponible" : True
+                        }
+                        self.whatsapp_service.update_number_cache(phone=number, data=data_update)
+                        self.whatsapp_service.send_individual_message(phone = number,
+                                                                      message = "Ahora recibiras mensajes de los miembros del equipo")
+                elif is_list:
+                    #Esto es para si es una lista despues de que ya se activo
+                    pass
+                
+                elif isinstance(exist_alert.get("disponible"), bool) and not exist_alert["disponible"]:
+                    #quiere decir que mando un mensaje cuando aun no puede hablar 
+                    data_alert = self.backend_client.get_alert_by_id(alert_id = id_alert,user_id=id_user).get("alert",{})
+                    #print(json.dumps(data_alert,indent=4))
+                    data_user = [u for u in data_alert["numeros_telefonicos"] if u["numero"] == number]
+                    self._send_create_active_user(alert=data_alert,list_users=data_user,data_user=cached_info)
+                else:
+                    """Aqui se deberia colocar el envio de mensaje a todos los usuarios, pero..
+                    por ahora se procesa solo mensajes de texto"""
+                    if type_message:
+                        body_text = entry[type_message]["body"]
+                        if body_text.upper() == "OPCIONES":
+                            pass
+                        else:
+                            data_alert = self.backend_client.get_alert_by_id(alert_id = id_alert,user_id=id_user).get("alert",{})
+                            data_user = [u for u in data_alert["numeros_telefonicos"] if u["numero"] != number]
+                            if data_user:
+                                self._send_bulk_team(name_made=user,message=body_text,list_users=data_user,type_message=type_message)
+                            else:
+                                self.logger.info("El mensaje no tiene destinatarios")
                 return
             else:
                 #No se ha creado la alerma pero ya se escogio
@@ -361,6 +422,13 @@ class WebSocketMessageHandler:
 
                 if ahora - fecha_crear < timedelta(minutes=5):
                     #Han pasado menos de 5 minutos
+                    #print(json.dumps(entry,indent=4))
+                    location = entry.get("location",False)
+                    if location:
+                        self._create_alarm(cached_info=cached_info,ubication=location)
+                    else:
+                        message_location = f"{user}\nPara crear la alerta {exist_alert["info_alert"]["alert_title"]}\nDebes enviar la ubicacion."
+                        self.whatsapp_service.send_location_request(phone=number,body_text=message_location)
                     return
                 else:
                     #Ya pasaron 5 minutos o más
@@ -370,29 +438,32 @@ class WebSocketMessageHandler:
                         "alert_active":"__DELETE__"
                     }
                     self.whatsapp_service.update_number_cache(phone=number, data=data_delete)
-                #print(json.dumps(entry,indent=4))
-        is_down_alarm = entry[type_message].get("button_reply", False)
-        if is_down_alarm:
-            self.logger.info("Procesando apagar alarma")
-            #print(f"es para apagar {json.dumps(entry,indent=4)}")
-
-            response = self._desactivate_alarm_to_back(entry=is_down_alarm,cached=cached_info)
-            
-            if response and response.get('success'):
-                # Si se desactivó exitosamente, enviar confirmación personalizada
-                self._send_alarm_deactivation_success_message(number, user, response)
-                
-                # También enviar comando de desactivación a los dispositivos MQTT
-                topics = response.get("topics", [])
-                prioridad = response.get("prioridad", "media")
-                if topics:
-                    self._send_deactivation_to_mqtt(topics=topics, prioridad=prioridad)
-                
-                return  # No enviar lista de alarmas después de desactivar
-            else:
-                # Si falló, enviar mensaje de error personalizado 
-                self._send_alarm_deactivation_error_message(number, user, response)
-                return  # No enviar lista de alarmas si hubo error
+        else:
+            if is_list:
+                self._alarm_back_save(entry_alarm=is_list,cached_info=cached_info)
+                self.logger.info("Procesando selección de alarma")
+                return
+            if is_button:
+                self.logger.info("Procesando apagar alarma")
+                #print(f"es para apagar {json.dumps(entry,indent=4)}")
+                response = self._desactivate_alarm_to_back(entry=is_button,cached=cached_info)
+                if response and response.get('success'):
+                    # Si se desactivó exitosamente, enviar confirmación personalizada
+                    self._send_alarm_deactivation_success_message(number, user, response)
+                    # También enviar comando de desactivación a los dispositivos MQTT
+                    topics = response.get("topics", [])
+                    prioridad = response.get("prioridad", "media")
+                    if topics:
+                        self._send_deactivation_to_mqtt(topics=topics, prioridad=prioridad)
+                    
+                    return  # No enviar lista de alarmas después de desactivar
+                else:
+                    # Si falló, enviar mensaje de error personalizado 
+                    self._send_alarm_deactivation_error_message(number, user, response)
+                    return  # No enviar lista de alarmas si hubo error
+        
+        
+      
         # Enviar lista de alarmas solo si NO es una desactivación
         self._send_create_alarma(number=number, usuario=user, is_in_cached=True,message_time=message)
     def _desactivate_alarm_to_back(self,entry: Dict, cached:Dict) ->Optional[Dict]:
@@ -459,63 +530,53 @@ class WebSocketMessageHandler:
             )
             if not response_verify:
                 return False
-        
-        # Procesar tipo de mensaje si existe
-        if entry:
-            type_message = entry["type"]
-            
-       
-            # Procesar desactivación de alarma (apagar)
-            is_down_alarm = entry[type_message].get("button_reply", False)
-            if is_down_alarm:
-                self.logger.info("Procesando apagar alarma (usuario nuevo)")
+        # # Procesar tipo de mensaje si existe
+        # if entry:
+        #     type_message = entry["type"]
+        #     # Procesar desactivación de alarma (apagar)
+        #     is_down_alarm = entry[type_message].get("button_reply", False)
+        #     if is_down_alarm:
+        #         self.logger.info("Procesando apagar alarma (usuario nuevo)")
                 
-                # DEBUG: Imprimir datos del usuario nuevo
-                print(f"\n=== DEBUG USUARIO NUEVO DESACTIVACION ===")
-                print(f"Usuario: {usuario}")
-                print(f"Numero: {number}")
-                print(f"verify_number: {json.dumps(verify_number, indent=2)}")
-                print(f"is_down_alarm: {json.dumps(is_down_alarm, indent=2)}")
-                print("=== END DEBUG USUARIO NUEVO DESACTIVACION ===")
+        #         # DEBUG: Imprimir datos del usuario nuevo
+        #         print(f"\n=== DEBUG USUARIO NUEVO DESACTIVACION ===")
+        #         print(f"Usuario: {usuario}")
+        #         print(f"Numero: {number}")
+        #         print(f"verify_number: {json.dumps(verify_number, indent=2)}")
+        #         print(f"is_down_alarm: {json.dumps(is_down_alarm, indent=2)}")
+        #         print("=== END DEBUG USUARIO NUEVO DESACTIVACION ===")
                 
-                # Desactivar alarma igual que usuarios cached
-                response = self._desactivate_alarm_to_back(
-                    entry=is_down_alarm,
-                    cached={"data": {"id": verify_number.get("id")}}
-                )
+        #         # Desactivar alarma igual que usuarios cached
+        #         response = self._desactivate_alarm_to_back(
+        #             entry=is_down_alarm,
+        #             cached={"data": {"id": verify_number.get("id")}}
+        #         )
                 
-                # DEBUG: Imprimir respuesta de desactivación
-                print(f"\n=== DEBUG RESPONSE DESACTIVACION USUARIO NUEVO ===")
-                print(f"Response: {json.dumps(response, indent=2)}")
-                print("=== END DEBUG RESPONSE DESACTIVACION USUARIO NUEVO ===")
+        #         # DEBUG: Imprimir respuesta de desactivación
+        #         print(f"\n=== DEBUG RESPONSE DESACTIVACION USUARIO NUEVO ===")
+        #         #print(f"Response: {json.dumps(response, indent=2)}")
+        #         print("=== END DEBUG RESPONSE DESACTIVACION USUARIO NUEVO ===")
                 
-                if response and response.get('success'):
-                    # Si se desactivó exitosamente, enviar confirmación personalizada
-                    self._send_alarm_deactivation_success_message(number, usuario, response)
+        #         if response and response.get('success'):
+        #             # Si se desactivó exitosamente, enviar confirmación personalizada
+        #             self._send_alarm_deactivation_success_message(number, usuario, response)
                     
-                    # También enviar comando de desactivación a los dispositivos MQTT
-                    topics = response.get("topics", [])
-                    prioridad = response.get("prioridad", "media")
-                    if topics:
-                        self._send_deactivation_to_mqtt(topics=topics, prioridad=prioridad)
-                else:
-                    # Si falló, enviar mensaje de error personalizado 
-                    print("⚠️ Desactivación falló, enviando mensaje de error")
-                    self._send_alarm_deactivation_error_message(number, usuario, response)
+        #             # También enviar comando de desactivación a los dispositivos MQTT
+        #             topics = response.get("topics", [])
+        #             prioridad = response.get("prioridad", "media")
+        #             if topics:
+        #                 self._send_deactivation_to_mqtt(topics=topics, prioridad=prioridad)
+        #         else:
+        #             # Si falló, enviar mensaje de error personalizado 
+        #             print("⚠️ Desactivación falló, enviando mensaje de error")
+        #             self._send_alarm_deactivation_error_message(number, usuario, response)
                 
-                return True
+        #         return True
         
         # Enviar lista de alarmas
         self._send_create_alarma(number=number, usuario=usuario)
         return True
 
-    async def _process_new_number(self, number: str) -> None:
-        """Procesar nuevo número (versión asíncrona para fallback)"""
-        if not self.backend_client:
-            return
-            
-        verify_number = self.backend_client.verify_user_number(number)
-        self.logger.info(f"Verificación de número: {verify_number}")
 
     def _send_create_alarma(self, number, usuario, is_in_cached: bool = False,message_time=None) -> bool:
         """Crear y enviar lista de alarmas por WhatsApp"""
@@ -577,16 +638,23 @@ class WebSocketMessageHandler:
             self.logger.error(f"❌ Error creando alarma: {e}")
             return False
 
-    def _create_alarm_in_back(self,usuario_id: str, tipo_alerta: str, descripcion: str) -> Dict:
+    def _create_alarm_in_back(self, usuario_id: str, tipo_alerta: str, descripcion: str, 
+                            latitud: str = "0.0", longitud: str = "0.0") -> Dict:
+        """
+        Crear alerta en el backend con ubicación.
+        Si no se proporcionan coordenadas, se usan valores por defecto.
+        """
         prioridad = "media"
         try:
             response = self.backend_client.create_user_alert(
-                usuario_id = usuario_id,
-                tipo_alerta = tipo_alerta, 
-                descripcion = descripcion, 
-                prioridad = prioridad
+                usuario_id=usuario_id,
+                latitud=latitud,
+                longitud=longitud,
+                tipo_alerta=tipo_alerta, 
+                descripcion=descripcion, 
+                prioridad=prioridad
             )
-            self.logger.info(f"Alerta {tipo_alerta}, creada por {usuario_id}")
+            self.logger.info(f"Alerta {tipo_alerta}, creada por {usuario_id} en ubicación ({latitud}, {longitud})")
             return response
         except Exception as ex:
             self.logger.error(f"Error al tratar de crear la alerta (websocket service): {ex}")
@@ -651,20 +719,20 @@ class WebSocketMessageHandler:
             self.logger.error(f"❌ Error enviando mensaje MQTT: {e}")
             return False
 
-    def _send_create_down_alarma(self, list_users: list, alert: Dict, data_user: Dict = {}) -> bool:
+    def _send_create_active_user(self, list_users: list, alert: Dict, data_user: Dict = {}) -> bool:
         """Crear notificación de alarma por WhatsApp"""
         if not self.whatsapp_service or not self.backend_client:
             self.logger.warning("⚠️ WhatsApp service o backend client no disponibles")
             return False
             
         try:
-            #print(f"La alerta es {json.dumps(data_user,indent=4)}")
-            id_alert = alert["alert_id"]
-            image = alert["imagen_base64"]
-            alert_name = alert["nombre"]
+            #print(f"La alerta es {json.dumps(list_users,indent=4)}")
+            data_create = alert.get("activacion_alerta",{})
+            image = alert["image_alert"]
+            alert_name = alert["nombre_alerta"]
             empresa = data_user["data"]["empresa"]
             recipients = []
-            footer = f"Creada por {data_user['name']}\nSistema RESCUE"
+            footer = f"Creada por {data_create["nombre"]}\nEquipo RESCUE"
             
             for item in list_users:
                 nombre = str(item["nombre"])
@@ -677,8 +745,8 @@ class WebSocketMessageHandler:
                 
             buttons = [
                 {
-                    "id": id_alert,
-                    "title": "Apagar alarma"
+                    "id": "Activar_User",
+                    "title": "Estoy disponible"
                 }
             ]
             
@@ -690,11 +758,11 @@ class WebSocketMessageHandler:
                 recipients=recipients,
                 use_queue=True
             )
-            self.logger.info(f"✅ Alarma {id_alert} enviada a {len(recipients)} usuarios")
+            self.logger.info(f"✅notificacion de activacion de usuario enviada a {len(recipients)} usuarios")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error enviando notificación de alarma: {e}")
+            self.logger.error(f"❌ Error enviando notificación de activacion de usuario: {e}")
             return False
    
     def _intermediate_to_mqtt(self,topics,alert) -> None:
@@ -800,29 +868,6 @@ class WebSocketMessageHandler:
             self.whatsapp_error_count += 1
             return False
 
-    async def _handle_empresa_message(self, message_data: Dict) -> bool:
-        """Manejar mensaje de desactivación por empresa (versión asíncrona)"""
-        try:
-            if not self.empresa_handler:
-                self.logger.error("❌ Empresa handler no disponible")
-                return False
-            
-            # Procesar con el handler específico de empresa
-            success = self.empresa_handler.process_empresa_deactivation(message_data)
-            
-            if success:
-                self.whatsapp_processed_count += 1
-                self.logger.info("✅ Mensaje de empresa procesado exitosamente")
-            else:
-                self.whatsapp_error_count += 1
-                self.logger.error("❌ Error procesando mensaje de empresa")
-                
-            return success
-            
-        except Exception as e:
-            self.logger.error(f"❌ Error manejando mensaje de empresa: {e}")
-            self.whatsapp_error_count += 1
-            return False
 
     async def stop_whatsapp_processing(self):
         """Detener el procesamiento de la cola de WhatsApp"""
@@ -1002,12 +1047,12 @@ class WebSocketMessageHandler:
             self.logger.error(f"❌ Error enviando notificación masiva de desactivación: {e}")
             return False
     
-    def _send_location_personalized_message(self, numeros_data: list, tipo_alarma_info: Dict, hardware_location: Dict) -> bool:
+    def _send_location_personalized_message(self, numeros_data: list, tipo_alarma_info: Dict) -> bool:
         """Enviar mensaje personalizado de ubicación por WhatsApp"""
         print("\n=== DEBUG SEND_LOCATION_PERSONALIZED_MESSAGE ===")
-        print(f"numeros_data: {json.dumps(numeros_data, indent=2)}")
-        print(f"tipo_alarma_info: {json.dumps(tipo_alarma_info, indent=2)}")
-        print(f"hardware_location: {json.dumps(hardware_location, indent=2)}")
+        # print(f"numeros_data: {json.dumps(numeros_data, indent=2)}")
+        # print(f"tipo_alarma_info: {json.dumps(tipo_alarma_info, indent=2)}")
+        # print(f"hardware_location: {json.dumps(hardware_location, indent=2)}")
         
         if not self.whatsapp_service:
             self.logger.warning("⚠️ WhatsApp service no disponible")
@@ -1015,7 +1060,8 @@ class WebSocketMessageHandler:
             return False
             
         try:
-            url_maps = hardware_location.get("direccion_url", "")
+            ubicacion = tipo_alarma_info.get("ubicacion")
+            url_maps = ubicacion.get("url_maps", "")
             print(f"URL Maps extraída: '{url_maps}'")
             
             recipients = []
@@ -1028,14 +1074,14 @@ class WebSocketMessageHandler:
                 }
                 recipients.append(data_item)
             
-            print(f"Recipients preparados: {json.dumps(recipients, indent=2)}")
+            # print(f"Recipients preparados: {json.dumps(recipients, indent=2)}")
             
             header_content = f"¡RESCUE SYSTEM UBICACIÓN!"
             
-            print(f"Enviando mensaje de ubicación con:")
-            print(f"  - Header: {header_content}")
-            print(f"  - URL: {url_maps}")
-            print(f"  - Recipients: {len(recipients)}")
+            # print(f"Enviando mensaje de ubicación con:")
+            # print(f"  - Header: {header_content}")
+            # print(f"  - URL: {url_maps}")
+            # print(f"  - Recipients: {len(recipients)}")
             
             result = self.whatsapp_service.send_personalized_broadcast(
                 recipients=recipients,
@@ -1047,7 +1093,7 @@ class WebSocketMessageHandler:
                 use_queue=True
             )
             
-            print(f"Resultado del envío: {result}")
+            # print(f"Resultado del envío: {result}")
             print("=== END DEBUG SEND_LOCATION_PERSONALIZED_MESSAGE ===")
             
             return True

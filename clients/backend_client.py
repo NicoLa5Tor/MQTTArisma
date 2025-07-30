@@ -232,15 +232,19 @@ class BackendClient:
             self.logger.error(f"Error en health check: {e}")
             return False
     
-    def create_user_alert(self, usuario_id: str, tipo_alerta: str, descripcion: str, prioridad: str = "media") -> Optional[Dict]:
+    def create_user_alert(self, usuario_id: str, latitud: str, longitud: str, tipo_alerta: str, descripcion: str, 
+                          prioridad: str = "media", tipo_creador: str = "usuario") -> Optional[Dict]:
         """
         Crear una alerta de usuario y obtener topics e ID de alerta
         
         Args:
-            usuario_id: ID del usuario (obligatorio)
+            usuario_id: ID del usuario que crea la alerta (obligatorio)
+            latitud: Latitud de la ubicación (obligatorio)
+            longitud: Longitud de la ubicación (obligatorio)
             tipo_alerta: Tipo de alerta (obligatorio)
             descripcion: Descripción de la alerta (obligatorio)
             prioridad: Prioridad de la alerta (opcional, por defecto 'media')
+            tipo_creador: Tipo del creador (opcional, por defecto 'usuario')
             
         Returns:
             Dict con la respuesta del backend incluyendo topics e ID de alerta
@@ -249,7 +253,14 @@ class BackendClient:
             endpoint = '/api/mqtt-alerts/user-alert'
             
             data = {
-                "usuario_id": usuario_id,
+                "creador": {
+                    "usuario_id": usuario_id,
+                    "tipo": tipo_creador
+                },
+                "ubicacion": {
+                    "latitud": latitud,
+                    "longitud": longitud
+                },
                 "tipo_alerta": tipo_alerta,
                 "descripcion": descripcion,
                 "prioridad": prioridad
@@ -257,6 +268,8 @@ class BackendClient:
             
             print(f"🚨 Creando alerta de usuario:")
             print(f"   🆔 Usuario ID: {usuario_id}")
+            print(f"   👤 Tipo creador: {tipo_creador}")
+            print(f"   📍 Ubicación: {latitud}, {longitud}")
             print(f"   🔔 Tipo: {tipo_alerta}")
             print(f"   📝 Descripción: {descripcion}")
             print(f"   ⚡ Prioridad: {prioridad}")
@@ -340,6 +353,152 @@ class BackendClient:
     def put(self, endpoint: str, data: Optional[Dict] = None) -> Optional[Dict]:
         """Realizar petición PUT"""
         return self._make_request('PUT', endpoint, data=data)
+    
+    def update_user_status(self, alert_id: str, usuario_id: str, disponible: Optional[bool] = None, 
+                           embarcado: Optional[bool] = None) -> Optional[Dict]:
+        """
+        Actualizar el estado de disponibilidad y/o embarcado de un usuario en una alerta
+        
+        Args:
+            alert_id: ID de la alerta (obligatorio)
+            usuario_id: ID del usuario (obligatorio)
+            disponible: Estado de disponibilidad del usuario (opcional)
+            embarcado: Estado de embarcado del usuario (opcional)
+            
+        Returns:
+            Dict con la respuesta del backend
+        """
+        try:
+            endpoint = '/api/mqtt-alerts/update-user-status'
+            
+            # Construir data solo con los campos proporcionados
+            data = {
+                "alert_id": alert_id,
+                "usuario_id": usuario_id
+            }
+            
+            # Agregar campos opcionales solo si se proporcionan
+            if disponible is not None:
+                data["disponible"] = disponible
+                
+            if embarcado is not None:
+                data["embarcado"] = embarcado
+            
+            # Validar que al menos un campo de estado se proporcione
+            if disponible is None and embarcado is None:
+                self.logger.error("❌ Debe proporcionar al menos 'disponible' o 'embarcado'")
+                return None
+            
+            print(f"🔄 Actualizando estado de usuario:")
+            print(f"   🆔 Alert ID: {alert_id}")
+            print(f"   👤 Usuario ID: {usuario_id}")
+            if disponible is not None:
+                print(f"   ✅ Disponible: {disponible}")
+            if embarcado is not None:
+                print(f"   🚢 Embarcado: {embarcado}")
+            
+            response = self.patch(endpoint, data=data)
+            
+            if response:
+                status_code = response.get('_status_code', 200)
+                print(f"📊 Respuesta (status {status_code}):")
+                print(f"   📝 Data enviada: {json.dumps(data, indent=2)}")
+                print(f"   🔍 Respuesta: {json.dumps(response, indent=2)}")
+            
+            if response and response.get('success'):
+                print(f"✅ Estado de usuario actualizado exitosamente:")
+                print(f"   🆔 Alert ID: {alert_id}")
+                print(f"   👤 Usuario ID: {usuario_id}")
+                
+                # Mostrar información adicional si está disponible
+                if 'message' in response:
+                    print(f"   📝 Mensaje: {response['message']}")
+                
+                return response
+            else:
+                error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
+                status_code = response.get('_status_code', 'N/A') if response else 'N/A'
+                print(f"❌ Error actualizando estado de usuario (status {status_code}): {error_msg}")
+                return response  # Devolver la respuesta completa para manejo de errores
+                
+        except Exception as e:
+            print(f"💥 Error actualizando estado de usuario: {e}")
+            return None
+    
+    def get_alert_by_id(self, alert_id: str, user_id: str) -> Optional[Dict]:
+        """
+        Obtener detalles de una alerta específica para un usuario
+        
+        Args:
+            alert_id: ID de la alerta a consultar (obligatorio)
+            user_id: ID del usuario que solicita los detalles (obligatorio)
+            
+        Returns:
+            Dict con los datos de la alerta o None si no se encuentra/hay error
+        """
+        try:
+            endpoint = '/api/mqtt-alerts/user-alert/details'
+            
+            data = {
+                "alert_id": alert_id,
+                "user_id": user_id
+            }
+            
+            print(f"🔍 Consultando detalles de alerta para usuario:")
+            print(f"   🆔 Alert ID: {alert_id}")
+            print(f"   👤 User ID: {user_id}")
+            
+            response = self.post(endpoint, data=data)
+            
+            if response:
+                status_code = response.get('_status_code', 200)
+                print(f"📊 Respuesta (status {status_code}):")
+                
+                # Manejo específico para 404 (alerta no encontrada o usuario sin acceso)
+                if status_code == 404:
+                    error_msg = response.get('message', 'Alerta no encontrada o usuario sin acceso')
+                    print(f"❌ No encontrado (404): {error_msg}")
+                    return response  # Devolver respuesta completa para manejo de errores
+                
+                # Manejo específico para 401 (no autorizado)
+                elif status_code == 401:
+                    error_msg = response.get('message', 'No autorizado')
+                    print(f"🔒 No autorizado (401): {error_msg}")
+                    return response  # Devolver respuesta completa para manejo de errores
+                
+                # Para respuestas exitosas
+                if response.get('success'):
+                    alert_data = response.get('alert')
+                    if alert_data:
+                        print(f"✅ Detalles de alerta obtenidos exitosamente:")
+                        print(f"   🆔 ID: {alert_data.get('_id', 'N/A')}")
+                        print(f"   🏢 Empresa: {alert_data.get('empresa_nombre', 'N/A')}")
+                        print(f"   🏢 Sede: {alert_data.get('sede', 'N/A')}")
+                        print(f"   🔔 Tipo: {alert_data.get('tipo_alerta', 'N/A')}")
+                        print(f"   📝 Descripción: {alert_data.get('descripcion', 'N/A')}")
+                        print(f"   ⚡ Prioridad: {alert_data.get('prioridad', 'N/A')}")
+                        print(f"   🟢 Activa: {alert_data.get('activo', False)}")
+                        print(f"   📱 Números telefónicos: {len(alert_data.get('numeros_telefonicos', []))}")
+                        
+                        return response  # Devolver respuesta completa
+                    else:
+                        print(f"❌ No se encontraron datos de alerta en la respuesta")
+                        return response
+                else:
+                    error_msg = response.get('error', response.get('message', 'Error desconocido'))
+                    print(f"❌ Error consultando detalles de alerta: {error_msg}")
+                    return response  # Devolver respuesta completa para manejo de errores
+            else:
+                print(f"❌ Sin respuesta del servidor para alerta: {alert_id}")
+                return None
+                
+        except Exception as e:
+            print(f"💥 Error consultando detalles de alerta: {e}")
+            return None
+    
+    def patch(self, endpoint: str, data: Optional[Dict] = None) -> Optional[Dict]:
+        """Realizar petición PATCH"""
+        return self._make_request('PATCH', endpoint, data=data)
     
     def _clear_token(self):
         """Limpiar el token de los headers después de usarlo"""
