@@ -390,17 +390,83 @@ class WebSocketMessageHandler:
                         self.whatsapp_service.send_individual_message(phone = number,
                                                                       message = "Ahora recibiras mensajes de los miembros del equipo")
                     elif type_button == "APAGAR ALARMA":
-                        response_desactivate = self._desactivate_alarm_to_back(id_alert=id_alert,cached=cached_info)
-                        list_users = response_desactivate["numeros_telefonicos"]
-                        self._clean_bulk_cache_alert(list_user=list_users)
-                        list_not_you = [u for u in list_users if u["numero"] != number]
-                        self._send_bulk_team(list_users=list_not_you,
-                                             name_made=user,type_message="text",
-                                             message="Alerta desactivada.\nConversación grupal concluida.")
-                        self.whatsapp_service.send_individual_message(phone = number,
-                                                                      message = "Desactivaste la alarma exitosamente\nConversación grupal concluida.")
-                        print(json.dumps(response_desactivate,indent=4))
-                        self._send_deactivation_to_mqtt()
+                        try:
+                            response_desactivate = self._desactivate_alarm_to_back(id_alert=id_alert,cached=cached_info)
+                            
+                            # Verificar si la desactivación fue exitosa
+                            if response_desactivate and response_desactivate.get('success', False):
+                                # Verificar que tenemos los datos necesarios
+                                list_users = response_desactivate.get("numeros_telefonicos", [])
+                                if not list_users:
+                                    self.logger.warning("⚠️ No se encontraron usuarios en la respuesta de desactivación")
+                                    self.whatsapp_service.send_individual_message(phone=number, message="Alarma desactivada exitosamente")
+                                    return  # Salir temprano para evitar más procesamiento
+                                
+                                # Limpiar cache de usuarios
+                                try:
+                                    self._clean_bulk_cache_alert(list_user=list_users)
+                                except Exception as cache_error:
+                                    self.logger.error(f"❌ Error limpiando cache: {cache_error}")
+                                
+                                # Enviar mensajes a otros usuarios
+                                try:
+                                    list_not_you = [u for u in list_users if u["numero"] != number]
+                                    if list_not_you:
+                                        self._send_bulk_team(list_users=list_not_you,
+                                                             name_made=user,type_message="text",
+                                                             message="Alerta desactivada.\nConversación grupal concluida.")
+                                except Exception as msg_error:
+                                    self.logger.error(f"❌ Error enviando mensajes bulk: {msg_error}")
+                                
+                                # Enviar confirmación al usuario que desactivó
+                                try:
+                                    self.whatsapp_service.send_individual_message(phone=number,
+                                                                                  message="Desactivaste la alarma exitosamente\nConversación grupal concluida.")
+                                except Exception as confirm_error:
+                                    self.logger.error(f"❌ Error enviando confirmación: {confirm_error}")
+                                
+                                # Debug response
+                                try:
+                                    print(json.dumps(response_desactivate,indent=4))
+                                except Exception as json_error:
+                                    self.logger.error(f"❌ Error imprimiendo JSON: {json_error}")
+                                
+                                # Enviar comando MQTT de desactivación
+                                try:
+                                    topics = response_desactivate.get("topics", [])
+                                    if topics:
+                                        prioridad = response_desactivate.get("prioridad", "media")
+                                        self._send_deactivation_to_mqtt(topics=topics, prioridad=prioridad)
+                                    else:
+                                        self.logger.info("ℹ️ No hay topics MQTT para desactivar")
+                                except Exception as mqtt_error:
+                                    self.logger.error(f"❌ Error enviando comandos MQTT: {mqtt_error}")
+                                
+                                self.logger.info(f"✅ Alarma {id_alert} desactivada exitosamente por usuario {user}")
+                            else:
+                                # Error en la desactivación - enviar mensaje de error
+                                error_msg = response_desactivate.get('message', 'Error desconocido') if response_desactivate else 'Sin respuesta del servidor'
+                                self.logger.error(f"❌ Error desactivando alarma {id_alert}: {error_msg}")
+                                
+                                # Enviar mensaje personalizado de error al usuario
+                                try:
+                                    self.whatsapp_service.send_individual_message(
+                                        phone=number,
+                                        message=f"⚠️ {user}, no se pudo desactivar la alarma.\n\nPosibles causas:\n• La alarma ya fue desactivada por otro usuario\n• Error temporal del sistema\n\nPor favor intenta nuevamente o contacta al administrador."
+                                    )
+                                except Exception as error_msg_error:
+                                    self.logger.error(f"❌ Error enviando mensaje de error: {error_msg_error}")
+                        
+                        except Exception as general_error:
+                            # Capturar cualquier error no manejado para evitar que Redis reintente
+                            self.logger.error(f"💥 Error general en desactivación de alarma: {general_error}")
+                            try:
+                                self.whatsapp_service.send_individual_message(
+                                    phone=number,
+                                    message=f"❌ {user}, ocurrió un error inesperado al desactivar la alarma. Por favor contacta al administrador."
+                                )
+                            except Exception:
+                                pass  # Si ni siquiera podemos enviar el mensaje de error, no hacer nada
                 elif is_list:
                     #Esto es para si es una lista despues de que ya se activo
                     opcion = is_list["id"]
