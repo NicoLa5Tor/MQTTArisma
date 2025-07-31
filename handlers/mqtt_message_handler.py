@@ -139,34 +139,57 @@ class MQTTMessageHandler:
             return False
 
     def _handle_alarm_notifications(self, response: Dict, mqtt_data: Dict) -> None:
-        """Procesar respuesta del backend y enviar notificaciones"""
+        """Procesar respuesta del backend y enviar notificaciones - COMPLETO como WebSocket handler"""
         try:
             # ENVIAR MENSAJES MQTT A OTROS HARDWARE
             self._send_mqtt_message(data=response, mqtt_data=mqtt_data)
             
-            # ENVIAR NOTIFICACIONES WHATSAPP (solo si tenemos servicio WhatsApp)
+            # PROCESAR NOTIFICACIONES WHATSAPP (replicando WebSocket handler)
             if self.whatsapp_service:
-                list_users = response.get("numeros_telefonicos", [])
-                tipo_alarma_info = response.get("tipo_alarma_info", {})
-                hardware_location = response.get("hardware_ubicacion", {})
+                # Extraer datos de la respuesta
+                alert_data = response.get("alert", {})
+                list_users = alert_data.get("numeros_telefonicos", [])
                 
-                if list_users and tipo_alarma_info:
-                    # Crear notificación de alarma
-                    alert_id = response.get("alert_id","")
-                    self._send_create_down_alarma(list_users=list_users,
-                                                  alert=tipo_alarma_info,
-                                                  alert_id=alert_id)
-                    time.sleep(1)
-                    # Enviar mensaje personalizado de ubicación
-                    self._send_location_personalized_message(
-                        hardware_location=hardware_location,
-                        numeros_data=list_users,
-                        tipo_alarma_info=tipo_alarma_info
+                if list_users and alert_data:
+                    # 1. ENVIAR NOTIFICACIONES DE ACTIVACIÓN ("Estoy disponible")
+                    self._send_create_active_user(
+                        alert=alert_data,
+                        list_users=list_users,
+                        mqtt_data=mqtt_data  # Datos de la BOTONERA
                     )
+                    
+                    time.sleep(1)  # Pequeña pausa entre mensajes
+                    
+                    # 2. ENVIAR MENSAJE DE UBICACIÓN
+                    hardware_location = response.get("hardware_ubicacion", {})
+                    if hardware_location or alert_data.get("ubicacion"):
+                        self._send_location_personalized_message(
+                            numeros_data=list_users,
+                            tipo_alarma_info=alert_data,
+                            hardware_location=hardware_location
+                        )
+                    else:
+                        self.logger.warning("⚠️ No hay datos de ubicación para enviar")
+                    
+                    # 3. CREAR CACHE MASIVO PARA TODOS LOS USUARIOS
+                    self._create_bulk_cache(
+                        alarm_info=alert_data,
+                        list_users=list_users,
+                        mqtt_data=mqtt_data
+                    )
+                    
+                    # 4. ENVIAR COMANDOS MQTT A OTROS HARDWARE
+                    topics = alert_data.get("topics_otros_hardware", [])
+                    if topics:
+                        self._send_intermediate_mqtt(alert_data, topics)
+                    else:
+                        self.logger.info("ℹ️ No hay topics adicionales de hardware para activar")
+                else:
+                    self.logger.warning("⚠️ No hay usuarios o datos de alerta para procesar")
             else:
                 self.logger.info("ℹ️ WhatsApp service no disponible - solo procesamiento MQTT")
             
-            self.logger.info("ℹ️ Procesamiento de notificaciones completado")
+            self.logger.info("✅ Procesamiento completo de notificaciones completado")
             
         except Exception as e:
             self.logger.error(f"❌ Error manejando notificaciones: {e}")
@@ -321,6 +344,133 @@ class MQTTMessageHandler:
             self.logger.error(f"❌ Error enviando mensaje MQTT: {e}")
             return False
    
+    def _send_create_active_user(self, alert: Dict, list_users: list, mqtt_data: Dict) -> bool:
+        """Crear notificación de activación de usuario por WhatsApp - IGUAL al WebSocket handler"""
+        if not self.whatsapp_service:
+            self.logger.warning("⚠️ WhatsApp service no disponible")
+            return False
+            
+        try:
+            # Usar los mismos campos que el WebSocket handler
+            data_create = alert.get("activacion_alerta", {})
+            image = alert["image_alert"]
+            alert_name = alert["nombre_alerta"]
+            empresa = mqtt_data.get("empresa", "la empresa")
+            recipients = []
+            footer = f"Creada por {data_create.get('nombre', 'Hardware')}\nEquipo RESCUE"
+            
+            for item in list_users:
+                nombre = str(item["nombre"])
+                body_text = f"¡Hola {nombre.split()[0].upper()}!.\nAlerta de {alert_name} en {empresa}."
+                data = {
+                    "phone": item.get("numero", ""),
+                    "body_text": body_text
+                }
+                recipients.append(data)
+                
+            buttons = [
+                {
+                    "id": "Activar_User",
+                    "title": "Estoy disponible"
+                }
+            ]
+            
+            self.whatsapp_service.send_bulk_button_message(
+                header_type="image",
+                header_content=image,
+                buttons=buttons,
+                footer_text=footer,
+                recipients=recipients,
+                use_queue=True
+            )
+            self.logger.info(f"✅ Notificación de activación de usuario enviada a {len(recipients)} usuarios")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando notificación de activación de usuario: {e}")
+            return False
+
+    def _create_bulk_cache(self, alarm_info: Dict, list_users: list, mqtt_data: Dict) -> None:
+        """Crear cache masivo actualizado para todos los usuarios"""
+        try:
+            for user in list_users:
+                user_id = user.get("usuario_id", "")
+                cache_data = {
+                    "created_at": time.strftime("%Y-%m-%dT%H:%M:%S"),  # Fecha de creacion
+                    "data": {
+                        "alert_active": True,
+                        "disponible": user.get("disponible", True),
+                        "embarcado": user.get("embarcado", False),
+                        "empresa": mqtt_data.get("empresa", ""),
+                        "id": user_id,
+                        "info_alert": {
+                            "alert_id": alarm_info.get("_id", "")
+                        }
+                    },
+                    "name": user.get("nombre", ""),
+                    "phone": user.get("numero", "")
+                }
+                
+                # Simular guardar en el cache
+                self.whatsapp_service.add_number_to_cache(
+                    phone=user.get("numero", ""),
+                    name=user.get("nombre", ""),
+                    data=cache_data["data"]
+                )
+                self.logger.info(f'📝 Cache creado para usuario {user.get("numero")}: {json.dumps(cache_data, indent=2)}')
+            self.logger.info(f'✅ Cache masivo actualizado creado para {len(list_users)} usuarios')
+        except Exception as e:
+            self.logger.error(f'❌ Error creando cache masivo actualizado: {e}')
+            return False
+
+    def _send_intermediate_mqtt(self, alert_data: Dict, topics: list) -> bool:
+        """Enviar comandos MQTT a otros dispositivos hardware"""
+        try:
+            if not self.mqtt_publisher:
+                self.logger.warning("⚠️ No hay cliente MQTT publisher disponible")
+                return False
+            
+            # Datos base para enviar a otros hardware
+            base_message = {
+                "action": "alarm_activated",
+                "alert_type": alert_data.get("tipo_alerta", ""),
+                "alert_name": alert_data.get("nombre", ""),
+                "priority": alert_data.get("prioridad", "media"),
+                "timestamp": time.time()
+            }
+            
+            success_count = 0
+            
+            for topic in topics:
+                # Agregar prefijo del patrón si no lo tiene
+                full_topic = f"{self.pattern_topic}/{topic}" if not topic.startswith(self.pattern_topic) else topic
+                
+                # Personalizar mensaje según tipo de hardware en el topic
+                message = base_message.copy()
+                
+                if "SEMAFORO" in topic.upper():
+                    message["color"] = alert_data.get("tipo_alerta", "ROJA")
+                elif "PANTALLA" in topic.upper():
+                    message["display_text"] = f"ALERTA: {alert_data.get('nombre', 'EMERGENCIA')}"
+                    message["display_priority"] = alert_data.get("prioridad", "ALTA")
+                elif "SIRENA" in topic.upper():
+                    message["sound_pattern"] = alert_data.get("patron_sonido", "CONTINUO")
+                    message["duration"] = alert_data.get("duracion_sonido", 30)
+                
+                # Enviar mensaje
+                if self.mqtt_publisher.publish_json(full_topic, message, qos=1):
+                    success_count += 1
+                    self.logger.info(f"✅ Comando MQTT enviado a: {full_topic}")
+                else:
+                    self.logger.error(f"❌ Error enviando comando MQTT a: {full_topic}")
+            
+            self.logger.info(f"✅ Comandos MQTT enviados a {success_count}/{len(topics)} dispositivos")
+            return success_count == len(topics)
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando comandos MQTT intermedios: {e}")
+            return False
+
     def get_statistics(self) -> Dict[str, Any]:
         """Obtener estadísticas del manejador MQTT"""
         return {
