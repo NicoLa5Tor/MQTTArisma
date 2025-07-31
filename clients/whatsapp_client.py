@@ -520,6 +520,56 @@ class WhatsAppClient:
             print(f"💥 Error actualizando información del cache: {type(e).__name__}")
             self.logger.error(f"Error actualizando información del cache: {str(e)[:200]}")
             return None
+
+    def bulk_update_numbers(self, phones: List[str], data: Dict) -> Optional[Dict]:
+        """
+        Actualizar información de múltiples números de WhatsApp de forma masiva
+        
+        Args:
+            phones: Lista de números de teléfono (formato internacional)
+            data: Datos a actualizar para todos los números (ej: {"status": "active", "campaign": "summer_2024"})
+            
+        Returns:
+            Dict con respuesta de la API o None si hay error
+            
+        Example:
+            client.bulk_update_numbers(
+                phones=["573123456789", "573987654321", "573111222333"],
+                data={
+                    "status": "active",
+                    "last_contact": "2024-01-20",
+                    "campaign": "summer_2024"
+                }
+            )
+        """
+        try:
+            # Limpiar números de teléfono
+            phones_clean = [self._clean_phone_number(phone) for phone in phones]
+            
+            payload = {
+                "phones": phones_clean,
+                "data": data
+            }
+            
+            print(f"🔄 Actualización masiva de números:")
+            print(f"   📞 Números a actualizar: {len(phones_clean)}")
+            print(f"   📋 Datos a actualizar: {data}")
+            
+            response = self._make_request('PATCH', '/api/numbers/bulk-update', data=payload)
+            
+            if response:
+                updated_count = response.get('updated_count', len(phones_clean))
+                print(f"✅ Actualización masiva completada exitosamente:")
+                print(f"   📤 Actualizados: {updated_count}/{len(phones_clean)}")
+                return response
+            else:
+                print(f"❌ Error en actualización masiva")
+                return None
+                
+        except Exception as e:
+            print(f"💥 Error en actualización masiva: {type(e).__name__}")
+            self.logger.error(f"Error en actualización masiva: {str(e)[:200]}")
+            return None
     
     def _clean_phone_number(self, phone: str) -> str:
         """

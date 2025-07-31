@@ -476,6 +476,41 @@ class WhatsAppService:
             print(f"💥 Error en servicio WhatsApp actualizando cache: {e}")
             self.logger.error(f"Error en servicio WhatsApp actualizando cache: {e}")
             return False
+
+    def bulk_update_numbers(self, phones: List[str], data: Dict) -> bool:
+        """
+        Actualizar información de múltiples números de WhatsApp de forma masiva
+        
+        Args:
+            phones: Lista de números de teléfono (formato internacional)
+            data: Datos a actualizar para todos los números (ej: {"status": "active", "campaign": "summer_2024"})
+            
+        Returns:
+            bool: True si se actualizó exitosamente, False en caso contrario
+        """
+        try:
+            if not self.config.enabled:
+                self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
+                return False
+            
+            print(f"🔄 Servicio WhatsApp - Realizando actualización masiva de {len(phones)} números...")
+            
+            response = self.client.bulk_update_numbers(phones, data)
+            
+            if response:
+                updated_count = response.get('updated_count', len(phones))
+                print(f"✅ Actualización masiva completada exitosamente")
+                self.logger.info(f"Actualización masiva completada: {updated_count}/{len(phones)} números actualizados con datos: {data}")
+                return True
+            else:
+                print(f"❌ Error en actualización masiva")
+                self.logger.error(f"Error en actualización masiva de {len(phones)} números")
+                return False
+                
+        except Exception as e:
+            print(f"💥 Error en servicio WhatsApp actualización masiva: {e}")
+            self.logger.error(f"Error en servicio WhatsApp actualización masiva: {e}")
+            return False
     
     def process_whatsapp_notification(self, notification: Dict[str, Any]) -> bool:
         """

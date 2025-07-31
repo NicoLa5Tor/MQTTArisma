@@ -323,7 +323,7 @@ class WebSocketMessageHandler:
                 print("⚠️ NO se envió mensaje de ubicación - faltan datos")
             self._create_bulk_cache(list_users=list_users,alarm_info=data_alert,cache_creator=cached_info)
            # print(json.dumps(entry,indent=4))
-            topics = response_alarm.get("topics",{})
+            topics = data_alert.get("topics_otros_hardware",{})
             self._intermediate_to_mqtt(alert=data_alert,topics=topics)
             return True
         except Exception as ex:
@@ -389,6 +389,18 @@ class WebSocketMessageHandler:
                         self.whatsapp_service.update_number_cache(phone=number, data=data_update)
                         self.whatsapp_service.send_individual_message(phone = number,
                                                                       message = "Ahora recibiras mensajes de los miembros del equipo")
+                    elif type_button == "APAGAR ALARMA":
+                        response_desactivate = self._desactivate_alarm_to_back(id_alert=id_alert,cached=cached_info)
+                        list_users = response_desactivate["numeros_telefonicos"]
+                        self._clean_bulk_cache_alert(list_user=list_users)
+                        list_not_you = [u for u in list_users if u["numero"] != number]
+                        self._send_bulk_team(list_users=list_not_you,
+                                             name_made=user,type_message="text",
+                                             message="Alerta desactivada.\nConversación grupal concluida.")
+                        self.whatsapp_service.send_individual_message(phone = number,
+                                                                      message = "Desactivaste la alarma exitosamente\nConversación grupal concluida.")
+                        print(json.dumps(response_desactivate,indent=4))
+                        self._send_deactivation_to_mqtt()
                 elif is_list:
                     #Esto es para si es una lista despues de que ya se activo
                     opcion = is_list["id"]
@@ -474,38 +486,46 @@ class WebSocketMessageHandler:
                 self._alarm_back_save(entry_alarm=is_list,cached_info=cached_info)
                 self.logger.info("Procesando selección de alarma")
                 return
-            if is_button:
-                self.logger.info("Procesando apagar alarma")
-                #print(f"es para apagar {json.dumps(entry,indent=4)}")
-                response = self._desactivate_alarm_to_back(entry=is_button,cached=cached_info)
-                if response and response.get('success'):
-                    # Si se desactivó exitosamente, enviar confirmación personalizada
-                    self._send_alarm_deactivation_success_message(number, user, response)
-                    # También enviar comando de desactivación a los dispositivos MQTT
-                    topics = response.get("topics", [])
-                    prioridad = response.get("prioridad", "media")
-                    if topics:
-                        self._send_deactivation_to_mqtt(topics=topics, prioridad=prioridad)
+            # if is_button:
+            #     self.logger.info("Procesando apagar alarma")
+            #     #print(f"es para apagar {json.dumps(entry,indent=4)}")
+            #     response = self._desactivate_alarm_to_back(entry=is_button,cached=cached_info)
+            #     if response and response.get('success'):
+            #         # Si se desactivó exitosamente, enviar confirmación personalizada
+            #         self._send_alarm_deactivation_success_message(number, user, response)
+            #         # También enviar comando de desactivación a los dispositivos MQTT
+            #         topics = response.get("topics", [])
+            #         prioridad = response.get("prioridad", "media")
+            #         if topics:
+            #             self._send_deactivation_to_mqtt(topics=topics, prioridad=prioridad)
                     
-                    return  # No enviar lista de alarmas después de desactivar
-                else:
-                    # Si falló, enviar mensaje de error personalizado 
-                    self._send_alarm_deactivation_error_message(number, user, response)
-                    return  # No enviar lista de alarmas si hubo error
+            #         return  # No enviar lista de alarmas después de desactivar
+            #     else:
+            #         # Si falló, enviar mensaje de error personalizado 
+            #         self._send_alarm_deactivation_error_message(number, user, response)
+            #         return  # No enviar lista de alarmas si hubo error
         
         
       
         # Enviar lista de alarmas solo si NO es una desactivación
         self._send_create_alarma(number=number, usuario=user, is_in_cached=True,message_time=message)
-    def _desactivate_alarm_to_back(self,entry: Dict, cached:Dict) ->Optional[Dict]:
+    def _clean_bulk_cache_alert(self,list_user:list[Dict]) -> None:
         try:
-
-            alert_id = entry["id"]
+            data = {
+                "info_alert" : "__DELETE__",
+                "alert_active": "__DELETE__",
+                "disponible": "__DELETE__",
+                "embarcado": "__DELETE__"
+            }
+            list_phones = [n["numero"] for n in list_user]
+            self.whatsapp_service.bulk_update_numbers(phones = list_phones,data=data )
+        except Exception as ex:
+            self.logger.error(f"Error en _clean_bulk_cache_alert {ex}")
+    def _desactivate_alarm_to_back(self,id_alert, cached:Dict) ->Optional[Dict]:
+        try:
             user_id = cached["data"]["id"]
-            print(alert_id+"+"+user_id)
-           # print(json.dumps(entry,indent=4))
             response = self.backend_client.deactivate_user_alert(
-                alert_id = alert_id,
+                alert_id = id_alert,
                 desactivado_por_id = user_id,
                 desactivado_por_tipo = "usuario"
             )
@@ -789,6 +809,7 @@ class WebSocketMessageHandler:
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensaje MQTT: {e}")
             return False
+  
     def _send_create_down_alarma(self,list_users: list, alert: Dict, data_user: Dict = {}) -> bool:
         """Crear notificación de alarma por WhatsApp"""
         if not self.whatsapp_service:
@@ -796,7 +817,6 @@ class WebSocketMessageHandler:
             return False
         try:
            # print(json.dumps(alert,indent=4))
-            id_alert = alert["_id"]
             image = alert["image_alert"]
             alert_name = alert["nombre_alerta"]
             empresa = data_user["data"]["empresa"]
@@ -811,7 +831,7 @@ class WebSocketMessageHandler:
                 
             buttons = [
                 {
-                    "id": id_alert+"-APAGAR ALARMA",
+                    "id": "APAGAR ALARMA",
                     "title": "Apagar alarma"
                 }
             ]
@@ -888,9 +908,10 @@ class WebSocketMessageHandler:
         except Exception as ex:
             self.logger.error(f"Error en el intermedario a enviar mensajes al mqtt {ex}")
 
-    def _select_data_hardware(self, topic, alert) -> Dict:
+    def _select_data_hardware(self, topic, alert:Dict) -> Dict:
         """Seleccionar datos específicos según el tipo de hardware"""
         alarm_color = alert.get("tipo_alerta", "")
+        location = alert.get("ubicacion",{})
         if "SEMAFORO" in topic:
             message_data = {
                 "tipo_alarma": alarm_color,
@@ -899,10 +920,10 @@ class WebSocketMessageHandler:
             message_data = {
                 "tipo_alarma": alarm_color,
                 "prioridad": alert.get("prioridad",""),
-                "ubicacion": alert.get("direccion", ""),
-                "url": alert.get("direccion_open_maps", ""),
-                "elementos_necesarios": alert.get("implementos_necesarios", []),
-                "instrucciones": alert.get("recomendaciones", [])
+                "ubicacion": location.get("direccion", ""),
+                "url": location.get("url_maps", ""),
+                "elementos_necesarios": alert.get("elementos_necesarios", []),
+                "instrucciones": alert.get("instrucciones", [])
             }
         else:
             message_data = {
