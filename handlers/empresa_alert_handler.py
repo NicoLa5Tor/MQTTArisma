@@ -81,7 +81,10 @@ class EmpresaAlertHandler:
             self.logger.info(f"   🏢 Empresa: {empresa}")
             self.logger.info(f"   🏛️ Sede: {sede}")
             
-            # 1. Enviar notificación WhatsApp a usuarios
+            # 1. Limpiar caché de usuarios afectados (igual que WebSocket handler)
+            cache_success = self._clean_users_cache_after_deactivation(usuarios)
+            
+            # 2. Enviar notificación WhatsApp a usuarios
             whatsapp_success = self._send_empresa_deactivation_notification(
                 usuarios=usuarios,
                 alert_info={
@@ -94,14 +97,14 @@ class EmpresaAlertHandler:
                 }
             )
             
-            # 2. Enviar comandos MQTT a dispositivos hardware
+            # 3. Enviar comandos MQTT a dispositivos hardware
             mqtt_success = self._send_mqtt_deactivation_commands(
                 hardware_list=hardware_vinculado,
                 prioridad=prioridad
             )
             
             # Actualizar estadísticas
-            if whatsapp_success and mqtt_success:
+            if cache_success and whatsapp_success and mqtt_success:
                 self.processed_count += 1
                 self.logger.info("✅ Desactivación por empresa procesada exitosamente")
                 return True
@@ -146,6 +149,54 @@ class EmpresaAlertHandler:
             return False
         
         return True
+
+    def _clean_users_cache_after_deactivation(self, usuarios: List[Dict]) -> bool:
+        """Limpiar caché de usuarios después de desactivación (igual que WebSocket handler)"""
+        if not self.whatsapp_service:
+            self.logger.warning("⚠️ WhatsApp service no disponible para limpieza de caché")
+            return False
+            
+        try:
+            # Crear estructura de datos igual que en WebSocket handler
+            list_user_format = []
+            for usuario in usuarios:
+                telefono = usuario.get("telefono", "")
+                nombre = usuario.get("nombre", "Usuario")
+                
+                # Limpiar formato del teléfono si es necesario
+                if telefono.startswith("+"):
+                    telefono = telefono[1:]  # Remover el +
+                
+                if telefono:
+                    list_user_format.append({
+                        "numero": telefono,
+                        "nombre": nombre
+                    })
+            
+            if not list_user_format:
+                self.logger.warning("⚠️ No hay usuarios válidos para limpiar caché")
+                return False
+            
+            # Usar la misma estructura de datos de limpieza que el WebSocket handler
+            data_to_delete = {
+                "info_alert": "__DELETE__",
+                "alert_active": "__DELETE__", 
+                "disponible": "__DELETE__",
+                "embarcado": "__DELETE__"
+            }
+            
+            # Extraer solo los números de teléfono
+            list_phones = [user["numero"] for user in list_user_format]
+            
+            # Usar el método bulk_update_numbers igual que en WebSocket handler
+            self.whatsapp_service.bulk_update_numbers(phones=list_phones, data=data_to_delete)
+            
+            self.logger.info(f"✅ Caché limpiado para {len(list_phones)} usuarios")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error limpiando caché de usuarios: {e}")
+            return False
 
     def _send_empresa_deactivation_notification(self, usuarios: List[Dict], alert_info: Dict) -> bool:
         """Enviar notificación de desactivación por empresa via WhatsApp"""
