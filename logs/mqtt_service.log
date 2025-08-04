@@ -6660,3 +6660,210 @@
 2025-07-30 23:55:53,010 - mqtt_service - INFO - ✅ Mensaje MQTT #17 procesado exitosamente
 2025-07-30 23:55:54,068 - mqtt_service - INFO - 🎉 MENSAJE MQTT #18 - TOPIC: empresas/NicolasEmpresa/Secundaria/PANTALLA/Nicols
 2025-07-30 23:55:54,068 - mqtt_service - INFO - ✅ Mensaje MQTT #18 procesado exitosamente
+2025-07-31 00:00:25,942 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:00:25,942 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:00:26,107 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:00:26,107 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:00:26,184 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 00:00:26,256 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:00:26,256 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:00:26,256 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 00:00:26,791 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:00:26,792 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:00:26,792 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 00:00:26,975 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:00:26,975 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:00:26,975 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 00:00:27,068 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-31 00:00:27,069 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-31 00:00:27,069 - mqtt_service - INFO -   • Total de mensajes recibidos: 18
+2025-07-31 00:00:27,069 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 6
+2025-07-31 00:00:27,069 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-31 00:00:27,069 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-31 00:00:27,069 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:00:27,069 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 00:00:27,069 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-31 00:00:27,069 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-31 00:00:27,069 - mqtt_service - INFO -   • Total de mensajes recibidos: 18
+2025-07-31 00:00:27,069 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 6
+2025-07-31 00:00:27,069 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-31 00:00:27,069 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-31 00:00:29,242 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-07-31 00:00:29,242 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-07-31 00:00:29,242 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-07-31 00:00:29,243 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-07-31 00:00:29,583 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-07-31 00:00:29,734 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-07-31 00:00:29,734 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-07-31 00:00:29,734 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-31 00:00:29,974 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-31 00:00:29,975 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-31 00:00:37,976 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware
+2025-07-31 00:00:37,977 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente
+2025-07-31 00:02:18,963 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:02:18,963 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:02:19,108 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:02:19,108 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:02:19,224 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:02:19,224 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:02:19,232 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 00:02:19,785 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-31 00:02:19,785 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-31 00:02:19,785 - mqtt_service - INFO -   • Total de mensajes recibidos: 1
+2025-07-31 00:02:19,786 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 1
+2025-07-31 00:02:19,786 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-31 00:02:19,786 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-31 00:02:19,786 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:02:19,786 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 00:02:19,786 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-31 00:02:19,786 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-31 00:02:19,786 - mqtt_service - INFO -   • Total de mensajes recibidos: 1
+2025-07-31 00:02:19,786 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 1
+2025-07-31 00:02:19,786 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-31 00:02:19,786 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-31 00:02:21,133 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-07-31 00:02:21,133 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-07-31 00:02:21,133 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-07-31 00:02:21,133 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-07-31 00:02:21,778 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-07-31 00:02:22,001 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-07-31 00:02:22,001 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-07-31 00:02:22,001 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-31 00:02:22,142 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-31 00:02:22,143 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-31 00:02:25,419 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware
+2025-07-31 00:02:25,419 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente
+2025-07-31 00:02:44,476 - mqtt_service - INFO - 🎉 MENSAJE MQTT #2 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware
+2025-07-31 00:02:44,476 - mqtt_service - INFO - ✅ Mensaje MQTT #2 procesado exitosamente
+2025-07-31 00:02:51,477 - mqtt_service - INFO - 🎉 MENSAJE MQTT #3 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware
+2025-07-31 00:02:51,477 - mqtt_service - INFO - ✅ Mensaje MQTT #3 procesado exitosamente
+2025-07-31 00:03:14,911 - mqtt_service - INFO - 🎉 MENSAJE MQTT #4 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware
+2025-07-31 00:03:14,911 - mqtt_service - INFO - ✅ Mensaje MQTT #4 procesado exitosamente
+2025-07-31 00:03:22,497 - mqtt_service - INFO - 🎉 MENSAJE MQTT #5 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware
+2025-07-31 00:03:22,497 - mqtt_service - INFO - ✅ Mensaje MQTT #5 procesado exitosamente
+2025-07-31 00:04:36,019 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:04:36,019 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:04:36,191 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:04:36,192 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:04:36,376 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:04:36,377 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:04:36,527 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:04:36,527 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:04:36,664 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:04:36,664 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:04:36,823 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:04:36,823 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:04:36,836 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 00:04:36,993 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 00:04:36,994 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:04:36,994 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 00:04:37,137 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-31 00:04:37,138 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-31 00:04:37,138 - mqtt_service - INFO -   • Total de mensajes recibidos: 5
+2025-07-31 00:04:37,138 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2025-07-31 00:04:37,138 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-31 00:04:37,138 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-31 00:04:37,138 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 00:04:37,138 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 00:04:37,138 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-31 00:04:37,139 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-31 00:04:37,139 - mqtt_service - INFO -   • Total de mensajes recibidos: 5
+2025-07-31 00:04:37,139 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2025-07-31 00:04:37,139 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-31 00:04:37,139 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-31 12:04:24,260 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-07-31 12:04:24,261 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-07-31 12:04:24,261 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-07-31 12:04:24,261 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-07-31 12:04:24,637 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-07-31 12:04:24,829 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-07-31 12:04:24,829 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-07-31 12:04:24,829 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-31 12:04:25,050 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-31 12:04:25,050 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-31 12:24:49,856 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware
+2025-07-31 12:24:49,858 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente
+2025-07-31 13:04:56,562 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-07-31 13:04:57,863 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-31 13:04:57,864 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-07-31 14:57:00,528 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 14:57:00,529 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 14:57:00,634 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 14:57:00,697 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 14:57:00,697 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 14:57:00,697 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 14:57:00,865 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-07-31 14:57:00,865 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 14:57:00,865 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 14:57:00,891 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-31 14:57:00,891 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-31 14:57:00,891 - mqtt_service - INFO -   • Total de mensajes recibidos: 1
+2025-07-31 14:57:00,891 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 1
+2025-07-31 14:57:00,891 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-31 14:57:00,891 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-31 14:57:00,891 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-07-31 14:57:00,892 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-07-31 14:57:00,892 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-07-31 14:57:00,892 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-07-31 14:57:00,892 - mqtt_service - INFO -   • Total de mensajes recibidos: 1
+2025-07-31 14:57:00,892 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 1
+2025-07-31 14:57:00,893 - mqtt_service - INFO -   • Errores totales: 0
+2025-07-31 14:57:00,893 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-07-31 15:16:27,327 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-07-31 15:16:27,327 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-07-31 15:16:27,327 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-07-31 15:16:27,327 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-07-31 15:16:27,934 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-07-31 15:16:28,077 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-07-31 15:16:28,077 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-07-31 15:16:28,077 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-07-31 15:16:28,221 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-07-31 15:16:28,221 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-01 22:34:43,435 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-08-01 22:34:43,442 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-08-01 22:34:43,442 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-08-01 22:34:43,442 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-08-01 22:34:43,989 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-08-01 22:34:44,146 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-08-01 22:34:44,146 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-08-01 22:34:44,146 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-08-01 22:34:44,357 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-01 22:34:44,358 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-01 22:35:10,720 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware
+2025-08-01 22:35:10,721 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente
+2025-08-02 13:27:40,371 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-08-02 13:27:40,372 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-08-02 13:27:40,372 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-08-02 13:27:40,372 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-08-02 13:27:40,874 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-08-02 13:27:41,016 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-08-02 13:27:41,016 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-08-02 13:27:41,016 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-08-02 13:27:41,185 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-02 13:27:41,185 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-02 13:27:54,317 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas/NicolasEmpresa/Secundaria/BOTONERA/TestHardware
+2025-08-02 13:27:54,318 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente
+2025-08-02 13:42:20,369 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-02 13:42:21,725 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-02 13:42:21,726 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-02 17:05:55,165 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-02 17:05:56,442 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-02 17:05:56,443 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+

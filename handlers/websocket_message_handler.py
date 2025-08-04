@@ -749,27 +749,27 @@ class WebSocketMessageHandler:
                         {
                             "id": "ROJO",
                             "title": "Incendio", 
-                            "description": "Alerta por incendio"
+                            "description": "Incendios estructurales y/o forestales."
                         },
                         {
                             "id": "AZUL",
-                            "title": "Inundación", 
-                            "description": "Alerta por inundación"
+                            "title": "Accidente", 
+                            "description": "Accidentes vehiculares e industriales."
                         },
                         {
                             "id": "AMARILLO",
-                            "title": "Peligro químico", 
-                            "description": "Exposición a sustancias químicas nocivas"
+                            "title": "Sanitaria", 
+                            "description": "Emergencias médicas y/o sanitarias."
                         },
                         {
                             "id": "VERDE",
-                            "title": "Robo", 
-                            "description": "Riesgo de robo o hurto"
+                            "title": "Delincuencia", 
+                            "description": "Robos, hurtos, atracos, asonadas."
                         },
                         {
                             "id": "NARANJA",
-                            "title": "Terremoto", 
-                            "description": "Alerta por de sismo o terremoto"
+                            "title": "Catástrofe natural", 
+                            "description": "Terremotos, derrumbes y otras catástrofes."
                         }
                     ]
                 }

@@ -32,7 +32,7 @@ class MQTTMessageHandler:
     def process_mqtt_message(self, topic: str, payload: str, json_data: Optional[Dict] = None) -> bool:
         """FILTRO ABSOLUTO PARA BOTONERA - Solo procesar topics que terminen después del hardware"""
         
-        # SOLO PROCESAR SI EL TOPIC CONTIENE "BOTONERA"
+        # SOLO PROCESAR SI EL TOPIC CONTIENE "BOTONERA" Y TIENE MENSAJES APROPIADOS
         if "BOTONERA" in topic:
             topic_parts = topic.split("/")
             
@@ -56,6 +56,20 @@ class MQTTMessageHandler:
                     hardware_name = parts_after_botonera[0]
                     
                     self.logger.info(f"🚨 BOTONERA: {hardware_name} - {topic}")
+                    
+                    # Verificar que el payload no sea de tipo desactivación
+                    if payload and isinstance(payload, str):
+                        try:
+                            json_data = json.loads(payload)
+                            if json_data.get("tipo_alarma") == "NORMAL":
+                                self.logger.info(f"⚠️ Ignorando mensaje de tipo NORMAL para {hardware_name}")
+                                return True
+                        except json.JSONDecodeError:
+                            self.logger.error(f"❌ JSON inválido en payload: {payload}")
+                            return False
+                        except Exception as e:
+                            self.logger.error(f"❌ Error al procesar payload: {e}")
+                            return False
                     
                     # Procesar JSON de BOTONERA (cualquier estructura)
                     try:

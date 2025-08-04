@@ -111,10 +111,9 @@ class MQTTService:
             if rc == 0:
                 self.logger.info("🔥 Conectado exitosamente al broker MQTT")
                 
-                # Suscribirse a topics de BOTONERA
+                # Suscribirse SOLO a topics de BOTONERA física
                 topics_to_subscribe = [
-                    "empresas/+/+/BOTONERA/+",  # Estructura principal
-                    "empresas/#",               # Wildcard completo
+                    "empresas/+/+/BOTONERA/+",  # Solo BOTONERA física
                 ]
                 
                 for topic in topics_to_subscribe:
