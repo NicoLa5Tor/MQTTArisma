@@ -1,18 +1,35 @@
 version: '3.8'
 
 networks:
-  # Red para conectar con el backend (rescue)
+  mqtt-network:
+    driver: bridge
   frontend_rescue-network:
-    external: true
-  # Red para conectar con WhatsApp y Redis
-  webhook_personal_redis_network:
     external: true
 
 services:
+  redis:
+    image: redis:7.2-alpine
+    container_name: mqtt-redis-service
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - mqtt-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   mqtt-service:
     build: .
     container_name: mqtt-connection-service
     command: ["python", "mqtt_service.py"]
+    depends_on:
+      - redis
     environment:
       - MQTT_BROKER=${MQTT_BROKER}
       - MQTT_PORT=${MQTT_PORT}
@@ -26,23 +43,23 @@ services:
       - BACKEND_TIMEOUT=${BACKEND_TIMEOUT}
       - BACKEND_RETRY_ATTEMPTS=${BACKEND_RETRY_ATTEMPTS}
       - BACKEND_RETRY_DELAY=${BACKEND_RETRY_DELAY}
-      - WHATSAPP_API_URL=http://webhook_personal-app-1:5050/api
+      - WHATSAPP_API_URL=${WHATSAPP_API_URL:-http://webhook_personal-app-1:5050/api}
       - WHATSAPP_API_TIMEOUT=${WHATSAPP_API_TIMEOUT}
-      - REDIS_HOST=webhook_personal-redis-1
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_DB=${REDIS_DB}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - REDIS_MAX_CONNECTIONS=${REDIS_MAX_CONNECTIONS}
-      - WHATSAPP_QUEUE_NAME=${WHATSAPP_QUEUE_NAME}
-      - WHATSAPP_WORKERS=${WHATSAPP_WORKERS}
-      - WHATSAPP_QUEUE_TTL=${WHATSAPP_QUEUE_TTL}
-      - LOG_LEVEL=${LOG_LEVEL}
-      - MESSAGE_INTERVAL=${MESSAGE_INTERVAL}
+      - REDIS_HOST=redis
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - REDIS_DB=${REDIS_DB:-0}
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - REDIS_MAX_CONNECTIONS=${REDIS_MAX_CONNECTIONS:-10}
+      - WHATSAPP_QUEUE_NAME=${WHATSAPP_QUEUE_NAME:-whatsapp_messages}
+      - WHATSAPP_WORKERS=${WHATSAPP_WORKERS:-3}
+      - WHATSAPP_QUEUE_TTL=${WHATSAPP_QUEUE_TTL:-3600}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - MESSAGE_INTERVAL=${MESSAGE_INTERVAL:-20}
     volumes:
       - ./logs:/app/logs
     networks:
+      - mqtt-network
       - frontend_rescue-network
-      - webhook_personal_redis_network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python", "-c", "import os; exit(0)"]
@@ -54,31 +71,37 @@ services:
     build: .
     container_name: websocket-connection-service
     command: ["python", "websocket_service.py"]
+    depends_on:
+      - redis
     ports:
       - "8080:8080"
     environment:
       - WEBSOCKET_HOST=0.0.0.0
       - WEBSOCKET_PORT=8080
-      - WEBSOCKET_PING_INTERVAL=${WEBSOCKET_PING_INTERVAL}
-      - WEBSOCKET_PING_TIMEOUT=${WEBSOCKET_PING_TIMEOUT}
+      - WEBSOCKET_PING_INTERVAL=${WEBSOCKET_PING_INTERVAL:-30}
+      - WEBSOCKET_PING_TIMEOUT=${WEBSOCKET_PING_TIMEOUT:-10}
       - BACKEND_URL=http://rescue-backend:5002
       - BACKEND_API_KEY=${BACKEND_API_KEY}
-      - BACKEND_TIMEOUT=${BACKEND_TIMEOUT}
-      - WHATSAPP_API_URL=http://webhook_personal-app-1:5050/api
-      - WHATSAPP_API_TIMEOUT=${WHATSAPP_API_TIMEOUT}
-      - REDIS_HOST=webhook_personal-redis-1
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_DB=${REDIS_DB}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - LOG_LEVEL=${LOG_LEVEL}
+      - BACKEND_TIMEOUT=${BACKEND_TIMEOUT:-30}
+      - WHATSAPP_API_URL=${WHATSAPP_API_URL:-http://webhook_personal-app-1:5050/api}
+      - WHATSAPP_API_TIMEOUT=${WHATSAPP_API_TIMEOUT:-30}
+      - REDIS_HOST=redis
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - REDIS_DB=${REDIS_DB:-0}
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
     volumes:
       - ./logs:/app/logs
     networks:
+      - mqtt-network
       - frontend_rescue-network
-      - webhook_personal_redis_network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "8080"]
       interval: 30s
       timeout: 10s
       retries: 3
+
+volumes:
+  redis_data:
+    driver: local
