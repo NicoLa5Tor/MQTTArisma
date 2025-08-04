@@ -7,6 +7,9 @@ requests==2.31.0
 # WebSocket Client
 websocket-client==1.6.4
 
+# WebSocket Server
+websockets==11.0.3
+
 # JSON handling and utilities
 urllib3==2.0.7
 
