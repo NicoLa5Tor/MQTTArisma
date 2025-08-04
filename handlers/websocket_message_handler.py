@@ -85,6 +85,7 @@ class WebSocketMessageHandler:
 
     async def queue_whatsapp_message(self, message: str) -> bool:
         """Agregar mensaje de WhatsApp a la cola para procesamiento"""
+        print(f"🔍 DEBUG: Mensaje recibido en WebSocket: {message}")
         try:
             # Primero verificar si es un mensaje de empresa
             try:
