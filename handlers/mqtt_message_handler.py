@@ -215,7 +215,7 @@ class MQTTMessageHandler:
             if not alarm_info:
                 return
                 
-            hardware_ubication = data.get("hardware_ubicacion", {})
+            hardware_ubication = data.get("ubicacion", {})
             priority = data.get("prioridad", "")
             
             if "topics_otros_hardware" in data:
@@ -235,7 +235,7 @@ class MQTTMessageHandler:
 
     def _select_data_hardware(self, item, data, hardware_ubication, priority) -> Dict:
         """Seleccionar datos específicos según el tipo de hardware"""
-        alarm_color = data.get("tipo_alerta", "")
+        alarm_color = data.get("tipo_alarma", "")
         
         if "SEMAFORO" in item:
             message_data = {
