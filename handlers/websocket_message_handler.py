@@ -537,7 +537,7 @@ class WebSocketMessageHandler:
                     if location:
                         self._create_alarm(cached_info=cached_info,ubication=location)
                     else:
-                        message_location = f"{user}\nPara crear la alerta {exist_alert["info_alert"]["alert_title"]}\nDebes enviar la ubicacion."
+                        message_location = f"{user}\nPara crear la alerta {exist_alert['info_alert']['alert_title']}\nDebes enviar la ubicacion."
                         self.whatsapp_service.send_location_request(phone=number,body_text=message_location)
                     return
                 else:
@@ -930,7 +930,7 @@ class WebSocketMessageHandler:
             alert_name = alert["nombre_alerta"]
             empresa = data_user["data"]["empresa"]
             recipients = []
-            footer = f"Creada por {data_create["nombre"]}\nEquipo RESCUE"
+            footer = f"Creada por {data_create['nombre']}\nEquipo RESCUE"
             
             for item in list_users:
                 nombre = str(item["nombre"])
