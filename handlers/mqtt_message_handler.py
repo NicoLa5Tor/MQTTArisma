@@ -192,10 +192,10 @@ class MQTTMessageHandler:
                         mqtt_data=mqtt_data
                     )
                     
-                    # 4. ENVIAR COMANDOS MQTT A OTROS HARDWARE
+                    # 4. ENVIAR COMANDOS MQTT A OTROS HARDWARE (usando método limpio)
                     topics = alert_data.get("topics_otros_hardware", [])
                     if topics:
-                        self._send_intermediate_mqtt(alert_data, topics)
+                        self._intermediate_to_mqtt(alert_data, topics)
                     else:
                         self.logger.info("ℹ️ No hay topics adicionales de hardware para activar")
                 else:
@@ -446,53 +446,6 @@ class MQTTMessageHandler:
             self.logger.error(f'❌ Error creando cache masivo actualizado: {e}')
             return False
 
-    def _send_intermediate_mqtt(self, alert_data: Dict, topics: list) -> bool:
-        """Enviar comandos MQTT a otros dispositivos hardware"""
-        try:
-            if not self.mqtt_publisher:
-                self.logger.warning("⚠️ No hay cliente MQTT publisher disponible")
-                return False
-            
-            # Datos base para enviar a otros hardware
-            base_message = {
-                "action": "alarm_activated",
-                "alert_type": alert_data.get("tipo_alarma", ""),
-                "alert_name": alert_data.get("nombre", ""),
-                "priority": alert_data.get("prioridad", "media"),
-                "timestamp": time.time()
-            }
-            
-            success_count = 0
-            
-            for topic in topics:
-                # Agregar prefijo del patrón si no lo tiene
-                full_topic = f"{self.pattern_topic}/{topic}" if not topic.startswith(self.pattern_topic) else topic
-                
-                # Personalizar mensaje según tipo de hardware en el topic
-                message = base_message.copy()
-                
-                if "SEMAFORO" in topic.upper():
-                    message["color"] = alert_data.get("tipo_alarma", "ROJA")
-                elif "PANTALLA" in topic.upper():
-                    message["display_text"] = f"ALERTA: {alert_data.get('nombre', 'EMERGENCIA')}"
-                    message["display_priority"] = alert_data.get("prioridad", "ALTA")
-                elif "SIRENA" in topic.upper():
-                    message["sound_pattern"] = alert_data.get("patron_sonido", "CONTINUO")
-                    message["duration"] = alert_data.get("duracion_sonido", 30)
-                
-                # Enviar mensaje
-                if self.mqtt_publisher.publish_json(full_topic, message, qos=1):
-                    success_count += 1
-                    self.logger.info(f"✅ Comando MQTT enviado a: {full_topic}")
-                else:
-                    self.logger.error(f"❌ Error enviando comando MQTT a: {full_topic}")
-            
-            self.logger.info(f"✅ Comandos MQTT enviados a {success_count}/{len(topics)} dispositivos")
-            return success_count == len(topics)
-            
-        except Exception as e:
-            self.logger.error(f"❌ Error enviando comandos MQTT intermedios: {e}")
-            return False
 
     def get_statistics(self) -> Dict[str, Any]:
         """Obtener estadísticas del manejador MQTT"""
