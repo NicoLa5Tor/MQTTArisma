@@ -203,52 +203,61 @@ class MQTTMessageHandler:
             else:
                 self.logger.info("ℹ️ WhatsApp service no disponible - solo procesamiento MQTT")
             
-            self.logger.info("✅ Procesamiento completo de notificaciones completado")
+            self.logger.info(f"✅ Procesamiento completo de notificaciones completado")
             
         except Exception as e:
             self.logger.error(f"❌ Error manejando notificaciones: {e}")
+    
+    def _intermediate_to_mqtt(self, alert, topics) -> None:
+        """Enviar alertas a MQTT - IGUAL al WebSocket handler"""
+        try:
+            # Enviar alerta a mqtt usando el mismo método que WebSocket
+            for topic in topics:
+                full_topic = self.pattern_topic + "/" + topic
+                message_hardware = self._select_data_hardware(alert=alert, topic=full_topic)
+                self.send_mqtt_message(topic=full_topic, message_data=message_hardware)
+
+        except Exception as ex:
+            self.logger.error(f"❌ Error en el intermediario a enviar mensajes al mqtt: {ex}")
 
     def _send_mqtt_message(self, data, mqtt_data) -> None:
-        """Enviar mensajes MQTT a otros hardware"""
+        """Enviar mensajes MQTT a otros hardware - IGUAL al WebSocket handler"""
         try:
-            alarm_info = data.get("tipo_alarma_info", False)
-            if not alarm_info:
+            # Obtener datos de la alerta desde la respuesta
+            alert_data = data.get("alert", {})
+            if not alert_data:
+                self.logger.warning("⚠️ No hay datos de alert en la respuesta")
+                return
+            
+            # Obtener topics desde alert_data (igual que WebSocket)
+            topics = alert_data.get("topics_otros_hardware", [])
+            if not topics:
+                self.logger.info("ℹ️ No hay topics adicionales de hardware para activar")
                 return
                 
-            hardware_ubication = data.get("ubicacion", {})
-            priority = data.get("prioridad", "")
-            
-            if "topics_otros_hardware" in data:
-                other_hardware = data["topics_otros_hardware"]
-                for item in other_hardware:
-                    item = self.pattern_topic + "/" + item
-                    message_data = self._select_data_hardware(
-                        item=item,
-                        data=alarm_info,
-                        hardware_ubication=hardware_ubication,
-                        priority=priority
-                    )
-                    self.send_mqtt_message(topic=item, message_data=message_data)
+            # Enviar mensajes usando el mismo método que WebSocket
+            self._intermediate_to_mqtt(alert=alert_data, topics=topics)
                     
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensajes MQTT: {e}")
 
-    def _select_data_hardware(self, item, data, hardware_ubication, priority) -> Dict:
-        """Seleccionar datos específicos según el tipo de hardware"""
-        alarm_color = data.get("tipo_alarma", "")
+    def _select_data_hardware(self, topic, alert: Dict) -> Dict:
+        """Seleccionar datos específicos según el tipo de hardware - IGUAL al WebSocket handler"""
+        alarm_color = alert.get("tipo_alerta", "")
+        location = alert.get("ubicacion", {})
         
-        if "SEMAFORO" in item:
+        if "SEMAFORO" in topic:
             message_data = {
                 "tipo_alarma": alarm_color,
             }
-        elif "PANTALLA" in item:
+        elif "PANTALLA" in topic:
             message_data = {
                 "tipo_alarma": alarm_color,
-                "prioridad": priority,
-                "ubicacion": hardware_ubication.get("direccion", ""),
-                "url": hardware_ubication.get("direccion_open_maps", ""),
-                "elementos_necesarios": data.get("implementos_necesarios", []),
-                "instrucciones": data.get("recomendaciones", [])
+                "prioridad": alert.get("prioridad", ""),
+                "ubicacion": location.get("direccion", ""),
+                "url": location.get("url_maps", ""),
+                "elementos_necesarios": alert.get("elementos_necesarios", []),
+                "instrucciones": alert.get("instrucciones", [])
             }
         else:
             message_data = {
