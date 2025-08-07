@@ -43,7 +43,7 @@ services:
       - BACKEND_TIMEOUT=${BACKEND_TIMEOUT}
       - BACKEND_RETRY_ATTEMPTS=${BACKEND_RETRY_ATTEMPTS}
       - BACKEND_RETRY_DELAY=${BACKEND_RETRY_DELAY}
-      - WHATSAPP_API_URL=${WHATSAPP_API_URL:-http://webhook_personal-app-1:5050/api}
+      - WHATSAPP_API_URL=${WHATSAPP_API_URL:-http://webhook_personal-app-1:5050}
       - WHATSAPP_API_TIMEOUT=${WHATSAPP_API_TIMEOUT}
       - REDIS_HOST=redis
       - REDIS_PORT=${REDIS_PORT:-6379}
@@ -83,7 +83,7 @@ services:
       - BACKEND_URL=http://rescue-backend:5002
       - BACKEND_API_KEY=${BACKEND_API_KEY}
       - BACKEND_TIMEOUT=${BACKEND_TIMEOUT:-30}
-      - WHATSAPP_API_URL=${WHATSAPP_API_URL:-http://webhook_personal-app-1:5050/api}
+      - WHATSAPP_API_URL=${WHATSAPP_API_URL:-http://webhook_personal-app-1:5050}
       - WHATSAPP_API_TIMEOUT=${WHATSAPP_API_TIMEOUT:-30}
       - REDIS_HOST=redis
       - REDIS_PORT=${REDIS_PORT:-6379}

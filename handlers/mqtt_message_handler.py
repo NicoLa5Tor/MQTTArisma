@@ -447,7 +447,7 @@ class MQTTMessageHandler:
             # Datos base para enviar a otros hardware
             base_message = {
                 "action": "alarm_activated",
-                "alert_type": alert_data.get("tipo_alerta", ""),
+                "alert_type": alert_data.get("tipo_alarma", ""),
                 "alert_name": alert_data.get("nombre", ""),
                 "priority": alert_data.get("prioridad", "media"),
                 "timestamp": time.time()
@@ -463,7 +463,7 @@ class MQTTMessageHandler:
                 message = base_message.copy()
                 
                 if "SEMAFORO" in topic.upper():
-                    message["color"] = alert_data.get("tipo_alerta", "ROJA")
+                    message["color"] = alert_data.get("tipo_alarma", "ROJA")
                 elif "PANTALLA" in topic.upper():
                     message["display_text"] = f"ALERTA: {alert_data.get('nombre', 'EMERGENCIA')}"
                     message["display_priority"] = alert_data.get("prioridad", "ALTA")
