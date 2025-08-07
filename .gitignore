@@ -3,3 +3,5 @@
 /.env
 /create_alarm.py
 /logs
+.env.production
+
