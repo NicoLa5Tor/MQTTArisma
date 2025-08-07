@@ -230,7 +230,7 @@ class WebSocketMessageHandler:
                 }
             }
             # print(json.dumps(cached_info,indent=4))
-            body_message = f"¡{cached_info["name"]}!\nPara crear la alerta de {entry_alarm["title"]}\nPrimero debes proporcionar la ubicación"
+            body_message = f"¡{cached_info['name']}!\nPara crear la alerta de {entry_alarm['title']}\nPrimero debes proporcionar la ubicación"
             self.whatsapp_service.update_number_cache(phone=number, data=new_data)
             self.whatsapp_service.send_location_request(phone=number,body_text=body_message)
             return True
