@@ -245,7 +245,7 @@ class MQTTMessageHandler:
         """Seleccionar datos específicos según el tipo de hardware - IGUAL al WebSocket handler"""
         print(json.dumps(alert,indent=4))
         data_alert = alert.get("data",{})
-        alarm_color = data_alert.get("tipo_alerta", "")
+        alarm_color = data_alert.get("tipo_alarma", "")
         location = alert.get("ubicacion", {})
         
         if "SEMAFORO" in topic:
@@ -257,7 +257,7 @@ class MQTTMessageHandler:
                 "tipo_alarma": alarm_color,
                 "prioridad": alert.get("prioridad", ""),
                 "ubicacion": location.get("direccion", ""),
-                "url": location.get("url_maps", ""),
+                "url": location.get("url_open_maps", ""),
                 "elementos_necesarios": alert.get("elementos_necesarios", []),
                 "instrucciones": alert.get("instrucciones", [])
             }
