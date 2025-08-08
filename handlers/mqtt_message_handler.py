@@ -73,7 +73,7 @@ class MQTTMessageHandler:
                     
                     # Procesar JSON de BOTONERA (cualquier estructura)
                     try:
-                        json_data = json.loads(payload)
+                        #json_data = json.loads(payload)
                         
                         # ENVIAR DATOS AL BACKEND (usando hilo)
                         self._send_botonera_to_backend(hardware_name, json_data, topic, payload)
@@ -175,11 +175,10 @@ class MQTTMessageHandler:
                     time.sleep(1)  # Pequeña pausa entre mensajes
                     
                     # 2. ENVIAR MENSAJE DE UBICACIÓN
-                    hardware_location = response.get("hardware_ubicacion", {})
-                    if hardware_location or alert_data.get("ubicacion"):
+                    hardware_location = alert_data.get("ubicacion", {})
+                    if hardware_location:
                         self._send_location_personalized_message(
                             numeros_data=list_users,
-                            tipo_alarma_info=alert_data,
                             hardware_location=hardware_location
                         )
                     else:
@@ -243,7 +242,7 @@ class MQTTMessageHandler:
 
     def _select_data_hardware(self, topic, alert: Dict) -> Dict:
         """Seleccionar datos específicos según el tipo de hardware - IGUAL al WebSocket handler"""
-        print(json.dumps(alert,indent=4))
+      #  print(json.dumps(alert,indent=4))
         data_alert = alert.get("data",{})
         alarm_color = data_alert.get("tipo_alarma", "")
         location = alert.get("ubicacion", {})
@@ -269,14 +268,15 @@ class MQTTMessageHandler:
             
         return message_data
   
-    def _send_location_personalized_message(self, numeros_data: list, tipo_alarma_info: Dict, hardware_location: Dict) -> bool:
+    def _send_location_personalized_message(self, numeros_data: list, hardware_location: Dict) -> bool:
         """Enviar mensaje personalizado de ubicación por WhatsApp"""
+    
         if not self.whatsapp_service:
             self.logger.warning("⚠️ WhatsApp service no disponible")
             return False
             
         try:
-            url_maps = hardware_location.get("direccion_url", "")
+            url_maps = hardware_location.get("url_maps", "")
             recipients = []
             
             for item in numeros_data:

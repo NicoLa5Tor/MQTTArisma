@@ -1,7 +1,335 @@
 /.envMQTT
-/.env.production
-/.env
-/create_alarm.py
-/logs
+.env
+.env.*
+/.envBack
+.env.local
 .env.production
+.env.staging
+.env.development
+
+# Archivos de configuración con secretos
+config/secrets.py
+config/production.py
+secrets.json
+credentials.json
+
+
+# ==========================================
+# PYTHON
+# ==========================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+PYTHONPATH
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff (si se usa):
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# ==========================================
+# DOCKER
+# ==========================================
+# Docker volumes y datos
+volumes/
+data/
+mongodb_data/
+
+# Docker compose overrides
+docker-compose.override.yml
+docker-compose.prod.yml
+docker-compose.local.yml
+
+# ==========================================
+# LOGS
+# ==========================================
+# Archivos de log
+logs/
+*.log
+*.log.*
+log/
+logfile
+logfiles/
+
+# ==========================================
+# MONGODB
+# ==========================================
+# Archivos temporales de MongoDB
+*.lock
+dump/
+backup/
+
+# ==========================================
+# ARCHIVOS TEMPORALES Y BACKUP
+# ==========================================
+# Archivos temporales
+tmp/
+temp/
+.tmp/
+.temp/
+
+# Archivos de backup
+*.bak
+*.backup
+*.old
+*.orig
+*.save
+*.swp
+*.swo
+*~
+
+# ==========================================
+# IDE Y EDITORES
+# ==========================================
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# PyCharm
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ==========================================
+# SISTEMA OPERATIVO
+# ==========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ==========================================
+# ARCHIVOS ESPECÍFICOS DEL PROYECTO
+# ==========================================
+# Archivos de prueba y desarrollo
+test_uploads/
+uploads/test/
+sandbox/
+playground/
+
+# Archivos de configuración local
+local_config.py
+dev_config.py
+
+# Certificados SSL (si se usan)
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+
+# Archivos de migración temporales
+migrations/versions/*.pyc
+
+# ==========================================
+# ARCHIVOS DE ANÁLISIS Y HERRAMIENTAS
+# ==========================================
+# Security scanning
+.bandit
+.safety
+
+# Performance profiling
+*.prof
+*.profile
+
+# Memory profiling
+*.mprofile
+
+# ==========================================
+# DEPLOY Y CI/CD
+# ==========================================
+# Archivos de deployment
+deploy_key
+deploy_key.pub
+.deploy/
+
+# CI/CD secrets
+.github/secrets/
+.gitlab-ci-secrets/
+
+# ==========================================
+# OTROS ARCHIVOS SENSIBLES
+# ==========================================
+# Llaves SSH
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# Archivos de sesión
+sessions/
+*.session
+
+# Archivos de cache personalizados
+.app_cache/
+.custom_cache/
 
