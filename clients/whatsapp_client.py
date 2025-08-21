@@ -521,6 +521,80 @@ class WhatsAppClient:
             self.logger.error(f"Error actualizando información del cache: {str(e)[:200]}")
             return None
 
+    def send_bulk_template(self, recipients: List[Dict], use_queue: bool = True) -> Optional[Dict]:
+        """
+        Enviar plantillas de WhatsApp de manera masiva con componentes personalizados
+        
+        Args:
+            recipients: Lista de diccionarios, cada uno con:
+                - phone: Número de teléfono (formato internacional)
+                - template_name: Nombre de la plantilla
+                - language: Idioma (ej: 'es', 'es_CO')
+                - components: Lista de componentes de la plantilla (opcional)
+                - parameters: Lista de parámetros simples (opcional, para compatibilidad)
+            use_queue: Si usar cola o no (default True)
+            
+        Returns:
+            Dict con respuesta de la API o None si hay error
+            
+        Example:
+            recipients = [
+                {
+                    "phone": "573103391854",
+                    "template_name": "location_alert",
+                    "language": "es_CO",
+                    "components": [
+                        {
+                            "type": "body",
+                            "parameters": [
+                                {"type": "text", "text": "Juan Pérez"}
+                            ]
+                        },
+                        {
+                            "type": "button",
+                            "sub_type": "url",
+                            "index": "0",
+                            "parameters": [
+                                {"type": "text", "text": "parametro_url_usuario1"}
+                            ]
+                        }
+                    ]
+                }
+            ]
+        """
+        try:
+            # Limpiar números de teléfono en recipients
+            recipients_clean = []
+            for recipient in recipients:
+                phone_clean = self._clean_phone_number(recipient["phone"])
+                recipient_clean = recipient.copy()
+                recipient_clean["phone"] = phone_clean
+                recipients_clean.append(recipient_clean)
+            
+            data = {
+                "recipients": recipients_clean,
+                "use_queue": use_queue
+            }
+            
+            print(f"📱 Enviando bulk template message:")
+            print(f"   📞 Destinatarios: {len(recipients_clean)} números")
+            print(f"   📋 Plantillas: {[r.get('template_name', 'N/A') for r in recipients_clean[:3]]}{'...' if len(recipients_clean) > 3 else ''}")
+            print(f"   🔄 Cola: {use_queue}")
+            
+            response = self.post('/api/send-bulk-template', data=data)
+            
+            if response:
+                print(f"✅ Bulk template message enviado exitosamente a {len(recipients_clean)} números")
+                return response
+            else:
+                print(f"❌ Error enviando bulk template message")
+                return None
+                
+        except Exception as e:
+            print(f"💥 Error enviando bulk template message: {type(e).__name__}")
+            self.logger.error(f"Error enviando bulk template message: {str(e)[:200]}")
+            return None
+    
     def bulk_update_numbers(self, phones: List[str], data: Dict) -> Optional[Dict]:
         """
         Actualizar información de múltiples números de WhatsApp de forma masiva

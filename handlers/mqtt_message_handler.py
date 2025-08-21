@@ -277,27 +277,36 @@ class MQTTMessageHandler:
             
         try:
             url_maps = hardware_location.get("url_maps", "")
+            parametro = url_maps.split("place/")[1]
             recipients = []
             
             for item in numeros_data:
                 nombre = str(item.get("nombre", ""))
-                data_item = {
+                recipient = {
                     "phone": item["numero"],
-                    "body_text": f"¡HOLA {nombre.split()[0].upper()}!.\nRESCUE TE AYUDA A LLEGAR A LA EMERGENCIA"
+                    "template_name": "location_alert",
+                    "language": "es_CO",
+                    "components": [
+                        {
+                            "type": "body",
+                            "parameters": [
+                                {"type": "text", "text": nombre}
+                            ]
+                        },
+                        {
+                            "type": "button",
+                            "sub_type": "url",
+                            "index": "0",
+                            "parameters": [
+                                {"type": "text", "text": parametro}
+                            ]
+                        }
+                    ]
                 }
-                recipients.append(data_item)
             
-            header_content = f"¡RESCUE SYSTEM UBICACIÓN!"
-            self.whatsapp_service.send_personalized_broadcast(
-                recipients=recipients,
-                header_type="text",
-                header_content=header_content,
-                button_url=url_maps,
-                footer_text="Equipo RESCUE",
-                button_text="Google Maps",
-                use_queue=True
-            )
+                recipients.append(recipient)
             
+            result = self.whatsapp_service.send_bulk_template(recipients=recipients)
             return True
             
         except Exception as e:

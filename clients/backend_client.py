@@ -425,6 +425,62 @@ class BackendClient:
             print(f"💥 Error actualizando estado de usuario: {e}")
             return None
     
+    def create_empresa_alert(self, empresa_id: str, sede: str, tipo_alerta: str, descripcion: str, 
+                           prioridad: str = "media") -> Optional[Dict]:
+        """
+        Crear una alerta de empresa y obtener topics e ID de alerta
+        
+        Args:
+            empresa_id: ID de la empresa que crea la alerta (obligatorio)
+            sede: Sede de la empresa (obligatorio)
+            tipo_alerta: Tipo de alerta (obligatorio)
+            descripcion: Descripción de la alerta (obligatorio)
+            prioridad: Prioridad de la alerta (opcional, por defecto 'media')
+            
+        Returns:
+            Dict con la respuesta del backend incluyendo topics e ID de alerta
+        """
+        try:
+            endpoint = '/api/mqtt-alerts/user-alert'
+            
+            data = {
+                "creador": {
+                    "empresa_id": empresa_id,
+                    "tipo": "empresa",
+                    "sede": sede
+                },
+                "tipo_alerta": tipo_alerta,
+                "descripcion": descripcion,
+                "prioridad": prioridad
+            }
+            
+            print(f"🏢 Creando alerta de empresa:")
+            print(f"   🆔 Empresa ID: {empresa_id}")
+            print(f"   🏛️ Sede: {sede}")
+            print(f"   🔔 Tipo: {tipo_alerta}")
+            print(f"   📝 Descripción: {descripcion}")
+            print(f"   ⚡ Prioridad: {prioridad}")
+            
+            response = self.post(endpoint, data=data)
+            
+            if response and response.get('success'):
+                alert_id = response.get('alert_id', 'N/A')
+                topics = response.get('topics_otros_hardware', [])
+                
+                print(f"✅ Alerta de empresa creada exitosamente:")
+                print(f"   🆔 ID de alerta: {alert_id}")
+                print(f"   📡 Topics generados: {len(topics)} topics")
+                
+                return response
+            else:
+                error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
+                print(f"❌ Error creando alerta de empresa: {error_msg}")
+                return None
+                
+        except Exception as e:
+            print(f"💥 Error creando alerta de empresa: {e}")
+            return None
+    
     def get_alert_by_id(self, alert_id: str, user_id: str) -> Optional[Dict]:
         """
         Obtener detalles de una alerta específica para un usuario

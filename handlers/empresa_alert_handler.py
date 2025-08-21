@@ -50,6 +50,113 @@ class EmpresaAlertHandler:
         self.logger.info("🏢 Empresa Alert Handler iniciado")
         self.logger.info("📱 WhatsApp Service + MQTT Publisher habilitados")
 
+    def process_empresa_alert(self, message_data: Dict) -> bool:
+        """Procesar mensaje de alerta de empresa (activación o desactivación)"""
+        try:
+            message_type = message_data.get("type", "")
+            
+            if message_type == "alert_deactivated_by_empresa":
+                return self.process_empresa_deactivation(message_data)
+            elif message_type == "alert_created_by_empresa":
+                return self.process_empresa_activation(message_data)
+            else:
+                self.logger.warning(f"⚠️ Tipo de mensaje de empresa no reconocido: {message_type}")
+                return False
+                
+        except Exception as e:
+            self.logger.error(f"❌ Error procesando mensaje de empresa: {e}")
+            self.error_count += 1
+            return False
+    
+    def process_empresa_activation(self, message_data: Dict) -> bool:
+        """Procesar activación de alerta por empresa (similar a MQTT handler)"""
+        try:
+            self.logger.info("🏢 Procesando activación de alerta por empresa")
+            
+            # Validar estructura del mensaje
+            if not self._validate_empresa_activation_message(message_data):
+                self.logger.error("❌ Estructura de mensaje inválida para activación de empresa")
+                return False
+            
+            # Extraer datos principales de la estructura del backend
+            alert_data = message_data.get("alert", {})
+            timestamp = message_data.get("timestamp", "")
+            
+            alert_id = alert_data.get("_id", "N/A")
+            alert_name = alert_data.get("tipo_alerta", "Alerta")  # Usar tipo_alerta como nombre
+            empresa_nombre = alert_data.get("empresa_nombre", "La Empresa")
+            sede = alert_data.get("sede", "")
+            prioridad = alert_data.get("prioridad", "media")
+            usuarios = alert_data.get("numeros_telefonicos", [])
+            topics_hardware = alert_data.get("topics_otros_hardware", [])
+            descripcion = alert_data.get("descripcion", "")
+            
+            self.logger.info(f"📋 Datos de activación extraídos:")
+            self.logger.info(f"   🚨 Alert ID: {alert_id}")
+            self.logger.info(f"   📛 Tipo: {alert_name}")
+            self.logger.info(f"   📝 Descripción: {descripcion}")
+            self.logger.info(f"   👥 Usuarios: {len(usuarios)}")
+            self.logger.info(f"   📡 Hardware: {len(topics_hardware)}")
+            self.logger.info(f"   🏢 Empresa: {empresa_nombre}")
+            self.logger.info(f"   🏛️ Sede: {sede}")
+            
+            # 1. Enviar notificaciones WhatsApp a usuarios ("Estoy disponible") - solo si hay usuarios
+            whatsapp_success = True
+            if usuarios:
+                whatsapp_success = self._send_empresa_activation_notification(
+                    usuarios=usuarios,
+                    alert_data=alert_data
+                )
+            else:
+                self.logger.info("ℹ️ No hay usuarios para notificar por WhatsApp")
+            
+            # 2. Enviar mensaje de ubicación si está disponible - solo si hay usuarios
+            location_success = True
+            if usuarios:
+                hardware_location = alert_data.get("ubicacion", {})
+                if hardware_location:
+                    location_success = self._send_location_message_empresa(
+                        usuarios=usuarios,
+                        location=hardware_location
+                    )
+                else:
+                    self.logger.info("ℹ️ No hay datos de ubicación para enviar")
+            
+            # 3. Crear cache masivo para todos los usuarios - solo si hay usuarios
+            cache_success = True
+            if usuarios:
+                cache_success = self._create_bulk_cache_empresa(
+                    alert_data=alert_data,
+                    usuarios=usuarios
+                )
+            else:
+                self.logger.info("ℹ️ No hay usuarios para crear cache")
+            
+            # 4. Enviar comandos MQTT a dispositivos hardware
+            mqtt_success = True
+            if topics_hardware:
+                mqtt_success = self._send_mqtt_activation_commands(
+                    topics_hardware=topics_hardware,
+                    alert_data=alert_data
+                )
+            else:
+                self.logger.info("ℹ️ No hay hardware para activar por MQTT")
+            
+            # Actualizar estadísticas
+            if whatsapp_success and location_success and cache_success and mqtt_success:
+                self.processed_count += 1
+                self.logger.info("✅ Activación por empresa procesada exitosamente")
+                return True
+            else:
+                self.error_count += 1
+                self.logger.warning("⚠️ Activación parcialmente exitosa")
+                return False
+                
+        except Exception as e:
+            self.logger.error(f"❌ Error procesando activación por empresa: {e}")
+            self.error_count += 1
+            return False
+    
     def process_empresa_deactivation(self, message_data: Dict) -> bool:
         """Procesar desactivación de alerta por empresa"""
         try:
@@ -118,6 +225,28 @@ class EmpresaAlertHandler:
             self.error_count += 1
             return False
 
+    def _validate_empresa_activation_message(self, message_data: Dict) -> bool:
+        """Validar estructura del mensaje de activación de empresa"""
+        # Verificar campos principales
+        if "type" not in message_data or message_data["type"] != "alert_created_by_empresa":
+            self.logger.error("❌ Tipo de mensaje incorrecto para activación")
+            return False
+            
+        if "alert" not in message_data:
+            self.logger.error("❌ Campo 'alert' faltante en mensaje de activación")
+            return False
+        
+        alert = message_data["alert"]
+        
+        # Validar campos requeridos en alert para activación
+        required_alert_fields = ["_id", "tipo_alerta"]
+        for field in required_alert_fields:
+            if field not in alert:
+                self.logger.error(f"❌ Campo requerido faltante en alert para activación: {field}")
+                return False
+        
+        return True
+    
     def _validate_empresa_message(self, message_data: Dict) -> bool:
         """Validar estructura del mensaje de empresa"""
         # Verificar campos principales
@@ -350,6 +479,300 @@ class EmpresaAlertHandler:
                 "tipo_alarma": "NORMAL"
             }
 
+    def _send_empresa_activation_notification(self, usuarios: List[Dict], alert_data: Dict) -> bool:
+        """Enviar notificación de activación por empresa via WhatsApp (similar a MQTT handler)"""
+        if not self.whatsapp_service:
+            self.logger.warning("⚠️ WhatsApp service no disponible")
+            return False
+            
+        try:
+            # Extraer datos de la alerta para el mensaje
+            alert_name = alert_data.get("nombre_alerta", alert_data.get("tipo_alerta", "Alerta"))
+            empresa_nombre = alert_data.get("empresa_nombre", "La Empresa")
+            descripcion = alert_data.get("descripcion", "")
+            image_alert = alert_data.get("image_alert", "")
+            activacion_alerta = alert_data.get("activacion_alerta", {})
+            creador_nombre = activacion_alerta.get("nombre", empresa_nombre)
+            
+            self.logger.info(f"📱 Enviando notificación de activación:")
+            self.logger.info(f"   🆔 ID de alerta: {alert_data.get('_id', 'N/A')}")
+            self.logger.info(f"   📡 Topics generados: {len(alert_data.get('topics_otros_hardware', []))} topics")
+            
+            recipients = []
+            footer = f"Creada por {creador_nombre}\nEquipo RESCUE"
+            
+            for usuario in usuarios:
+                nombre = usuario.get("nombre", "Usuario")
+                telefono = usuario.get("numero", "")  # ✅ CAMBIO: usar 'numero' en lugar de 'telefono'
+                
+                # Limpiar formato del teléfono si es necesario
+                if telefono.startswith("+"):
+                    telefono = telefono[1:]  # Remover el +
+                
+                if not telefono:
+                    self.logger.warning(f"⚠️ Usuario {nombre} no tiene teléfono válido")
+                    continue
+                    
+                # Mensaje personalizado para cada usuario
+                body_text = f"¡Hola {nombre.split()[0].upper()}!.\nAlerta de {alert_name} en {empresa_nombre}."
+                if descripcion:
+                    body_text += f"\n{descripcion}"
+                
+                recipients.append({
+                    "phone": telefono,
+                    "body_text": body_text
+                })
+            
+            if not recipients:
+                self.logger.warning("⚠️ No hay destinatarios válidos para WhatsApp")
+                return False
+            
+            # Botones de acción
+            buttons = [
+                {
+                    "id": "Activar_User",
+                    "title": "Estoy disponible"
+                }
+            ]
+            
+            # Enviar mensaje usando bulk_button_message
+            if image_alert:
+                # Con imagen
+                response = self.whatsapp_service.send_bulk_button_message(
+                    header_type="image",
+                    header_content=image_alert,
+                    buttons=buttons,
+                    footer_text=footer,
+                    recipients=recipients,
+                    use_queue=True
+                )
+            else:
+                # Sin imagen, solo texto
+                response = self.whatsapp_service.send_bulk_button_message(
+                    header_type="text",
+                    header_content=f"🚨 ALERTA {alert_name.upper()}",
+                    buttons=buttons,
+                    footer_text=footer,
+                    recipients=recipients,
+                    use_queue=True
+                )
+            
+            if response:
+                self.logger.info(f"✅ Notificación de activación enviada a {len(recipients)} usuarios")
+                return True
+            else:
+                self.logger.error("❌ Error enviando notificación de activación masiva")
+                return False
+                
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando notificación de activación: {e}")
+            return False
+    
+    def _send_location_message_empresa(self, usuarios: List[Dict], location: Dict) -> bool:
+        """Enviar mensaje de ubicación personalizado por WhatsApp (similar a MQTT handler)"""
+        if not self.whatsapp_service:
+            self.logger.warning("⚠️ WhatsApp service no disponible")
+            return False
+            
+        try:
+            url_maps = location.get("url_maps", "")
+            if not url_maps:
+                self.logger.warning("⚠️ No hay URL de ubicación disponible")
+                return False
+            parametro = url_maps.split("place/")[1]
+            recipients = []
+            
+            for usuario in usuarios:
+                nombre = usuario.get("nombre", "Usuario")
+                telefono = usuario.get("numero", "") 
+                
+
+                if not telefono:
+                    continue
+                    
+                recipient = {
+                    "phone": telefono,
+                    "template_name": "location_alert",
+                    "language": "es_CO",
+                    "components": [
+                        {
+                            "type": "body",
+                            "parameters": [
+                                {"type": "text", "text": nombre}
+                            ]
+                        },
+                        {
+                            "type": "button",
+                            "sub_type": "url",
+                            "index": "0",
+                            "parameters": [
+                                {"type": "text", "text": parametro}
+                            ]
+                        }
+                    ]
+                }
+            
+                recipients.append(recipient)
+            
+            if not recipients:
+                self.logger.warning("⚠️ No hay destinatarios válidos para ubicación")
+                return False
+            
+            response = self.whatsapp_service.send_bulk_template(recipients=recipients)
+            
+            if response:
+                self.logger.info(f"✅ Mensaje de ubicación enviado a {len(recipients)} usuarios")
+                return True
+            else:
+                self.logger.error("❌ Error enviando mensaje de ubicación")
+                return False
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando mensaje de ubicación: {e}")
+            return False
+    
+    def _create_bulk_cache_empresa(self, alert_data: Dict, usuarios: List[Dict]) -> bool:
+        """Crear cache masivo para todos los usuarios (similar a MQTT handler)"""
+        if not self.whatsapp_service:
+            self.logger.warning("⚠️ WhatsApp service no disponible para cache")
+            return False
+            
+        try:
+            import time
+            
+            alert_id = alert_data.get("_id", "")
+            empresa_nombre = alert_data.get("empresa_nombre", "")
+            
+            success_count = 0
+            
+            for usuario in usuarios:
+                telefono = usuario.get("numero", "")  # ✅ CAMBIO: usar 'numero' en lugar de 'telefono'
+                nombre = usuario.get("nombre", "")
+                user_id = usuario.get("usuario_id", "")
+                
+                # Limpiar formato del teléfono si es necesario
+                if telefono.startswith("+"):
+                    telefono = telefono[1:]  # Remover el +
+                
+                if not telefono:
+                    continue
+                
+                cache_data = {
+                    "alert_active": True,
+                    "disponible": usuario.get("disponible", False),  # ✅ CAMBIO: False por defecto como en MQTT handler
+                    "embarcado": usuario.get("embarcado", False),
+                    "empresa": empresa_nombre,
+                    "id": user_id,
+                    "info_alert": {
+                        "alert_id": alert_id
+                    }
+                }
+                
+                # Agregar al cache
+                response = self.whatsapp_service.add_number_to_cache(
+                    phone=telefono,
+                    name=nombre,
+                    data=cache_data
+                )
+                
+                if response:
+                    success_count += 1
+                    self.logger.debug(f"📝 Cache creado para usuario {telefono}")
+                else:
+                    self.logger.warning(f"⚠️ Error creando cache para usuario {telefono}")
+            
+            self.logger.info(f"✅ Cache masivo creado para {success_count}/{len(usuarios)} usuarios")
+            return success_count > 0
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error creando cache masivo: {e}")
+            return False
+    
+    def _send_mqtt_activation_commands(self, topics_hardware: List[str], alert_data: Dict) -> bool:
+        """Enviar comandos de activación MQTT a dispositivos hardware (similar a MQTT handler)"""
+        if not self.mqtt_publisher:
+            self.logger.warning("⚠️ MQTT Publisher no disponible")
+            return False
+            
+        if not topics_hardware:
+            self.logger.info("ℹ️ No hay hardware para activar")
+            return True
+            
+        try:
+            success_count = 0
+            
+            self.logger.info(f"🔄 Enviando comandos de activación MQTT a {len(topics_hardware)} dispositivos")
+            
+            for topic in topics_hardware:
+                # Construir topic completo igual que en MQTT handler
+                full_topic = f"{self.pattern_topic}/{topic}"
+                
+                # Crear mensaje específico según el tipo de hardware
+                activation_message = self._create_activation_message(topic=topic, alert_data=alert_data)
+                
+                # Enviar mensaje MQTT
+                success = self._send_mqtt_message(message_data=activation_message, topic=full_topic)
+                
+                if success:
+                    success_count += 1
+                    hardware_name = topic.split("/")[-1] if "/" in topic else topic
+                    self.logger.info(f"✅ Hardware activado: {hardware_name}")
+                else:
+                    self.logger.error(f"❌ Error activando hardware: {topic}")
+            
+            self.logger.info(f"📊 MQTT: {success_count}/{len(topics_hardware)} dispositivos activados")
+            return success_count > 0
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando comandos de activación MQTT: {e}")
+            return False
+    
+    def _create_activation_message(self, topic: str, alert_data: Dict) -> Dict:
+        """Crear mensaje de activación específico según el tipo de dispositivo (similar a MQTT handler)"""
+        # Extraer datos de la alerta para el mensaje
+        tipo_alerta = alert_data.get("tipo_alerta", "")
+        prioridad = alert_data.get("prioridad", "media")
+        ubicacion = alert_data.get("ubicacion", {})
+        elementos_necesarios = alert_data.get("elementos_necesarios", [])
+        instrucciones = alert_data.get("instrucciones", [])
+        
+        # Mapear tipo de alerta a color (igual que en MQTT handler)
+        color_map = {
+            "incendio": "ROJO",
+            "accidente": "AZUL",
+            "sanitaria": "AMARILLO",
+            "delincuencia": "VERDE",
+            "catastrofe": "NARANJA",
+            "evacuacion": "ROJO",  # Agregar evacuación como rojo
+            "mantenimiento": "AZUL",
+            "seguridad": "VERDE"
+        }
+        
+        alarm_color = color_map.get(tipo_alerta.lower(), "AZUL")
+        
+        if "SEMAFORO" in topic:
+            # Para semáforos: solo tipo_alarma (color)
+            return {
+                "tipo_alarma": alarm_color,
+            }
+        elif "PANTALLA" in topic:
+            # Para televisores: información completa
+            return {
+                "tipo_alarma": alarm_color,
+                "prioridad": prioridad.upper(),
+                "ubicacion": ubicacion.get("direccion", ""),
+                "url": ubicacion.get("url_maps", ""),
+                "elementos_necesarios": elementos_necesarios,
+                "instrucciones": instrucciones
+            }
+        else:
+            # Para dispositivos genéricos
+            return {
+                "tipo_alarma": alarm_color,
+                "action": "activate",
+                "message": f"Alerta de {tipo_alerta}",
+            }
+    
     def _send_mqtt_message(self, topic: str, message_data: Dict, qos: int = 0) -> bool:
         """Enviar mensaje MQTT a un topic específico"""
         try:

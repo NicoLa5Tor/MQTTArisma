@@ -85,7 +85,7 @@ class WebSocketMessageHandler:
 
     async def queue_whatsapp_message(self, message: str) -> bool:
         """Agregar mensaje de WhatsApp a la cola para procesamiento"""
-        print(f"🔍 DEBUG: Mensaje recibido en WebSocket: {message}")
+        #print(f"🔍 DEBUG: Mensaje recibido en WebSocket: {message}")
         try:
             # Primero verificar si es un mensaje de empresa
             try:
@@ -95,6 +95,9 @@ class WebSocketMessageHandler:
                 if message_type == "alert_deactivated_by_empresa":
                     self.logger.info("🏢 Detectado mensaje de desactivación por empresa")
                     return self._handle_empresa_message_sync(json_message)
+                elif message_type == "create_empresa_alert":
+                    self.logger.info("🏢 Detectado mensaje para crear alerta de empresa")
+                    return self._handle_create_empresa_alert_sync(json_message)
             except (json.JSONDecodeError, KeyError):
                 # Si no es JSON válido o no tiene type, procesar como mensaje normal
                 pass
@@ -287,43 +290,40 @@ class WebSocketMessageHandler:
                 usuario_id=cached_info["data"]["id"]
             )
            
-            print("\n=== DEBUG RESPONSE_ALARM ===")
-            print("=== END DEBUG RESPONSE_ALARM ===")
-            
+   
             data_alert = response_alarm.get("alert",{})
             list_users = data_alert.get("numeros_telefonicos",{})
          
             
-            # DEBUG: Imprimir datos extraídos
-            print("\n=== DEBUG DATOS EXTRAIDOS ===")
+       
             # print(f"data_alert: {json.dumps(data_alert, indent=2)}")
             # print(f"list_users: {json.dumps(list_users, indent=2)}")
             # print(f"hardware_location: {json.dumps(hardware_location, indent=2)}")
-            print("=== END DEBUG DATOS EXTRAIDOS ===")
+ 
             numero_excluido = cached_info["phone"]
             usuarios_filtrados = [u for u in list_users if u["numero"] != numero_excluido]
+            if list_users:
+                self._send_location_personalized_message(
+                    numeros_data=list_users,
+                    tipo_alarma_info=data_alert,
+                )
+                time.sleep(2)
+            else:
+                self.logger.error("⚠️ NO se envió mensaje de ubicación - faltan datos")
+
             self._send_create_active_user(
                 alert=data_alert,
                 list_users=usuarios_filtrados,
                 data_user=cached_info
             )
             
-            print(f"\n=== DEBUG CONDICION UBICACION ===")
             # print(f"list_users exists: {bool(list_users)}")
             # print(f"hardware_location exists: {bool(hardware_location)}")
             # print(f"data_alert has direccion_url: {bool(data_alert.get('direccion_url'))}")
             # print(f"Enviando ubicación: {bool(list_users and data_alert.get('direccion_url'))}")
-            print("=== END DEBUG CONDICION UBICACION ===")
             #print(json.dumps(response_alarm,indent=4))
-            if list_users:
-                self._send_location_personalized_message(
-                    numeros_data=list_users,
-                    tipo_alarma_info=data_alert,
-                )
-            else:
-                print("⚠️ NO se envió mensaje de ubicación - faltan datos")
+           
             self._create_bulk_cache(list_users=list_users,alarm_info=data_alert,cache_creator=cached_info)
-           # print(json.dumps(entry,indent=4))
             topics = data_alert.get("topics_otros_hardware",{})
             self._intermediate_to_mqtt(alert=data_alert,topics=topics)
             return True
@@ -427,10 +427,10 @@ class WebSocketMessageHandler:
                                     self.logger.error(f"❌ Error enviando confirmación: {confirm_error}")
                                 
                                 # Debug response
-                                try:
-                                    print(json.dumps(response_desactivate,indent=4))
-                                except Exception as json_error:
-                                    self.logger.error(f"❌ Error imprimiendo JSON: {json_error}")
+                                # try:
+                                #     print(json.dumps(response_desactivate,indent=4))
+                                # except Exception as json_error:
+                                #     self.logger.error(f"❌ Error imprimiendo JSON: {json_error}")
                                 
                                 # Enviar comando MQTT de desactivación
                                 try:
@@ -512,7 +512,8 @@ class WebSocketMessageHandler:
                             "VER OPCIONES",
                             "VER MENÚ",
                             "INSTRUCCIONES",
-                            "AYUDA"
+                            "AYUDA",
+                            "HELP"
                         ]
                         if body_text.upper() in comandos_opciones:
                             self._send_options_user(number=number,user=user)
@@ -1043,6 +1044,75 @@ class WebSocketMessageHandler:
                 "action": "deactivate"
             }
 
+    def _handle_create_empresa_alert_sync(self, message_data: Dict) -> bool:
+        """Manejar mensaje de creación de alerta de empresa con alert_data incluido"""
+        try:
+            self.logger.info("🏢 Procesando comando de crear alerta de empresa")
+            
+            # Validar campos requeridos en el nuevo formato
+            required_fields = ["type", "alert_data"]
+            for field in required_fields:
+                if field not in message_data:
+                    self.logger.error(f"❌ Campo requerido faltante: {field}")
+                    return False
+            
+            # Extraer alert_data completo del mensaje
+            alert_data = message_data["alert_data"]
+            
+            # Validar que alert_data tenga los campos mínimos necesarios
+            required_alert_fields = ["_id", "tipo_alerta", "descripcion"]
+            for field in required_alert_fields:
+                if field not in alert_data:
+                    self.logger.error(f"❌ Campo requerido en alert_data faltante: {field}")
+                    return False
+            
+            # Extraer información básica para logging
+            alert_id = alert_data.get("_id", "N/A")
+            tipo_alerta = alert_data.get("tipo_alerta", "N/A")
+            descripcion = alert_data.get("descripcion", "N/A")
+            prioridad = alert_data.get("prioridad", "media")
+            empresa_nombre = alert_data.get("empresa_nombre", "N/A")
+            sede = alert_data.get("sede", "N/A")
+            
+            self.logger.info(f"📋 Procesando alerta de empresa recibida:")
+            self.logger.info(f"   🆔 Alert ID: {alert_id}")
+            self.logger.info(f"   🏢 Empresa: {empresa_nombre}")
+            self.logger.info(f"   🏛️ Sede: {sede}")
+            self.logger.info(f"   🔔 Tipo: {tipo_alerta}")
+            self.logger.info(f"   📝 Descripción: {descripcion}")
+            self.logger.info(f"   ⚡ Prioridad: {prioridad}")
+            
+            # Ya no es necesario crear la alerta en el backend, solo procesarla
+            self.logger.info(f"✅ Alert data recibido completo, procesando con empresa handler...")
+            
+            # Crear estructura compatible con empresa handler
+            empresa_message = {
+                "type": "alert_created_by_empresa",
+                "timestamp": alert_data.get("fecha_creacion", ""),
+                "alert": alert_data
+            }
+            
+            # Procesar con el empresa handler
+            if not self.empresa_handler:
+                self.logger.error("❌ Empresa handler no disponible")
+                return False
+            
+            success = self.empresa_handler.process_empresa_activation(empresa_message)
+            
+            if success:
+                self.whatsapp_processed_count += 1
+                self.logger.info("✅ Alerta de empresa procesada exitosamente")
+            else:
+                self.whatsapp_error_count += 1
+                self.logger.error("❌ Error procesando alerta con empresa handler")
+                
+            return success
+            
+        except Exception as e:
+            self.logger.error(f"❌ Error manejando creación de alerta de empresa: {e}")
+            self.whatsapp_error_count += 1
+            return False
+    
     def _handle_empresa_message_sync(self, message_data: Dict) -> bool:
         """Manejar mensaje de desactivación por empresa (versión síncrona para Redis)"""
         try:
@@ -1050,8 +1120,8 @@ class WebSocketMessageHandler:
                 self.logger.error("❌ Empresa handler no disponible")
                 return False
             
-            # Procesar con el handler específico de empresa
-            success = self.empresa_handler.process_empresa_deactivation(message_data)
+            # Procesar con el handler específico de empresa (ahora maneja activación y desactivación)
+            success = self.empresa_handler.process_empresa_alert(message_data)
             
             if success:
                 self.whatsapp_processed_count += 1
@@ -1248,57 +1318,42 @@ class WebSocketMessageHandler:
     
     def _send_location_personalized_message(self, numeros_data: list, tipo_alarma_info: Dict) -> bool:
         """Enviar mensaje personalizado de ubicación por WhatsApp"""
-        print("\n=== DEBUG SEND_LOCATION_PERSONALIZED_MESSAGE ===")
-        # print(f"numeros_data: {json.dumps(numeros_data, indent=2)}")
-        # print(f"tipo_alarma_info: {json.dumps(tipo_alarma_info, indent=2)}")
-        # print(f"hardware_location: {json.dumps(hardware_location, indent=2)}")
-        
         if not self.whatsapp_service:
             self.logger.warning("⚠️ WhatsApp service no disponible")
-            print("❌ WhatsApp service NO disponible")
             return False
-            
         try:
             ubicacion = tipo_alarma_info.get("ubicacion")
-            url_maps = ubicacion.get("url_maps", "")
-            print(f"URL Maps extraída: '{url_maps}'")
-            
+            url_maps = str(ubicacion.get("url_maps", ""))
+            parametro = url_maps.split("place/")[1]
             recipients = []
-            
             for item in numeros_data:
                 nombre = str(item.get("nombre", ""))
-                data_item = {
+                recipient = {
                     "phone": item["numero"],
-                    "body_text": f"¡HOLA {nombre.split()[0].upper()}!.\nRESCUE TE AYUDA A LLEGAR A LA EMERGENCIA"
+                    "template_name": "location_alert",
+                    "language": "es_CO",
+                    "components": [
+                        {
+                            "type": "body",
+                            "parameters": [
+                                {"type": "text", "text": nombre}
+                            ]
+                        },
+                        {
+                            "type": "button",
+                            "sub_type": "url",
+                            "index": "0",
+                            "parameters": [
+                                {"type": "text", "text": parametro}
+                            ]
+                        }
+                    ]
                 }
-                recipients.append(data_item)
             
-            # print(f"Recipients preparados: {json.dumps(recipients, indent=2)}")
-            
-            header_content = f"¡RESCUE SYSTEM UBICACIÓN!"
-            
-            # print(f"Enviando mensaje de ubicación con:")
-            # print(f"  - Header: {header_content}")
-            # print(f"  - URL: {url_maps}")
-            # print(f"  - Recipients: {len(recipients)}")
-            
-            result = self.whatsapp_service.send_personalized_broadcast(
-                recipients=recipients,
-                header_type="text",
-                header_content=header_content,
-                button_url=url_maps,
-                footer_text="Equipo RESCUE",
-                button_text="Google Maps",
-                use_queue=True
-            )
-            
-            # print(f"Resultado del envío: {result}")
-            print("=== END DEBUG SEND_LOCATION_PERSONALIZED_MESSAGE ===")
-            
+                recipients.append(recipient)
+            result = self.whatsapp_service.send_bulk_template(recipients=recipients)
             return True
             
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensaje de ubicación: {e}")
-            print(f"❌ EXCEPCION en _send_location_personalized_message: {e}")
-            print("=== END DEBUG SEND_LOCATION_PERSONALIZED_MESSAGE ===")
             return False

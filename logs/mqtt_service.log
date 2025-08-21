@@ -574,3 +574,825 @@
 2025-08-08 01:12:28,223 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 1
 2025-08-08 01:12:28,223 - mqtt_service - INFO -   • Errores totales: 0
 2025-08-08 01:12:28,223 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-08-13 13:24:47,607 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-08-13 13:24:47,607 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-08-13 13:24:47,607 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-08-13 13:24:47,607 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-08-13 13:24:48,149 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-08-13 13:24:48,481 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-08-13 13:24:48,481 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-08-13 13:24:48,481 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-08-13 13:24:48,665 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-13 13:24:48,665 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-13 16:04:42,056 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:04:42,057 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente
+2025-08-13 16:04:42,481 - mqtt_service - INFO - 🎉 MENSAJE MQTT #2 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:04:42,481 - mqtt_service - INFO - ✅ Mensaje MQTT #2 procesado exitosamente
+2025-08-13 16:04:50,082 - mqtt_service - INFO - 🎉 MENSAJE MQTT #3 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:04:50,083 - mqtt_service - INFO - ✅ Mensaje MQTT #3 procesado exitosamente
+2025-08-13 16:04:54,563 - mqtt_service - INFO - 🎉 MENSAJE MQTT #4 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:04:54,564 - mqtt_service - INFO - ✅ Mensaje MQTT #4 procesado exitosamente
+2025-08-13 16:10:36,262 - mqtt_service - INFO - 🎉 MENSAJE MQTT #5 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:10:36,263 - mqtt_service - INFO - ✅ Mensaje MQTT #5 procesado exitosamente
+2025-08-13 16:10:49,663 - mqtt_service - INFO - 🎉 MENSAJE MQTT #6 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:10:49,664 - mqtt_service - INFO - ✅ Mensaje MQTT #6 procesado exitosamente
+2025-08-13 16:10:50,030 - mqtt_service - INFO - 🎉 MENSAJE MQTT #7 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:10:50,032 - mqtt_service - INFO - ✅ Mensaje MQTT #7 procesado exitosamente
+2025-08-13 16:10:50,684 - mqtt_service - INFO - 🎉 MENSAJE MQTT #8 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:10:50,685 - mqtt_service - INFO - ✅ Mensaje MQTT #8 procesado exitosamente
+2025-08-13 16:10:50,973 - mqtt_service - INFO - 🎉 MENSAJE MQTT #9 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:10:50,974 - mqtt_service - INFO - ✅ Mensaje MQTT #9 procesado exitosamente
+2025-08-13 16:10:51,641 - mqtt_service - INFO - 🎉 MENSAJE MQTT #10 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:10:51,641 - mqtt_service - INFO - ✅ Mensaje MQTT #10 procesado exitosamente
+2025-08-13 16:10:52,664 - mqtt_service - INFO - 🎉 MENSAJE MQTT #11 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:10:52,665 - mqtt_service - INFO - ✅ Mensaje MQTT #11 procesado exitosamente
+2025-08-13 16:10:53,279 - mqtt_service - INFO - 🎉 MENSAJE MQTT #12 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:10:53,280 - mqtt_service - INFO - ✅ Mensaje MQTT #12 procesado exitosamente
+2025-08-13 16:18:17,890 - mqtt_service - INFO - 🎉 MENSAJE MQTT #13 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-13 16:18:17,890 - mqtt_service - INFO - ✅ Mensaje MQTT #13 procesado exitosamente
+2025-08-13 18:04:03,723 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-13 18:04:05,024 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-13 18:04:05,024 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-13 22:37:40,692 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-13 22:37:41,988 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-13 22:37:41,988 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-14 00:38:31,805 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-14 00:38:33,087 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-14 00:38:33,088 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-14 10:51:43,192 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-08-14 10:51:43,192 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-08-14 10:51:43,192 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-08-14 10:51:43,193 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-08-14 10:51:43,991 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-08-14 10:51:44,184 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-08-14 10:51:44,184 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-08-14 10:51:44,184 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-08-14 10:51:44,510 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-14 10:51:44,510 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-14 11:16:41,076 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:16:41,077 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente
+2025-08-14 11:16:46,176 - mqtt_service - INFO - 🎉 MENSAJE MQTT #2 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:16:46,176 - mqtt_service - INFO - ✅ Mensaje MQTT #2 procesado exitosamente
+2025-08-14 11:16:49,762 - mqtt_service - INFO - 🎉 MENSAJE MQTT #3 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:16:49,762 - mqtt_service - INFO - ✅ Mensaje MQTT #3 procesado exitosamente
+2025-08-14 11:16:53,855 - mqtt_service - INFO - 🎉 MENSAJE MQTT #4 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:16:53,855 - mqtt_service - INFO - ✅ Mensaje MQTT #4 procesado exitosamente
+2025-08-14 11:16:58,872 - mqtt_service - INFO - 🎉 MENSAJE MQTT #5 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:16:58,872 - mqtt_service - INFO - ✅ Mensaje MQTT #5 procesado exitosamente
+2025-08-14 11:17:04,508 - mqtt_service - INFO - 🎉 MENSAJE MQTT #6 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:17:04,509 - mqtt_service - INFO - ✅ Mensaje MQTT #6 procesado exitosamente
+2025-08-14 11:19:11,186 - mqtt_service - INFO - 🎉 MENSAJE MQTT #7 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:19:11,188 - mqtt_service - INFO - ✅ Mensaje MQTT #7 procesado exitosamente
+2025-08-14 11:20:31,280 - mqtt_service - INFO - 🎉 MENSAJE MQTT #8 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:20:31,281 - mqtt_service - INFO - ✅ Mensaje MQTT #8 procesado exitosamente
+2025-08-14 11:20:39,038 - mqtt_service - INFO - 🎉 MENSAJE MQTT #9 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:20:39,038 - mqtt_service - INFO - ✅ Mensaje MQTT #9 procesado exitosamente
+2025-08-14 11:20:52,094 - mqtt_service - INFO - 🎉 MENSAJE MQTT #10 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:20:52,096 - mqtt_service - INFO - ✅ Mensaje MQTT #10 procesado exitosamente
+2025-08-14 11:22:44,168 - mqtt_service - INFO - 🎉 MENSAJE MQTT #11 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:22:44,168 - mqtt_service - INFO - ✅ Mensaje MQTT #11 procesado exitosamente
+2025-08-14 11:22:50,517 - mqtt_service - INFO - 🎉 MENSAJE MQTT #12 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:22:50,517 - mqtt_service - INFO - ✅ Mensaje MQTT #12 procesado exitosamente
+2025-08-14 11:23:35,167 - mqtt_service - INFO - 🎉 MENSAJE MQTT #13 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:23:35,168 - mqtt_service - INFO - ✅ Mensaje MQTT #13 procesado exitosamente
+2025-08-14 11:23:45,039 - mqtt_service - INFO - 🎉 MENSAJE MQTT #14 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:23:45,040 - mqtt_service - INFO - ✅ Mensaje MQTT #14 procesado exitosamente
+2025-08-14 11:29:21,171 - mqtt_service - INFO - 🎉 MENSAJE MQTT #15 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:29:21,171 - mqtt_service - INFO - ✅ Mensaje MQTT #15 procesado exitosamente
+2025-08-14 11:50:40,728 - mqtt_service - INFO - 🎉 MENSAJE MQTT #16 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:50:40,729 - mqtt_service - INFO - ✅ Mensaje MQTT #16 procesado exitosamente
+2025-08-14 11:52:11,815 - mqtt_service - INFO - 🎉 MENSAJE MQTT #17 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:52:11,815 - mqtt_service - INFO - ✅ Mensaje MQTT #17 procesado exitosamente
+2025-08-14 11:57:04,369 - mqtt_service - INFO - 🎉 MENSAJE MQTT #18 - TOPIC: empresas/bomberos/Colon/BOTONERA/bomberos-botonera1
+2025-08-14 11:57:04,370 - mqtt_service - INFO - ✅ Mensaje MQTT #18 procesado exitosamente
+2025-08-14 12:47:03,211 - mqtt_service - INFO - 🎉 MENSAJE MQTT #19 - TOPIC: empresas/prueba1/Principal/BOTONERA/prueba-botonera1
+2025-08-14 12:47:03,212 - mqtt_service - INFO - ✅ Mensaje MQTT #19 procesado exitosamente
+2025-08-14 12:50:36,577 - mqtt_service - INFO - 🎉 MENSAJE MQTT #20 - TOPIC: empresas/prueba1/Principal/BOTONERA/prueba-botonera
+2025-08-14 12:50:36,577 - mqtt_service - INFO - ✅ Mensaje MQTT #20 procesado exitosamente
+2025-08-14 12:51:44,269 - mqtt_service - INFO - 🎉 MENSAJE MQTT #21 - TOPIC: empresas/prueba1/Principal/BOTONERA/prueba-botonera
+2025-08-14 12:51:44,270 - mqtt_service - INFO - ✅ Mensaje MQTT #21 procesado exitosamente
+2025-08-14 12:53:16,102 - mqtt_service - INFO - 🎉 MENSAJE MQTT #22 - TOPIC: empresas/prueba1/Principal/BOTONERA/prueba-botonera
+2025-08-14 12:53:16,104 - mqtt_service - INFO - ✅ Mensaje MQTT #22 procesado exitosamente
+2025-08-14 12:53:42,521 - mqtt_service - INFO - 🎉 MENSAJE MQTT #23 - TOPIC: empresas/prueba1/Principal/BOTONERA/prueba-botonera
+2025-08-14 12:53:42,522 - mqtt_service - INFO - ✅ Mensaje MQTT #23 procesado exitosamente
+2025-08-14 12:54:03,822 - mqtt_service - INFO - 🎉 MENSAJE MQTT #24 - TOPIC: empresas/prueba1/Principal/BOTONERA/prueba-botonera
+2025-08-14 12:54:03,823 - mqtt_service - INFO - ✅ Mensaje MQTT #24 procesado exitosamente
+2025-08-14 18:46:14,847 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-14 18:46:16,213 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-14 18:46:16,214 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:05,516 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-08-20 14:23:05,516 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-08-20 14:23:05,516 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-08-20 14:23:05,516 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-08-20 14:23:06,372 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-08-20 14:23:06,591 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-08-20 14:23:06,592 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-08-20 14:23:06,592 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-08-20 14:23:06,797 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:06,797 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:11,917 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-08-20 14:23:11,917 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-08-20 14:23:11,972 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-08-20 14:23:12,066 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-08-20 14:23:12,066 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-08-20 14:23:12,067 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-08-20 14:23:12,209 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2025-08-20 14:23:12,209 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-08-20 14:23:12,210 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-08-20 14:23:12,293 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-08-20 14:23:12,293 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-08-20 14:23:12,294 - mqtt_service - INFO -   • Total de mensajes recibidos: 0
+2025-08-20 14:23:12,294 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2025-08-20 14:23:12,294 - mqtt_service - INFO -   • Errores totales: 0
+2025-08-20 14:23:12,294 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-08-20 14:23:12,294 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2025-08-20 14:23:12,294 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2025-08-20 14:23:12,294 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2025-08-20 14:23:12,295 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2025-08-20 14:23:12,295 - mqtt_service - INFO -   • Total de mensajes recibidos: 0
+2025-08-20 14:23:12,295 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2025-08-20 14:23:12,295 - mqtt_service - INFO -   • Errores totales: 0
+2025-08-20 14:23:12,295 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2025-08-20 14:23:15,569 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-08-20 14:23:15,569 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-08-20 14:23:15,570 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-08-20 14:23:15,570 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-08-20 14:23:15,881 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-08-20 14:23:15,996 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-08-20 14:23:15,996 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-08-20 14:23:15,996 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-08-20 14:23:16,181 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:16,181 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:28,105 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-08-20 14:23:28,105 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-08-20 14:23:28,105 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-08-20 14:23:28,105 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-08-20 14:23:28,481 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-08-20 14:23:28,613 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-08-20 14:23:28,613 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-08-20 14:23:28,613 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-08-20 14:23:28,733 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:28,733 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:28,733 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:29,950 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:29,950 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:29,951 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:31,174 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:31,174 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:31,174 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:32,457 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:32,457 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:32,457 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:33,697 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:33,697 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:33,697 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:34,967 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:34,967 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:34,967 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:36,194 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:36,194 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:36,194 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:37,533 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:37,533 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:37,533 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:38,950 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:38,950 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:38,951 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:40,384 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:40,385 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:40,385 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:41,618 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:41,618 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:41,619 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:42,843 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:42,843 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:42,843 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:44,172 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:44,172 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:44,172 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:45,390 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:45,391 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:45,391 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:46,605 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:46,605 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:46,605 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:47,963 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:47,963 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:47,963 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:49,292 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:49,293 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:49,293 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:50,538 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:50,538 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:50,538 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:51,757 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:51,757 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:51,757 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:52,972 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:52,973 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:52,973 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:54,203 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:54,204 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:54,204 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:55,443 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:55,443 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:55,443 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:56,682 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:56,682 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:56,687 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:57,940 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:23:57,941 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:57,941 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:59,175 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:23:59,176 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:23:59,176 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:00,412 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:00,412 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:00,413 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:01,747 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:01,747 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:01,747 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:02,986 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:02,986 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:02,986 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:04,257 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:04,258 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:04,353 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:05,569 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:05,569 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:05,570 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:06,842 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:06,842 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:06,843 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:08,135 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:08,135 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:08,135 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:09,359 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:09,367 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:09,367 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:10,577 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:10,577 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:10,578 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:11,801 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:11,801 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:11,801 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:13,046 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:13,047 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:13,047 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:14,263 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:14,264 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:14,264 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:15,538 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:15,538 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:15,538 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:16,763 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:16,763 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:17,235 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:18,494 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:18,494 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:18,494 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:19,789 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:19,789 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:19,789 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:21,023 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:21,023 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:21,024 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:22,327 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:22,327 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:22,327 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:23,682 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:23,682 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:23,682 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:25,035 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:25,036 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:25,036 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:26,251 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:26,254 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:26,254 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:27,471 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:27,480 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:27,480 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:28,721 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:28,722 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:28,722 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:29,958 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:29,958 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:29,958 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:31,350 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:31,350 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:31,350 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:32,621 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:32,621 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:32,621 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:33,846 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:33,846 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:33,846 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:35,069 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:35,069 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:35,069 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:36,502 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:36,502 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:36,502 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:37,736 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:37,736 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:37,736 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:39,039 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:39,039 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:39,039 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:40,263 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:40,263 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:40,263 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:41,488 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:41,493 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:41,493 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:42,819 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:42,819 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:42,820 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:44,161 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:44,162 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:44,162 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:45,428 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:45,429 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:45,514 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:46,744 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:46,744 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:46,744 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:48,072 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:48,072 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:48,072 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:49,308 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:49,308 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:49,309 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:50,633 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:50,634 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:50,634 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:51,861 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:51,862 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:51,862 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:53,079 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:53,080 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:53,080 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:54,322 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:54,322 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:54,322 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:55,603 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:55,603 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:55,605 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:56,821 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:56,822 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:56,822 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:58,039 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:58,040 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:58,040 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:24:59,420 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:24:59,420 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:24:59,421 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:00,639 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:00,639 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:00,640 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:01,942 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:01,943 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:01,943 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:03,288 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:03,288 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:03,288 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:04,510 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:04,510 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:04,510 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:05,739 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:05,740 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:05,740 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:06,972 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:06,973 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:06,973 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:08,248 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:08,249 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:08,248 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:09,593 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:09,593 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:09,593 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:10,819 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:10,820 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:10,820 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:12,057 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:12,057 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:12,058 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:13,289 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:13,290 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:13,290 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:14,531 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:15,096 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:15,096 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:15,925 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:15,925 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:15,925 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:17,259 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:17,259 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:17,259 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:18,589 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:18,590 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:18,590 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:19,917 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:19,917 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:19,917 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:21,137 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:21,137 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:21,138 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:22,372 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:22,372 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:22,373 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:23,656 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:23,656 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:23,656 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:24,877 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:24,877 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:24,878 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:26,099 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:26,100 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:26,100 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:27,433 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:27,433 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:27,433 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:28,651 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:28,655 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:28,656 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:30,057 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:30,057 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:30,058 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:31,274 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:31,274 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:31,275 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:32,500 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:32,506 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:32,507 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:33,749 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:33,750 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:33,750 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:34,978 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:34,979 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:34,979 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:36,510 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:36,510 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:36,510 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:37,805 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:37,805 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:37,805 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:39,070 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:39,070 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:39,070 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:40,401 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:40,401 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:40,401 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:41,618 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:41,619 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:41,619 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:42,860 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:42,860 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:42,860 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:44,095 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:44,095 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:44,096 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:45,623 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:45,623 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:45,624 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:46,858 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:46,859 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:46,859 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:48,201 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:48,202 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:48,202 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:49,419 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:49,419 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:49,420 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:50,721 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:50,722 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:50,722 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:52,029 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:52,029 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:52,030 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:53,379 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:53,379 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:53,380 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:54,634 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:54,634 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:54,634 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:55,867 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:55,868 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:55,868 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:57,084 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:57,084 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:57,085 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:58,302 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:58,302 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:58,302 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:25:59,604 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:25:59,604 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:25:59,604 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:00,883 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:00,883 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:00,883 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:02,212 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:02,212 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:02,212 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:03,647 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:03,647 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:03,647 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:04,935 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:04,935 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:04,935 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:06,309 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:06,309 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:06,309 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:07,648 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:07,648 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:07,648 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:08,979 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:08,979 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:08,979 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:10,405 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:10,405 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:10,406 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:11,638 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:11,638 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:11,639 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:12,963 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:12,963 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:13,375 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:14,705 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:14,705 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:14,705 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:16,134 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:16,134 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:16,134 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:17,372 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:17,372 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:17,372 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:18,612 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:18,612 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:18,612 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:19,837 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:19,838 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:19,838 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:21,053 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:21,053 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:21,054 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:22,335 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:22,335 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:22,335 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:23,699 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:23,699 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:23,699 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:24,920 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:24,920 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:24,920 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:26,147 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:26,147 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:26,147 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:27,484 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:27,484 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:27,484 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:28,733 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:28,733 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:28,734 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:30,080 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:30,081 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:30,081 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:31,297 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:31,297 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:31,297 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:32,731 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:32,731 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:32,732 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:35,083 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:35,083 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:35,083 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:36,927 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:36,928 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:36,928 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:38,296 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:38,296 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:38,297 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:39,661 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:39,661 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:39,661 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:41,008 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:41,008 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:41,008 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:42,391 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:42,391 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:42,391 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:43,768 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:43,768 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:43,768 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:45,004 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:45,006 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:45,006 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:46,225 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:46,225 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:46,225 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:47,449 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:47,450 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:47,450 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:48,677 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:48,677 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:48,678 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:49,894 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:49,894 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:49,899 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:51,137 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:51,137 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:51,138 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:52,361 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:52,361 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:52,361 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:53,581 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:53,581 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:53,581 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:56,015 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:56,015 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:56,015 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:57,235 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:57,235 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:57,235 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:58,460 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:58,460 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:58,461 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:26:59,677 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:26:59,677 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:26:59,679 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:00,921 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:00,921 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:00,921 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:02,142 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:02,142 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:02,142 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:03,700 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:03,826 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:03,826 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:04,921 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:04,921 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:04,921 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:06,138 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:06,138 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:06,138 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:07,367 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:07,371 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:07,371 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:08,598 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:08,598 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:08,598 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:09,820 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:09,820 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:09,824 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:11,144 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:11,145 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:11,145 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:12,561 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:12,561 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:12,561 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:13,794 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:13,795 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:14,508 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:15,835 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:15,835 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:15,835 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:17,076 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:17,077 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:17,077 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:18,302 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:18,303 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:18,383 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:19,657 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:19,657 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:19,657 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:20,539 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-08-20 14:27:20,539 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-08-20 14:27:20,539 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-08-20 14:27:20,539 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-08-20 14:27:20,854 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-08-20 14:27:20,891 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:20,891 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:20,891 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:20,983 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-08-20 14:27:20,983 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-08-20 14:27:20,983 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-08-20 14:27:21,102 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:21,102 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:21,102 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:22,125 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:22,125 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:22,126 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:22,339 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:22,339 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:22,339 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:23,340 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:23,340 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:23,340 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:23,563 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:23,563 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:23,564 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:24,566 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:24,566 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:24,567 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:24,781 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:24,781 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:24,782 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:25,796 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:25,796 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:25,796 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:26,018 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:26,018 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:26,018 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:27,028 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:27,029 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:27,029 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:27,234 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:27,235 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:27,235 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:28,262 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:28,262 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:28,262 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:28,458 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:28,458 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:28,459 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:29,479 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:29,480 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:29,480 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:29,689 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:29,689 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:29,690 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:30,698 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:30,698 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:30,698 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:30,912 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:30,912 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:30,912 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:31,945 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:31,945 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:31,945 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:32,143 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:32,143 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:32,143 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:33,166 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:33,167 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:33,167 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:33,377 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:33,378 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:33,378 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:34,397 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:34,396 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:34,397 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:34,612 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:34,612 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:34,612 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:35,613 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:35,613 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:35,613 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:35,829 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:35,829 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:35,829 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:36,849 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:36,849 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:36,850 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:37,075 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:37,075 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:37,076 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:38,082 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:38,082 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:38,082 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:38,296 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:38,296 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:38,296 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:39,304 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:39,304 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:39,304 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:39,512 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:39,513 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:39,513 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:40,531 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:40,531 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:40,532 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:40,756 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:40,756 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:40,756 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:41,753 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:41,753 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:41,753 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:41,991 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:41,991 - mqtt_service - WARNING - Desconexión inesperada del broker MQTT: 7
+2025-08-20 14:27:41,992 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:27:49,140 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2025-08-20 14:27:49,140 - mqtt_service - INFO - 📡 Broker: 161.35.239.177:17090
+2025-08-20 14:27:49,140 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2025-08-20 14:27:49,140 - mqtt_service - INFO - 📋 Topic base: empresas
+2025-08-20 14:27:49,463 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2025-08-20 14:27:49,571 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2025-08-20 14:27:49,572 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2025-08-20 14:27:49,572 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2025-08-20 14:27:49,678 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2025-08-20 14:27:49,679 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2025-08-20 14:28:13,014 - mqtt_service - INFO - 🎉 MENSAJE MQTT #1 - TOPIC: empresas/empresa6-8-25/Principal/BOTONERA/botonera6825
+2025-08-20 14:28:13,014 - mqtt_service - INFO - ✅ Mensaje MQTT #1 procesado exitosamente

@@ -28,7 +28,7 @@ def create_alarm(topic):
     alarm_data = {
     "tipo_mensaje": "alarma",
     "id_origen": "BOTONERA_XXX",
-    "tipo_alerta": "AZUL",  
+    "tipo_alarma": "AZUL",  
     "ubicacion": "Oficina Principal"
   }
     
