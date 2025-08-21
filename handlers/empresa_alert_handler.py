@@ -2,7 +2,7 @@
 Handler específico para alertas desactivadas por empresa
 Solo maneja WhatsApp Service y MQTT Publisher
 """
-import json
+import time
 import logging
 from typing import Dict, Any, Optional, List
 from clients.mqtt_publisher_lite import MQTTPublisherLite
@@ -102,16 +102,9 @@ class EmpresaAlertHandler:
             
             # 1. Enviar notificaciones WhatsApp a usuarios ("Estoy disponible") - solo si hay usuarios
             whatsapp_success = True
-            if usuarios:
-                whatsapp_success = self._send_empresa_activation_notification(
-                    usuarios=usuarios,
-                    alert_data=alert_data
-                )
-            else:
-                self.logger.info("ℹ️ No hay usuarios para notificar por WhatsApp")
-            
-            # 2. Enviar mensaje de ubicación si está disponible - solo si hay usuarios
             location_success = True
+          
+                
             if usuarios:
                 hardware_location = alert_data.get("ubicacion", {})
                 if hardware_location:
@@ -121,6 +114,15 @@ class EmpresaAlertHandler:
                     )
                 else:
                     self.logger.info("ℹ️ No hay datos de ubicación para enviar")
+                time.sleep(3)
+                whatsapp_success = self._send_empresa_activation_notification(
+                    usuarios=usuarios,
+                    alert_data=alert_data
+                )
+            else:
+                self.logger.info("ℹ️ No hay usuarios para notificar por WhatsApp")
+            
+            # 2. Enviar mensaje de ubicación si está disponible - solo si hay usuarios
             
             # 3. Crear cache masivo para todos los usuarios - solo si hay usuarios
             cache_success = True

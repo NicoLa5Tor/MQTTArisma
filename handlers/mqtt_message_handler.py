@@ -160,29 +160,26 @@ class MQTTMessageHandler:
             
             # PROCESAR NOTIFICACIONES WHATSAPP (replicando WebSocket handler)
             if self.whatsapp_service:
-                # Extraer datos de la respuesta
                 alert_data = response.get("alert", {})
                 list_users = alert_data.get("numeros_telefonicos", [])
-                
                 if list_users and alert_data:
-                    # 1. ENVIAR NOTIFICACIONES DE ACTIVACIÓN ("Estoy disponible")
-                    self._send_create_active_user(
-                        alert=alert_data,
-                        list_users=list_users,
-                        mqtt_data=mqtt_data  # Datos de la BOTONERA
-                    )
-                    
-                    time.sleep(1)  # Pequeña pausa entre mensajes
-                    
-                    # 2. ENVIAR MENSAJE DE UBICACIÓN
                     hardware_location = alert_data.get("ubicacion", {})
                     if hardware_location:
                         self._send_location_personalized_message(
                             numeros_data=list_users,
                             hardware_location=hardware_location
                         )
+                        time.sleep(2)  
+                    # 1. ENVIAR MENSAJE DE UBICACIÓN
                     else:
                         self.logger.warning("⚠️ No hay datos de ubicación para enviar")
+                    self._send_create_active_user(
+                        alert=alert_data,
+                        list_users=list_users,
+                        mqtt_data=mqtt_data 
+                    )
+                  
+                    
                     
                     # 3. CREAR CACHE MASIVO PARA TODOS LOS USUARIOS
                     self._create_bulk_cache(
