@@ -22,6 +22,10 @@ services:
         aliases:
           - redis
           - mqtt-redis-service
+      frontend_rescue-network:
+        aliases:
+          - redis
+          - mqtt-redis-service
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -63,8 +67,12 @@ services:
     volumes:
       - ./logs:/app/logs
     networks:
-      - mqtt-network
-      - frontend_rescue-network
+      mqtt-network:
+        aliases:
+          - mqtt-connection-service
+      frontend_rescue-network:
+        aliases:
+          - mqtt-connection-service
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python", "-c", "import os; exit(0)"]
@@ -99,11 +107,16 @@ services:
     volumes:
       - ./logs:/app/logs
     networks:
-      - mqtt-network
-      - frontend_rescue-network
+      mqtt-network:
+        aliases:
+          - websocket-service
+          - websocket-connection-service
+      frontend_rescue-network:
+        aliases:
+          - websocket-service
+          - websocket-connection-service
     restart: unless-stopped
     healthcheck:
-      # Usa Python (está en la imagen) para chequear TCP sin depender de nc
       test:
         [
           "CMD-SHELL",
