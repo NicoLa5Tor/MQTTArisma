@@ -1,12 +1,10 @@
-version: "3.8"
+version: '3.8'
 
 networks:
   mqtt-network:
-    external: true
-    name: mqttarisma_mqtt-network
+    driver: bridge
   frontend_rescue-network:
     external: true
-    name: frontend_rescue-network
 
 services:
   redis:
@@ -18,10 +16,7 @@ services:
     volumes:
       - redis_data:/data
     networks:
-      mqtt-network:
-        aliases:
-          - redis
-          - mqtt-redis-service
+      - mqtt-network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -103,12 +98,7 @@ services:
       - frontend_rescue-network
     restart: unless-stopped
     healthcheck:
-      # Usa Python (está en la imagen) para chequear TCP sin depender de nc
-      test:
-        [
-          "CMD-SHELL",
-          "python - <<'PY'\nimport socket,sys\ns=socket.socket();s.settimeout(2)\ntry:\n  s.connect(('localhost',8080)); s.close(); sys.exit(0)\nexcept Exception:\n  sys.exit(1)\nPY"
-        ]
+      test: ["CMD", "nc", "-z", "localhost", "8080"]
       interval: 30s
       timeout: 10s
       retries: 3
