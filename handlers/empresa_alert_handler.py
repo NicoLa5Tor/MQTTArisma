@@ -738,19 +738,19 @@ class EmpresaAlertHandler:
         elementos_necesarios = alert_data.get("elementos_necesarios", [])
         instrucciones = alert_data.get("instrucciones", [])
         
-        # Mapear tipo de alerta a color (igual que en MQTT handler)
-        color_map = {
-            "incendio": "ROJO",
-            "accidente": "AZUL",
-            "sanitaria": "AMARILLO",
-            "delincuencia": "VERDE",
-            "catastrofe": "NARANJA",
-            "evacuacion": "ROJO",  # Agregar evacuación como rojo
-            "mantenimiento": "AZUL",
-            "seguridad": "VERDE"
-        }
+        # # Mapear tipo de alerta a color (igual que en MQTT handler)
+        # color_map = {
+        #     "incendio": "ROJO",
+        #     "accidente": "AZUL",
+        #     "sanitaria": "AMARILLO",
+        #     "delincuencia": "VERDE",
+        #     "catastrofe": "NARANJA",
+        #     "evacuacion": "ROJO",  # Agregar evacuación como rojo
+        #     "mantenimiento": "AZUL",
+        #     "seguridad": "VERDE"
+        # }
         
-        alarm_color = color_map.get(tipo_alerta.lower(), "AZUL")
+        alarm_color = tipo_alerta
         
         if "SEMAFORO" in topic:
             # Para semáforos: solo tipo_alarma (color)
