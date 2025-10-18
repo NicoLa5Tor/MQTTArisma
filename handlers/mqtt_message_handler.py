@@ -424,6 +424,12 @@ class MQTTMessageHandler:
     def _create_bulk_cache(self, alarm_info: Dict, list_users: list, mqtt_data: Dict) -> None:
         """Crear cache masivo actualizado para todos los usuarios"""
         try:
+            empresa_id = alarm_info.get("empresa_id")
+            if not empresa_id:
+                empresa_data = alarm_info.get("empresa")
+                if isinstance(empresa_data, dict):
+                    empresa_id = empresa_data.get("id") or empresa_data.get("_id")
+
             for user in list_users:
                 user_id = user.get("usuario_id", "")
                 cache_data = {
@@ -441,12 +447,16 @@ class MQTTMessageHandler:
                     "name": user.get("nombre", ""),
                     "phone": user.get("numero", "")
                 }
+
+                if empresa_id:
+                    cache_data["data"]["empresa_id"] = empresa_id
                 
                 # Simular guardar en el cache
                 self.whatsapp_service.add_number_to_cache(
                     phone=user.get("numero", ""),
                     name=user.get("nombre", ""),
-                    data=cache_data["data"]
+                    data=cache_data["data"],
+                    empresa_id=empresa_id
                 )
                 self.logger.info(f'📝 Cache creado para usuario {user.get("numero")}: {json.dumps(cache_data, indent=2)}')
             self.logger.info(f'✅ Cache masivo actualizado creado para {len(list_users)} usuarios')

@@ -12,7 +12,7 @@ config/secrets.py
 config/production.py
 secrets.json
 credentials.json
-
+AGENTS.md
 
 # ==========================================
 # PYTHON

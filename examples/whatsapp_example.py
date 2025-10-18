@@ -204,7 +204,8 @@ async def main():
             "company": "ECOES Tech",
             "role": "Developer",
             "location": "Medellín"
-        }
+        },
+        empresa_id="empresa-demo-id"
     )
     print(f"   - Agregar número al cache: {'✅ Éxito' if success else '❌ Error'}")
     
@@ -216,7 +217,8 @@ async def main():
             "company": "Nueva Empresa ECOES",
             "last_update": "2024-01-15",
             "status": "active"
-        }
+        },
+        empresa_id="empresa-demo-id"
     )
     print(f"   - Actualizar cache: {'✅ Éxito' if success else '❌ Error'}")
     

@@ -7,7 +7,7 @@ import logging
 import asyncio
 import time
 from asyncio import Queue
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Set
 from utils.redis_queue_manager import RedisQueueManager
 from clients.mqtt_publisher_lite import MQTTPublisherLite
 from config.settings import MQTTConfig
@@ -234,7 +234,11 @@ class WebSocketMessageHandler:
             }
             # print(json.dumps(cached_info,indent=4))
             body_message = f"¡{cached_info['name']}!\nPara crear la alerta de {entry_alarm['title']}\nPrimero debes proporcionar la ubicación"
-            self.whatsapp_service.update_number_cache(phone=number, data=new_data)
+            self.whatsapp_service.update_number_cache(
+                phone=number,
+                data=new_data,
+                empresa_id=cached_info.get("data", {}).get("empresa_id")
+            )
             self.whatsapp_service.send_location_request(phone=number,body_text=body_message)
             return True
         except Exception as ex:
@@ -262,6 +266,8 @@ class WebSocketMessageHandler:
       
 
             """
+            empresa_id = data_cache.get("empresa_id")
+
             for user in list_users:
                 data_user = {
                     "id" : user["usuario_id"],
@@ -273,9 +279,12 @@ class WebSocketMessageHandler:
                         "alert_id" : alarm_info["_id"]
                     }
                 }
+                if empresa_id:
+                    data_user["empresa_id"] = empresa_id
                 self.whatsapp_service.add_number_to_cache(phone = user["numero"]
                                                           , name = user["nombre"]
-                                                          , data = data_user)
+                                                          , data = data_user
+                                                          , empresa_id = empresa_id)
         except Exception as ex:
             self.logger.error(f"Error en _create_bulk_cache {ex}")
     def _create_alarm(self,cached_info:Dict,ubication:Dict) -> bool:
@@ -387,7 +396,11 @@ class WebSocketMessageHandler:
                         data_update = {
                             "disponible" : True
                         }
-                        self.whatsapp_service.update_number_cache(phone=number, data=data_update)
+                        self.whatsapp_service.update_number_cache(
+                            phone=number,
+                            data=data_update,
+                            empresa_id=cached_info.get("data", {}).get("empresa_id")
+                        )
                         self.whatsapp_service.send_individual_message(phone = number,
                                                                       message = "Ahora recibiras mensajes de los miembros del equipo")
                     elif type_button == "APAGAR ALARMA":
@@ -482,7 +495,11 @@ class WebSocketMessageHandler:
                         self.backend_client.update_user_status(alert_id=exist_alert["info_alert"]["alert_id"],
                                                                 usuario_id = exist_alert["id"], 
                                                                 embarcado = True)
-                        self.whatsapp_service.update_number_cache(phone = number, data = {"embarcado" : True})
+                        self.whatsapp_service.update_number_cache(
+                            phone = number,
+                            data = {"embarcado" : True},
+                            empresa_id=cached_info.get("data", {}).get("empresa_id")
+                        )
                         self._send_bulk_team(list_users=data_user_not_you,message="Estoy camino a la emergencia",name_made=user,type_message="text")
 
                 
@@ -548,7 +565,11 @@ class WebSocketMessageHandler:
                         "info_alert":"__DELETE__",
                         "alert_active":"__DELETE__"
                     }
-                    self.whatsapp_service.update_number_cache(phone=number, data=data_delete)
+                    self.whatsapp_service.update_number_cache(
+                        phone=number,
+                        data=data_delete,
+                        empresa_id=cached_info.get("data", {}).get("empresa_id")
+                    )
         else:
             if is_list:
                 self._alarm_back_save(entry_alarm=is_list,cached_info=cached_info)
@@ -576,7 +597,13 @@ class WebSocketMessageHandler:
         
       
         # Enviar lista de alarmas solo si NO es una desactivación
-        self._send_create_alarma(number=number, usuario=user, is_in_cached=True,message_time=message)
+        self._send_create_alarma(
+            number=number,
+            usuario=user,
+            is_in_cached=True,
+            message_time=message,
+            empresa_id=cached_info.get("data", {}).get("empresa_id")
+        )
     def _clean_bulk_cache_alert(self,list_user:list[Dict]) -> None:
         try:
             data = {
@@ -635,6 +662,25 @@ class WebSocketMessageHandler:
             return False
             
         usuario = verify_number.get("nombre", "")
+
+        # Normalizar información de empresa (puede venir como string o dict)
+        empresa_info = verify_number.get("empresa")
+        empresa_id = verify_number.get("empresa_id")
+        empresa_nombre = ""
+
+        if isinstance(empresa_info, dict):
+            empresa_id = empresa_id or empresa_info.get("id") or empresa_info.get("_id")
+            empresa_nombre = empresa_info.get("nombre") or empresa_info.get("name") or ""
+        else:
+            empresa_nombre = empresa_info or ""
+
+        # Normalizar información de sede (igual puede venir como string o dict)
+        sede_info = verify_number.get("sede")
+        sede_nombre = ""
+        if isinstance(sede_info, dict):
+            sede_nombre = sede_info.get("nombre") or sede_info.get("name") or ""
+        else:
+            sede_nombre = sede_info or ""
         
         # Agregar número al cache de WhatsApp
         if self.whatsapp_service:
@@ -643,9 +689,11 @@ class WebSocketMessageHandler:
                 name=verify_number.get("nombre", ""),           
                 data={
                     "id": verify_number.get("id"),
-                    "empresa": verify_number.get("empresa"),
-                    "sede": verify_number.get("sede")
-                }          
+                    "empresa": empresa_nombre,
+                    "sede": sede_nombre,
+                    **({"empresa_id": empresa_id} if empresa_id else {})
+                },
+                empresa_id=empresa_id
             )
             if not response_verify:
                 return False
@@ -693,7 +741,7 @@ class WebSocketMessageHandler:
         #         return True
         
         # Enviar lista de alarmas
-        self._send_create_alarma(number=number, usuario=usuario)
+        self._send_create_alarma(number=number, usuario=usuario, empresa_id=empresa_id)
         return True
 
     def _send_options_user(self,number : str ,user : str )-> bool:
@@ -737,46 +785,246 @@ class WebSocketMessageHandler:
         except Exception  as ex:
             self.logger.error(f"Error en _send_options_user {ex}")
             return False
-    def _send_create_alarma(self, number, usuario, is_in_cached: bool = False,message_time=None) -> bool:
+    def _resolve_empresa_id(self, phone: str, current_empresa_id: Optional[str] = None) -> Optional[str]:
+        """Obtener empresa_id a partir del número de teléfono"""
+        if current_empresa_id:
+            return current_empresa_id
+
+        if not self.backend_client:
+            self.logger.error("❌ No hay backend_client para resolver empresa_id")
+            return None
+
+        try:
+            response = self.backend_client.verify_user_number(phone)
+        except Exception as ex:
+            self.logger.error(f"❌ Error verificando número {phone} para obtener empresa_id: {ex}")
+            return None
+
+        if not response:
+            self.logger.error("❌ Respuesta vacía al verificar número para empresa_id")
+            return None
+
+        status_code = response.get('_status_code', 200)
+        if status_code in (401, 404):
+            self.logger.error(f"❌ Backend devolvió status {status_code} al verificar número {phone}")
+            return None
+
+        if not response.get('success', False):
+            self.logger.error("❌ Verificación de número no exitosa, no se puede obtener empresa_id")
+            return None
+
+        data = response.get('data', {}) or {}
+        empresa_id = data.get('empresa_id')
+        empresa_info = data.get('empresa')
+
+        if isinstance(empresa_info, dict):
+            empresa_id = empresa_id or empresa_info.get('id') or empresa_info.get('_id')
+
+        if not empresa_id and isinstance(empresa_info, str):
+            self.logger.warning(f"⚠️ Empresa proporcionada sin identificador para {phone}: {empresa_info}")
+
+        return empresa_id
+
+    def _ensure_unique_row_id(
+        self,
+        base_id: str,
+        alert_type: Dict[str, Any],
+        seen_ids: Set[str],
+        index: int,
+        empresa_id: Optional[str],
+    ) -> str:
+        """Garantizar que el ID de la fila sea único en la sección"""
+        candidates = [
+            alert_type.get("id"),
+            alert_type.get("_id"),
+            alert_type.get("uuid"),
+            alert_type.get("uid"),
+            alert_type.get("codigo"),
+            alert_type.get("code"),
+            alert_type.get("tipo_alerta"),
+            alert_type.get("identificador")
+        ]
+
+        for candidate in candidates:
+            candidate_str = str(candidate).strip() if candidate is not None else ""
+            if candidate_str and candidate_str not in seen_ids:
+                self.logger.warning(
+                    "⚠️ ID duplicado en lista WhatsApp (%s). Ajustando a '%s'",
+                    base_id,
+                    candidate_str,
+                )
+                return candidate_str
+
+        suffix = 1
+        unique_id = f"{base_id or 'option'}-{index + 1}"
+        while unique_id in seen_ids:
+            suffix += 1
+            unique_id = f"{base_id or 'option'}-{index + 1}-{suffix}"
+
+        self.logger.warning(
+            "⚠️ ID duplicado en lista WhatsApp (%s) para empresa %s. Se asigna '%s'",
+            base_id,
+            empresa_id,
+            unique_id,
+        )
+        return unique_id
+
+    def _map_backend_alert_type(self, alert_type: Dict[str, Any]) -> Optional[Dict[str, str]]:
+        """Convertir un tipo de alerta del backend al formato de WhatsApp list"""
+        if not isinstance(alert_type, dict):
+            return None
+
+        row_id = (
+            alert_type.get("id")
+            or alert_type.get("_id")
+            or alert_type.get("uuid")
+            or alert_type.get("uid")
+            or alert_type.get("codigo")
+            or alert_type.get("code")
+            or alert_type.get("tipo_alerta")
+            or alert_type.get("identificador")
+        )
+
+        if not row_id:
+            return None
+
+        row_id_str = str(row_id).strip()
+        if not row_id_str:
+            return None
+
+        title = alert_type.get("nombre") or alert_type.get("titulo") or alert_type.get("name") or str(row_id)
+        description = alert_type.get("descripcion") or alert_type.get("description") or ""
+
+        return {
+            "id": row_id_str,
+            "title": str(title),
+            "description": str(description)
+        }
+
+    def _build_alert_sections(self, phone: str, empresa_id: Optional[str]) -> list[Dict[str, Any]]:
+        """Obtener secciones de alertas consultando el backend"""
+        sections: list[Dict[str, Any]] = []
+
+        resolved_empresa_id = self._resolve_empresa_id(phone, empresa_id)
+
+        if not resolved_empresa_id:
+            self.logger.error("❌ No se recibió empresa_id para obtener tipos de alerta")
+            return sections
+
+        if not self.backend_client or not hasattr(self.backend_client, "get_empresa_alarm_types"):
+            self.logger.error("❌ Backend client no soporta consulta de tipos de alerta")
+            return sections
+
+        try:
+            response = self.backend_client.get_empresa_alarm_types(resolved_empresa_id)
+        except Exception as ex:
+            self.logger.error(f"❌ Error consultando tipos de alerta para empresa {empresa_id}: {ex}")
+            return sections
+
+        if not response:
+            self.logger.error("❌ Respuesta vacía al consultar tipos de alerta")
+            return sections
+
+        success_value = response.get("success")
+        if success_value is False:
+            error_msg = response.get("message", "Respuesta inválida")
+            self.logger.error(f"❌ Backend rechazó la consulta de tipos de alerta: {error_msg}")
+            return sections
+
+        alert_types_raw = response.get("data")
+
+        potential_lists = []
+        if isinstance(alert_types_raw, list):
+            potential_lists.append(alert_types_raw)
+        elif isinstance(alert_types_raw, dict):
+            for key in ("tipos", "tipos_alerta", "alert_types", "items", "results", "data"):
+                value = alert_types_raw.get(key)
+                if isinstance(value, list):
+                    potential_lists.append(value)
+            # some APIs return {'success': True, 'data': {'items': [...] }} and also include list under same dict
+            if not potential_lists and all(isinstance(v, dict) for v in alert_types_raw.values()):
+                potential_lists.append(list(alert_types_raw.values()))
+
+        for alert_type_list in potential_lists:
+            rows = []
+            seen_row_ids: Set[str] = set()
+            for index, alert_type in enumerate(alert_type_list):
+                mapped_row = self._map_backend_alert_type(alert_type)
+                if not mapped_row:
+                    continue
+
+                row_id = mapped_row.get("id", "").strip()
+                if not row_id:
+                    row_id = f"option-{index + 1}"
+
+                if row_id in seen_row_ids:
+                    row_id = self._ensure_unique_row_id(
+                        base_id=row_id,
+                        alert_type=alert_type,
+                        seen_ids=seen_row_ids,
+                        index=index,
+                        empresa_id=resolved_empresa_id,
+                    )
+
+                mapped_row["id"] = row_id
+                seen_row_ids.add(row_id)
+                rows.append(mapped_row)
+
+            if rows:
+                sections.append({"title": "Servicios técnicos", "rows": rows})
+                break
+
+        if not sections:
+            self.logger.error("❌ No se encontraron tipos de alerta válidos en la respuesta del backend")
+
+        return sections
+
+    def _send_create_alarma(self, number, usuario, is_in_cached: bool = False, message_time=None, empresa_id: Optional[str] = None) -> bool:
         """Crear y enviar lista de alarmas por WhatsApp"""
         if not self.whatsapp_service:
             self.logger.warning("⚠️ WhatsApp service no disponible")
             return False
             
         try:
-            sections = [
-                {
-                    "title": "Servicios técnicos",
-                    "rows": [
-                        {
-                            "id": "ROJO",
-                            "title": "Incendio", 
-                            "description": "Incendios estructurales y/o forestales."
-                        },
-                        {
-                            "id": "AZUL",
-                            "title": "Accidente", 
-                            "description": "Accidentes vehiculares e industriales."
-                        },
-                        {
-                            "id": "AMARILLO",
-                            "title": "Sanitaria", 
-                            "description": "Emergencias médicas y/o sanitarias."
-                        },
-                        {
-                            "id": "VERDE",
-                            "title": "Delincuencia", 
-                            "description": "Robos, hurtos, atracos, asonadas."
-                        },
-                        {
-                            "id": "NARANJA",
-                            "title": "Catástrofe natural", 
-                            "description": "Terremotos, derrumbes y otras catástrofes."
-                        }
-                    ]
-                }
-            ]
-   
+            resolved_empresa_id = empresa_id or self._resolve_empresa_id(number)
+
+            if not resolved_empresa_id:
+                self.logger.error("❌ No se enviará menú de alertas: empresa_id desconocido")
+                self.whatsapp_service.send_individual_message(
+                    phone=number,
+                    message=(
+                        "⚠️ No se pudo identificar la empresa asociada a tu cuenta. "
+                        "Contacta al administrador para validar tu registro."
+                    ),
+                    use_queue=True
+                )
+                return False
+
+            if not empresa_id:
+                try:
+                    self.whatsapp_service.update_number_cache(
+                        phone=number,
+                        data={"empresa_id": resolved_empresa_id},
+                        empresa_id=resolved_empresa_id
+                    )
+                except Exception as ex:
+                    self.logger.warning(f"⚠️ No se pudo actualizar el cache con empresa_id: {ex}")
+
+            sections = self._build_alert_sections(number, resolved_empresa_id)
+            if not sections:
+                self.logger.error("❌ No se enviará menú de alertas por falta de datos dinámicos")
+                if self.whatsapp_service:
+                    info_message = (
+                        "⚠️ No se encontraron tipos de alerta configurados para tu empresa. "
+                        "Contacta al administrador para habilitarlos."
+                    )
+                    self.whatsapp_service.send_individual_message(
+                        phone=number,
+                        message=info_message,
+                        use_queue=True
+                    )
+                return False
+  
             if message_time is not None:
                 body_text = message_time
             else:
@@ -925,7 +1173,7 @@ class WebSocketMessageHandler:
             return False
             
         try:
-            #print(f"La alerta es {json.dumps(list_users,indent=4)}")
+            print(f"La alerta es {json.dumps(alert,indent=4)}")
             data_create = alert.get("activacion_alerta",{})
             image = alert["image_alert"]
             alert_name = alert["nombre_alerta"]

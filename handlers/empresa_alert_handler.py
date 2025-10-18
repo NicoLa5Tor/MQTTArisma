@@ -644,6 +644,12 @@ class EmpresaAlertHandler:
             
             alert_id = alert_data.get("_id", "")
             empresa_nombre = alert_data.get("empresa_nombre", "")
+            empresa_id = alert_data.get("empresa_id")
+
+            if not empresa_id:
+                empresa_data = alert_data.get("empresa")
+                if isinstance(empresa_data, dict):
+                    empresa_id = empresa_data.get("id") or empresa_data.get("_id")
             
             success_count = 0
             
@@ -669,12 +675,16 @@ class EmpresaAlertHandler:
                         "alert_id": alert_id
                     }
                 }
+
+                if empresa_id:
+                    cache_data["empresa_id"] = empresa_id
                 
                 # Agregar al cache
                 response = self.whatsapp_service.add_number_to_cache(
                     phone=telefono,
                     name=nombre,
-                    data=cache_data
+                    data=cache_data,
+                    empresa_id=empresa_id
                 )
                 
                 if response:

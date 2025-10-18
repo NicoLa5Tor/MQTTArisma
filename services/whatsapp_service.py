@@ -408,14 +408,15 @@ class WhatsAppService:
             self.logger.error(f"Error en servicio WhatsApp bulk button: {e}")
             return False
     
-    def add_number_to_cache(self, phone: str, name: str = None, data: Dict = None) -> bool:
+    def add_number_to_cache(self, phone: str, name: str = None, data: Dict = None, empresa_id: str = None) -> bool:
         """
         Agregar número al cache de WhatsApp
-        
+
         Args:
             phone: Número de teléfono (formato internacional)
             name: Nombre del contacto
             data: Datos adicionales del contacto
+            empresa_id: Identificador de la empresa al mismo nivel que phone
             
         Returns:
             bool: True si se agregó exitosamente, False en caso contrario
@@ -427,7 +428,7 @@ class WhatsAppService:
             
             print(f"📞 Servicio WhatsApp - Agregando número al cache...")
             
-            response = self.client.add_number_to_cache(phone, name, data)
+            response = self.client.add_number_to_cache(phone, name, data, empresa_id=empresa_id)
             
             if response:
                 print(f"✅ Número agregado al cache exitosamente")
@@ -443,13 +444,14 @@ class WhatsAppService:
             self.logger.error(f"Error en servicio WhatsApp agregando al cache: {e}")
             return False
     
-    def update_number_cache(self, phone: str, data: Dict) -> bool:
+    def update_number_cache(self, phone: str, data: Dict, empresa_id: str = None) -> bool:
         """
         Actualizar información del cache de un usuario de WhatsApp
         
         Args:
             phone: Número de teléfono (formato internacional)
             data: Datos a actualizar en el cache (ej: {"email": "nuevo@email.com", "company": "Nueva Empresa"})
+            empresa_id: Identificador de la empresa a mantener en la entrada
             
         Returns:
             bool: True si se actualizó exitosamente, False en caso contrario
@@ -461,7 +463,7 @@ class WhatsAppService:
             
             print(f"🔄 Servicio WhatsApp - Actualizando información del cache...")
             
-            response = self.client.update_number_cache(phone, data)
+            response = self.client.update_number_cache(phone, data, empresa_id=empresa_id)
             
             if response:
                 print(f"✅ Información del cache actualizada exitosamente")

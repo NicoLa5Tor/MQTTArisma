@@ -442,14 +442,15 @@ class WhatsAppClient:
             self.logger.error(f"Error enviando bulk button message: {str(e)[:200]}")
             return None
     
-    def add_number_to_cache(self, phone: str, name: str = None, data: Dict = None) -> Optional[Dict]:
+    def add_number_to_cache(self, phone: str, name: str = None, data: Dict = None, empresa_id: str = None) -> Optional[Dict]:
         """
         Agregar número al cache de WhatsApp
-        
+
         Args:
             phone: Número de teléfono (formato internacional)
             name: Nombre del contacto
             data: Datos adicionales del contacto
+            empresa_id: Identificador de empresa para almacenar a nivel raíz
             
         Returns:
             Dict con respuesta de la API o None si hay error
@@ -463,6 +464,9 @@ class WhatsAppClient:
                 "name": name,
                 "data": data or {}
             }
+
+            if empresa_id:
+                payload["empresa_id"] = empresa_id
             
             print(f"📞 Agregando número al cache:")
             print(f"   📞 Teléfono: {phone_clean}")
@@ -483,13 +487,14 @@ class WhatsAppClient:
             self.logger.error(f"Error agregando número al cache: {str(e)[:200]}")
             return None
     
-    def update_number_cache(self, phone: str, data: Dict) -> Optional[Dict]:
+    def update_number_cache(self, phone: str, data: Dict, empresa_id: str = None) -> Optional[Dict]:
         """
         Actualizar información del cache de un usuario de WhatsApp
         
         Args:
             phone: Número de teléfono (formato internacional)
             data: Datos a actualizar en el cache (ej: {"email": "nuevo@email.com", "company": "Nueva Empresa"})
+            empresa_id: Identificador de empresa para mantener sincronizado el registro
             
         Returns:
             Dict con respuesta de la API o None si hay error
@@ -502,6 +507,9 @@ class WhatsAppClient:
                 "phone": phone_clean,
                 "data": data
             }
+
+            if empresa_id:
+                payload["empresa_id"] = empresa_id
             
             print(f"🔄 Actualizando información del cache:")
             print(f"   📞 Teléfono: {phone_clean}")

@@ -480,7 +480,38 @@ class BackendClient:
         except Exception as e:
             print(f"💥 Error creando alerta de empresa: {e}")
             return None
-    
+
+    def get_empresa_alarm_types(self, empresa_id: str) -> Optional[Dict]:
+        """Obtener lista completa de tipos de alarma para una empresa"""
+        try:
+            endpoint = f"/api/tipos-alarma/empresa/{empresa_id}/todos"
+
+            print("📋 Consultando tipos de alarma disponibles para empresa:")
+            print(f"   🆔 Empresa ID: {empresa_id}")
+
+            response = self.get(endpoint=endpoint)
+
+            if response:
+                status_code = response.get('_status_code', 200)
+                print(f"📊 Respuesta (status {status_code}): {json.dumps(response, indent=2)}")
+
+                if status_code == 404:
+                    print("⚠️ Empresa sin tipos de alarma registrados")
+                    return response
+
+            if response and response.get('success'):
+                tipos = response.get('data', [])
+                print(f"✅ Tipos de alarma recuperados ({len(tipos)} tipos)")
+                return response
+
+            error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
+            print(f"❌ Error consultando tipos de alarma: {error_msg}")
+            return response
+
+        except Exception as e:
+            print(f"💥 Error consultando tipos de alarma por empresa: {e}")
+            return None
+
     def get_alert_by_id(self, alert_id: str, user_id: str) -> Optional[Dict]:
         """
         Obtener detalles de una alerta específica para un usuario
