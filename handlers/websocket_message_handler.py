@@ -7,7 +7,7 @@ import logging
 import asyncio
 import time
 from asyncio import Queue
-from typing import Dict, Any, Optional, Set
+from typing import Dict, Any, Optional, Set, List
 from utils.redis_queue_manager import RedisQueueManager
 from clients.mqtt_publisher_lite import MQTTPublisherLite
 from config.settings import MQTTConfig
@@ -347,6 +347,14 @@ class WebSocketMessageHandler:
             numero_excluido = cached_info["phone"]
             usuarios_filtrados = [u for u in list_users if u["numero"] != numero_excluido]
             if list_users:
+                creator_name = data_alert.get("activacion_alerta", {}).get("nombre")
+                recipients_template = [u for u in list_users if u.get("numero") != numero_excluido]
+                self._send_alert_created_template(
+                    recipients=recipients_template,
+                    alert_info=data_alert,
+                    creator_name=creator_name
+                )
+                time.sleep(20)
                 self._send_location_personalized_message(
                     numeros_data=list_users,
                     tipo_alarma_info=data_alert,
@@ -946,6 +954,50 @@ class WebSocketMessageHandler:
             unique_id,
         )
         return unique_id
+
+
+    def _send_alert_created_template(
+        self,
+        recipients: List[Dict],
+        alert_info: Dict,
+        creator_name: Optional[str]
+    ) -> None:
+        """Enviar plantilla de alerta creada antes de otros mensajes"""
+        if not self.whatsapp_service:
+            return
+
+        template_recipients = []
+        alert_name = alert_info.get("nombre_alerta") or alert_info.get("nombre") or "Alerta"
+        empresa = alert_info.get("empresa_nombre") or alert_info.get("empresa") or "la empresa"
+        creator = creator_name or alert_info.get("activacion_alerta", {}).get("nombre", "un miembro autorizado")
+
+        for usuario in recipients:
+            numero = usuario.get("numero")
+            if not numero:
+                continue
+
+            
+            template_recipients.append({
+                "phone": numero,
+                "template_name": "alerta_creada",
+                "language": "es_CO",
+                "components": [
+                    {
+                        "type": "body",
+                        "parameters": [
+                            {"type": "text", "text": alert_name},
+                            {"type": "text", "text": empresa},
+                            {"type": "text", "text": creator}
+                        ]
+                    }
+                ]
+            })
+
+        if template_recipients:
+            self.whatsapp_service.send_bulk_template(
+                recipients=template_recipients,
+                use_queue=True
+            )
 
     def _map_backend_alert_type(self, alert_type: Dict[str, Any]) -> Optional[Dict[str, str]]:
         """Convertir un tipo de alerta del backend al formato de WhatsApp list"""
