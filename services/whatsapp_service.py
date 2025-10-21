@@ -360,7 +360,7 @@ class WhatsAppService:
                                 footer_text: str, recipients: List[Dict], use_queue: bool = True) -> bool:
         """
         Enviar mensaje con botones de manera masiva a múltiples destinatarios
-        
+
         Args:
             header_type: Tipo de encabezado (e.g., 'text')
             header_content: Contenido del encabezado (común para todos)
@@ -406,6 +406,81 @@ class WhatsAppService:
             self.stats["errors"] += 1
             print(f"💥 Error en servicio WhatsApp bulk button: {e}")
             self.logger.error(f"Error en servicio WhatsApp bulk button: {e}")
+            return False
+
+    def send_bulk_location_button_message(
+        self,
+        recipients: List[Dict],
+        url_maps: str,
+        footer_text: str = "",
+        use_queue: bool = True
+    ) -> bool:
+        """Enviar ubicación mediante CTA 'Abrir en Maps' usando broadcast personalizado"""
+
+        if not self.config.enabled:
+            self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
+            return False
+
+        if not url_maps:
+            self.logger.warning("⚠️ No se puede enviar ubicación: falta URL de Maps")
+            return False
+
+        try:
+            header_type = "text"
+            header_content = "¡RESCUE SYSTEM UBICACIÓN!"
+
+            enriched_recipients = []
+            for recipient in recipients:
+                name = (recipient.get("nombre") or recipient.get("name") or "").strip()
+                phone = recipient.get("phone") or recipient.get("numero")
+
+                if not phone:
+                    self.logger.debug("⚠️ Se omite destinatario sin número válido en ubicación")
+                    continue
+
+                body_lines = []
+                if name:
+                    body_lines.append(f"¡HOLA {name}!")
+                else:
+                    body_lines.append("¡HOLA!")
+                body_lines.append("Rescue te ayuda a llegar a la emergencia.")
+
+                body_text = "\n".join(body_lines)
+
+                enriched_recipients.append({
+                    "phone": phone,
+                    "body_text": body_text
+                })
+
+            if not enriched_recipients:
+                self.logger.warning("⚠️ No hay destinatarios válidos para enviar ubicación")
+                return False
+
+            response = self.client.send_personalized_broadcast_message(
+                recipients=enriched_recipients,
+                header_type=header_type,
+                header_content=header_content,
+                button_text="Abrir en Maps",
+                button_url=url_maps,
+                footer_text=footer_text,
+                use_queue=use_queue
+            )
+
+            if response:
+                self.stats["broadcast_messages_sent"] += 1
+                self.stats["total_recipients"] += len(enriched_recipients)
+                self.logger.info(
+                    f"✅ Mensaje de ubicación enviado a {len(enriched_recipients)} destinatarios"
+                )
+                return True
+
+            self.stats["errors"] += 1
+            self.logger.error("❌ Error enviando mensaje de ubicación con CTA")
+            return False
+
+        except Exception as e:
+            self.stats["errors"] += 1
+            self.logger.error(f"❌ Error en envío de ubicación con CTA: {e}")
             return False
     
     def add_number_to_cache(self, phone: str, name: str = None, data: Dict = None, empresa_id: str = None) -> bool:

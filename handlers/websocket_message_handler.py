@@ -1565,43 +1565,32 @@ class WebSocketMessageHandler:
             return False
     
     def _send_location_personalized_message(self, numeros_data: list, tipo_alarma_info: Dict) -> bool:
-        """Enviar mensaje personalizado de ubicación por WhatsApp"""
+        """Enviar ubicación por WhatsApp usando CTA 'Abrir en Maps'"""
+
         if not self.whatsapp_service:
             self.logger.warning("⚠️ WhatsApp service no disponible")
             return False
+
         try:
-            ubicacion = tipo_alarma_info.get("ubicacion")
-            url_maps = str(ubicacion.get("url_maps", ""))
-            parametro = url_maps.split("place/")[1]
-            recipients = []
-            for item in numeros_data:
-                nombre = str(item.get("nombre", ""))
-                recipient = {
-                    "phone": item["numero"],
-                    "template_name": "location_alert",
-                    "language": "es_CO",
-                    "components": [
-                        {
-                            "type": "body",
-                            "parameters": [
-                                {"type": "text", "text": nombre}
-                            ]
-                        },
-                        {
-                            "type": "button",
-                            "sub_type": "url",
-                            "index": "0",
-                            "parameters": [
-                                {"type": "text", "text": parametro}
-                            ]
-                        }
-                    ]
-                }
-            
-                recipients.append(recipient)
-            result = self.whatsapp_service.send_bulk_template(recipients=recipients)
-            return True
-            
+            ubicacion = tipo_alarma_info.get("ubicacion", {}) if tipo_alarma_info else {}
+            url_maps = ubicacion.get("url_maps") if isinstance(ubicacion, dict) else None
+
+            if not url_maps:
+                self.logger.warning("⚠️ No hay URL de ubicación disponible")
+                return False
+
+            success = self.whatsapp_service.send_bulk_location_button_message(
+                recipients=numeros_data,
+                url_maps=url_maps,
+                footer_text="Equipo RESCUE",
+                use_queue=True
+            )
+
+            if not success:
+                self.logger.error("❌ Error enviando mensaje de ubicación con CTA")
+
+            return success
+
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensaje de ubicación: {e}")
             return False

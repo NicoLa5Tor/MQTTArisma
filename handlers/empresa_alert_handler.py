@@ -571,64 +571,33 @@ class EmpresaAlertHandler:
             return False
     
     def _send_location_message_empresa(self, usuarios: List[Dict], location: Dict) -> bool:
-        """Enviar mensaje de ubicación personalizado por WhatsApp (similar a MQTT handler)"""
+        """Enviar ubicación por WhatsApp usando CTA 'Abrir en Maps'"""
+
         if not self.whatsapp_service:
             self.logger.warning("⚠️ WhatsApp service no disponible")
             return False
-            
+
         try:
-            url_maps = location.get("url_maps", "")
+            url_maps = location.get("url_maps") if isinstance(location, dict) else None
+
             if not url_maps:
                 self.logger.warning("⚠️ No hay URL de ubicación disponible")
                 return False
-            parametro = url_maps.split("place/")[1]
-            recipients = []
-            
-            for usuario in usuarios:
-                nombre = usuario.get("nombre", "Usuario")
-                telefono = usuario.get("numero", "") 
-                
 
-                if not telefono:
-                    continue
-                    
-                recipient = {
-                    "phone": telefono,
-                    "template_name": "location_alert",
-                    "language": "es_CO",
-                    "components": [
-                        {
-                            "type": "body",
-                            "parameters": [
-                                {"type": "text", "text": nombre}
-                            ]
-                        },
-                        {
-                            "type": "button",
-                            "sub_type": "url",
-                            "index": "0",
-                            "parameters": [
-                                {"type": "text", "text": parametro}
-                            ]
-                        }
-                    ]
-                }
-            
-                recipients.append(recipient)
-            
-            if not recipients:
-                self.logger.warning("⚠️ No hay destinatarios válidos para ubicación")
-                return False
-            
-            response = self.whatsapp_service.send_bulk_template(recipients=recipients)
-            
-            if response:
-                self.logger.info(f"✅ Mensaje de ubicación enviado a {len(recipients)} usuarios")
+            success = self.whatsapp_service.send_bulk_location_button_message(
+                recipients=usuarios,
+                url_maps=url_maps,
+                footer_text="Equipo RESCUE",
+                use_queue=True
+            )
+
+            if success:
+                self.logger.info(f"✅ Mensaje de ubicación enviado a {len(usuarios)} usuarios")
                 return True
-            else:
-                self.logger.error("❌ Error enviando mensaje de ubicación")
-                return False
-            
+
+            self.logger.error("❌ Error enviando mensaje de ubicación con CTA")
+            return False
+
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensaje de ubicación: {e}")
             return False

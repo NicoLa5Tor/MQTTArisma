@@ -50,7 +50,7 @@ class WhatsAppClient:
             )
             
             response.raise_for_status()
-            print(f"📱 WhatsApp API Response: {response.status_code}")
+            #print(f"📱 WhatsApp API Response: {response.status_code}")
             
             # Intentar parsear JSON
             try:
@@ -84,13 +84,13 @@ class WhatsAppClient:
             }
             response = self.post(endpoint='/api/send-location-request',data=data)
             if response:
-                print(f"✅ Mensaje individual de peticion de ubicacion enviado exitosamente")
+                #print(f"✅ Mensaje individual de peticion de ubicacion enviado exitosamente")
                 return response
             else:
-                print(f"❌ Error enviando mensaje  de peticion de ubicacion individual")
+                #print(f"❌ Error enviando mensaje  de peticion de ubicacion individual")
                 return None
         except Exception as e:
-            print(f"💥 Error enviando mensaje de peticion de ubicaciion individual: {e}")
+            #print(f"💥 Error enviando mensaje de peticion de ubicaciion individual: {e}")
             self.logger.error(f"Error enviando mensaje de peticion de ubicaciion individual: {e}")
             return None
     def send_individual_message(self, phone: str, message: str, use_queue: bool = False) -> Optional[Dict]:
@@ -115,22 +115,22 @@ class WhatsAppClient:
                 "use_queue": use_queue
             }
             
-            print(f"📱 Enviando mensaje individual:")
-            print(f"   📞 Teléfono: {phone_clean}")
-            print(f"   💬 Mensaje: {message[:50]}{'...' if len(message) > 50 else ''}")
-            print(f"   🔄 Cola: {use_queue}")
+            #print(f"📱 Enviando mensaje individual:")
+            #print(f"   📞 Teléfono: {phone_clean}")
+            #print(f"   💬 Mensaje: {message[:50]}{'...' if len(message) > 50 else ''}")
+            #print(f"   🔄 Cola: {use_queue}")
             
             response = self.post('/api/send-message', data=data)
             
             if response:
-                print(f"✅ Mensaje individual enviado exitosamente")
+                #print(f"✅ Mensaje individual enviado exitosamente")
                 return response
             else:
-                print(f"❌ Error enviando mensaje individual")
+                #print(f"❌ Error enviando mensaje individual")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error enviando mensaje individual: {e}")
+            #print(f"💥 Error enviando mensaje individual: {e}")
             self.logger.error(f"Error enviando mensaje individual: {e}")
             return None
     
@@ -151,23 +151,23 @@ class WhatsAppClient:
                 "use_queue": use_queue
             }
             
-            print(f"📱 Enviando mensajes individuales masivos:")
-            print(f"   📞 Destinatarios: {len(recipients)}")
-            print(f"   🔄 Usar cola: {use_queue}")
+            #print(f"📱 Enviando mensajes individuales masivos:")
+            #print(f"   📞 Destinatarios: {len(recipients)}")
+            #print(f"   🔄 Usar cola: {use_queue}")
             
             response = self.post('/api/send-bulk', data=data)
             
             if response:
                 sent_count = response.get('sent_count', len(recipients))
-                print(f"✅ Mensajes masivos enviados exitosamente:")
-                print(f"   📤 Enviados: {sent_count}/{len(recipients)}")
+                #print(f"✅ Mensajes masivos enviados exitosamente:")
+                #print(f"   📤 Enviados: {sent_count}/{len(recipients)}")
                 return response
             else:
-                print(f"❌ Error enviando mensajes masivos")
+                #print(f"❌ Error enviando mensajes masivos")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error enviando mensajes masivos: {e}")
+            #print(f"💥 Error enviando mensajes masivos: {e}")
             self.logger.error(f"Error enviando mensajes masivos: {e}")
             return None
     
@@ -204,27 +204,14 @@ class WhatsAppClient:
                 "footer_text": footer_text,
                 "use_queue": use_queue
             }
-            
-            print(f"📱 Enviando broadcast interactivo:")
-            print(f"   📞 Teléfonos: {len(phones_clean)} números")
-            print(f"   📋 Encabezado: {header_content}")
-            print(f"   💬 Cuerpo: {body_text[:50]}{'...' if len(body_text) > 50 else ''}")
-            print(f"   🔘 Botón: {button_text}")
-            print(f"   🔗 URL: {button_url}")
-            print(f"   📝 Pie: {footer_text}")
-            print(f"   🔄 Cola: {use_queue}")
-            
             response = self.post('/api/send-broadcast-interactive', data=data)
             
             if response:
-                print(f"✅ Broadcast enviado exitosamente a {len(phones_clean)} números")
                 return response
             else:
-                print(f"❌ Error enviando broadcast")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error enviando broadcast: {e}")
             self.logger.error(f"Error enviando broadcast: {e}")
             return None
     
@@ -255,26 +242,13 @@ class WhatsAppClient:
                 "footer_text": footer_text,
                 "use_queue": use_queue
             }
-            
-            print(f"📱 Enviando broadcast personalizado:")
-            print(f"   📋 Recipients: {len(recipients)}")
-            print(f"   📋 Encabezado: {header_content}")
-            print(f"   🔘 Botón: {button_text}")
-            print(f"   🔗 URL: {button_url}")
-            print(f"   📝 Pie: {footer_text}")
-            print(f"   🔄 Cola: {use_queue}")
-            
             response = self.post('/api/send-personalized-broadcast', data=data)
-            
             if response:
-                print(f"✅ Broadcast personalizado enviado exitosamente")
                 return response
             else:
-                print(f"❌ Error enviando broadcast personalizado")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error enviando broadcast personalizado: {e}")
             self.logger.error(f"Error enviando broadcast personalizado: {e}")
             return None
     
@@ -307,25 +281,15 @@ class WhatsAppClient:
                 "sections": sections
             }
             
-            print(f"📱 Enviando mensaje de lista:")
-            print(f"   📞 Teléfono: {phone_clean}")
-            print(f"   📋 Encabezado: {header_text[:50]}{'...' if len(header_text) > 50 else ''}")
-            print(f"   💬 Cuerpo: {body_text[:50]}{'...' if len(body_text) > 50 else ''}")
-            print(f"   📝 Pie: {footer_text[:30]}{'...' if len(footer_text) > 30 else ''}")
-            print(f"   🔘 Botón: {button_text[:30]}{'...' if len(button_text) > 30 else ''}")
-            print(f"   📋 Secciones: {len(sections)} secciones")
-            
+   
             response = self.post('/api/send-list', data=data)
             
             if response:
-                print(f"✅ Mensaje de lista enviado exitosamente")
                 return response
             else:
-                print(f"❌ Error enviando mensaje de lista")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error enviando mensaje de lista: {type(e).__name__}")
             self.logger.error(f"Error enviando mensaje de lista: {str(e)[:200]}")
             return None
     def send_bulk_list_message(self, header_text: str, footer_text: str, button_text: str, 
@@ -363,25 +327,25 @@ class WhatsAppClient:
                 "use_queue": use_queue
             }
             
-            print(f"📱 Enviando bulk list message:")
-            print(f"   📋 Encabezado: {header_text[:50]}{'...' if len(header_text) > 50 else ''}")
-            print(f"   📝 Pie: {footer_text[:30]}{'...' if len(footer_text) > 30 else ''}")
-            print(f"   🔘 Botón: {button_text[:30]}{'...' if len(button_text) > 30 else ''}")
-            print(f"   📋 Secciones: {len(sections)} secciones")
-            print(f"   📞 Destinatarios: {len(recipients_clean)} números")
-            print(f"   🔄 Cola: {use_queue}")
+            #print(f"📱 Enviando bulk list message:")
+            ##print(f"   📋 Encabezado: {header_text[:50]}{'...' if len(header_text) > 50 else ''}")
+            #print(f"   📝 Pie: {footer_text[:30]}{'...' if len(footer_text) > 30 else ''}")
+            #print(f"   🔘 Botón: {button_text[:30]}{'...' if len(button_text) > 30 else ''}")
+            #print(f"   📋 Secciones: {len(sections)} secciones")
+            #print(f"   📞 Destinatarios: {len(recipients_clean)} números")
+            #print(f"   🔄 Cola: {use_queue}")
             
             response = self.post('/api/send-bulk-list', data=data)
             
             if response:
-                print(f"✅ Bulk list message enviado exitosamente a {len(recipients_clean)} números")
+                #print(f"✅ Bulk list message enviado exitosamente a {len(recipients_clean)} números")
                 return response
             else:
-                print(f"❌ Error enviando bulk list message")
+                #print(f"❌ Error enviando bulk list message")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error enviando bulk list message: {type(e).__name__}")
+            #print(f"💥 Error enviando bulk list message: {type(e).__name__}")
             self.logger.error(f"Error enviando bulk list message: {str(e)[:200]}")
             return None
     
@@ -420,26 +384,75 @@ class WhatsAppClient:
                 "use_queue": use_queue
             }
             
-            print(f"📱 Enviando bulk button message:")
-            print(f"   📋 Encabezado tipo: {header_type}")
-            print(f"   📋 Encabezado: {header_content}")
-            print(f"   📝 Pie: {footer_text}")
-            print(f"   🔘 Botones: {len(buttons)} botones")
-            print(f"   📞 Destinatarios: {len(recipients_clean)} números")
-            print(f"   🔄 Cola: {use_queue}")
+            #print(f"📱 Enviando bulk button message:")
+            #print(f"   📋 Encabezado tipo: {header_type}")
+            #print(f"   📋 Encabezado: {header_content}")
+            #print(f"   📝 Pie: {footer_text}")
+            #print(f"   🔘 Botones: {len(buttons)} botones")
+            #print(f"   📞 Destinatarios: {len(recipients_clean)} números")
+            #print(f"   🔄 Cola: {use_queue}")
             
             response = self.post('/api/send-bulk-button', data=data)
             
             if response:
-                print(f"✅ Bulk button message enviado exitosamente a {len(recipients_clean)} números")
+                #print(f"✅ Bulk button message enviado exitosamente a {len(recipients_clean)} números")
                 return response
             else:
-                print(f"❌ Error enviando bulk button message")
+                #print(f"❌ Error enviando bulk button message")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error enviando bulk button message: {type(e).__name__}")
+            #print(f"💥 Error enviando bulk button message: {type(e).__name__}")
             self.logger.error(f"Error enviando bulk button message: {str(e)[:200]}")
+            return None
+    
+    def send_personalized_broadcast_message(self, recipients: List[Dict], button_text: str, button_url: str,
+                                            header_type: Optional[str] = None, header_content: Optional[str] = None,
+                                            footer_text: Optional[str] = None, use_queue: bool = True) -> Optional[Dict]:
+        """Enviar broadcast interactivo personalizado con botón de vínculo"""
+        try:
+            recipients_clean = []
+            for recipient in recipients:
+                phone_clean = self._clean_phone_number(recipient["phone"])
+                body_text = recipient.get("body_text", "")
+
+                recipients_clean.append({
+                    "phone": phone_clean,
+                    "body_text": body_text
+                })
+
+            data: Dict[str, Any] = {
+                "recipients": recipients_clean,
+                "button_text": button_text,
+                "button_url": button_url,
+                "use_queue": use_queue
+            }
+
+            if header_type:
+                data["header_type"] = header_type
+            if header_content:
+                data["header_content"] = header_content
+            if footer_text:
+                data["footer_text"] = footer_text
+
+            #print("📱 Enviando broadcast interactivo personalizado:")
+            #print(f"   📞 Destinatarios: {len(recipients_clean)} números")
+            #print(f"   🔘 Botón: {button_text}")
+            #print(f"   🔗 URL: {button_url}")
+            #print(f"   🔄 Cola: {use_queue}")
+
+            response = self.post('/api/send-personalized-broadcast', data=data)
+
+            if response:
+                #print(f"✅ Broadcast interactivo enviado exitosamente a {len(recipients_clean)} números")
+                return response
+
+            #print("❌ Error enviando broadcast interactivo personalizado")
+            return None
+
+        except Exception as e:
+            #print(f"💥 Error enviando broadcast interactivo personalizado: {type(e).__name__}")
+            self.logger.error(f"Error enviando broadcast interactivo personalizado: {str(e)[:200]}")
             return None
     
     def add_number_to_cache(self, phone: str, name: str = None, data: Dict = None, empresa_id: str = None) -> Optional[Dict]:
@@ -468,22 +481,22 @@ class WhatsAppClient:
             if empresa_id:
                 payload["empresa_id"] = empresa_id
             
-            print(f"📞 Agregando número al cache:")
-            print(f"   📞 Teléfono: {phone_clean}")
-            print(f"   👤 Nombre: {name or 'N/A'}")
-            print(f"   📋 Datos: {len(str(data or {})) if data else 0} caracteres")
+            #print(f"📞 Agregando número al cache:")
+            #print(f"   📞 Teléfono: {phone_clean}")
+            #print(f"   👤 Nombre: {name or 'N/A'}")
+            #print(f"   📋 Datos: {len(str(data or {})) if data else 0} caracteres")
             
             response = self.post('/api/numbers', data=payload)
             
             if response:
-                print(f"✅ Número agregado al cache exitosamente")
+                #print(f"✅ Número agregado al cache exitosamente")
                 return response
             else:
-                print(f"❌ Error agregando número al cache")
+                #print(f"❌ Error agregando número al cache")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error agregando número al cache: {type(e).__name__}")
+            #print(f"💥 Error agregando número al cache: {type(e).__name__}")
             self.logger.error(f"Error agregando número al cache: {str(e)[:200]}")
             return None
     
@@ -511,21 +524,21 @@ class WhatsAppClient:
             if empresa_id:
                 payload["empresa_id"] = empresa_id
             
-            print(f"🔄 Actualizando información del cache:")
-            print(f"   📞 Teléfono: {phone_clean}")
-            print(f"   📋 Datos a actualizar: {data}")
+            #print(f"🔄 Actualizando información del cache:")
+            #print(f"   📞 Teléfono: {phone_clean}")
+            #print(f"   📋 Datos a actualizar: {data}")
             
             response = self._make_request('PATCH', '/api/numbers/update', data=payload)
             
             if response:
-                print(f"✅ Información del cache actualizada exitosamente")
+                #print(f"✅ Información del cache actualizada exitosamente")
                 return response
             else:
-                print(f"❌ Error actualizando información del cache")
+                #print(f"❌ Error actualizando información del cache")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error actualizando información del cache: {type(e).__name__}")
+            #print(f"💥 Error actualizando información del cache: {type(e).__name__}")
             self.logger.error(f"Error actualizando información del cache: {str(e)[:200]}")
             return None
 
@@ -584,22 +597,22 @@ class WhatsAppClient:
                 "use_queue": use_queue
             }
             
-            print(f"📱 Enviando bulk template message:")
-            print(f"   📞 Destinatarios: {len(recipients_clean)} números")
-            print(f"   📋 Plantillas: {[r.get('template_name', 'N/A') for r in recipients_clean[:3]]}{'...' if len(recipients_clean) > 3 else ''}")
-            print(f"   🔄 Cola: {use_queue}")
+            #print(f"📱 Enviando bulk template message:")
+            #print(f"   📞 Destinatarios: {len(recipients_clean)} números")
+            #print(f"   📋 Plantillas: {[r.get('template_name', 'N/A') for r in recipients_clean[:3]]}{'...' if len(recipients_clean) > 3 else ''}")
+            #print(f"   🔄 Cola: {use_queue}")
             
             response = self.post('/api/send-bulk-template', data=data)
             
             if response:
-                print(f"✅ Bulk template message enviado exitosamente a {len(recipients_clean)} números")
+                #print(f"✅ Bulk template message enviado exitosamente a {len(recipients_clean)} números")
                 return response
             else:
-                print(f"❌ Error enviando bulk template message")
+                #print(f"❌ Error enviando bulk template message")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error enviando bulk template message: {type(e).__name__}")
+            #print(f"💥 Error enviando bulk template message: {type(e).__name__}")
             self.logger.error(f"Error enviando bulk template message: {str(e)[:200]}")
             return None
     
@@ -633,23 +646,23 @@ class WhatsAppClient:
                 "data": data
             }
             
-            print(f"🔄 Actualización masiva de números:")
-            print(f"   📞 Números a actualizar: {len(phones_clean)}")
-            print(f"   📋 Datos a actualizar: {data}")
+            #print(f"🔄 Actualización masiva de números:")
+            #print(f"   📞 Números a actualizar: {len(phones_clean)}")
+            #print(f"   📋 Datos a actualizar: {data}")
             
             response = self._make_request('PATCH', '/api/numbers/bulk-update', data=payload)
             
             if response:
                 updated_count = response.get('updated_count', len(phones_clean))
-                print(f"✅ Actualización masiva completada exitosamente:")
-                print(f"   📤 Actualizados: {updated_count}/{len(phones_clean)}")
+                #print(f"✅ Actualización masiva completada exitosamente:")
+                #print(f"   📤 Actualizados: {updated_count}/{len(phones_clean)}")
                 return response
             else:
-                print(f"❌ Error en actualización masiva")
+                #print(f"❌ Error en actualización masiva")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error en actualización masiva: {type(e).__name__}")
+            #print(f"💥 Error en actualización masiva: {type(e).__name__}")
             self.logger.error(f"Error en actualización masiva: {str(e)[:200]}")
             return None
     
@@ -685,13 +698,13 @@ class WhatsAppClient:
         try:
             response = self.session.get(f'{self.base_url}/health', timeout=10)
             if response.status_code == 200:
-                print("✅ API de WhatsApp disponible")
+                #print("✅ API de WhatsApp disponible")
                 return True
             else:
-                print(f"❌ API de WhatsApp no disponible: {response.status_code}")
+                #print(f"❌ API de WhatsApp no disponible: {response.status_code}")
                 return False
         except Exception as e:
-            print(f"❌ Error verificando API de WhatsApp: {e}")
+            #print(f"❌ Error verificando API de WhatsApp: {e}")
             self.logger.error(f"Error en health check WhatsApp: {e}")
             return False
     
