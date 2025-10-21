@@ -645,6 +645,13 @@ class EmpresaAlertHandler:
                     }
                 }
 
+                role_info = usuario.get("rol") if isinstance(usuario, dict) else None
+                if isinstance(role_info, dict):
+                    cache_data["rol"] = {
+                        "nombre": role_info.get("nombre") or role_info.get("name", ""),
+                        "is_creator": bool(role_info.get("is_creator"))
+                    }
+
                 if empresa_id:
                     cache_data["empresa_id"] = empresa_id
                 

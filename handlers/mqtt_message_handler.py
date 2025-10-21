@@ -294,6 +294,21 @@ class MQTTMessageHandler:
             self.logger.error(f"❌ Error enviando mensaje de ubicación: {e}")
             return False
 
+
+    @staticmethod
+    def _has_creator_permission(payload: Dict) -> bool:
+        if not isinstance(payload, dict):
+            return False
+        role_data = payload.get("rol")
+        if isinstance(role_data, dict):
+            return bool(role_data.get("is_creator"))
+        data = payload.get("data")
+        if isinstance(data, dict):
+            role_data = data.get("rol")
+            if isinstance(role_data, dict):
+                return bool(role_data.get("is_creator"))
+        return False
+
     def _send_create_down_alarma(self, list_users: list, alert: Dict, data_user: Dict = {},alert_id = str) -> bool:
         """Crear notificación de alarma por WhatsApp"""
         if not self.whatsapp_service:
@@ -306,33 +321,48 @@ class MQTTMessageHandler:
             image = alert["imagen_base64"]
             alert_name = alert["nombre"]
             empresa = "en " + data_user.get("empresa", "la empresa")
-            recipients = []
-            
+            recipients_button = []
+            recipients_plain = []
+
             for item in list_users:
                 body_text = f"¡Hola {item['nombre']}!.\nAlerta de {alert_name} {empresa}"
-                data = {
+                button_target = {
                     "phone": item.get("numero", ""),
                     "body_text": body_text
                 }
-                recipients.append(data)
-                
+
+                if self._has_creator_permission(item):
+                    recipients_button.append(button_target)
+                else:
+                    recipients_plain.append({
+                        "phone": item.get("numero", ""),
+                        "message": f"{body_text}\n\nNo tienes permisos para apagar la alarma."
+                    })
+
             buttons = [
                 {
                     "id": id_alert,
                     "title": "Apagar alarma"
                 }
             ]
-            
-            self.whatsapp_service.send_bulk_button_message(
-                header_type="image",
-                header_content=image,
-                buttons=buttons,
-                footer_text="Sistema RESCUE",
-                recipients=recipients,
-                use_queue=True
-            )
-            
-            return True
+
+            if recipients_button:
+                self.whatsapp_service.send_bulk_button_message(
+                    header_type="image",
+                    header_content=image,
+                    buttons=buttons,
+                    footer_text="Sistema RESCUE",
+                    recipients=recipients_button,
+                    use_queue=True
+                )
+
+            if recipients_plain:
+                self.whatsapp_service.send_bulk_individual(
+                    recipients=recipients_plain,
+                    use_queue=True
+                )
+
+            return bool(recipients_button or recipients_plain)
             
         except Exception as e:
             self.logger.error(f"❌ Error enviando notificación de alarma: {e}")
@@ -431,6 +461,13 @@ class MQTTMessageHandler:
                     "name": user.get("nombre", ""),
                     "phone": user.get("numero", "")
                 }
+
+                role_info = user.get("rol") if isinstance(user, dict) else None
+                if isinstance(role_info, dict):
+                    cache_data["data"]["rol"] = {
+                        "nombre": role_info.get("nombre") or role_info.get("name", ""),
+                        "is_creator": bool(role_info.get("is_creator"))
+                    }
 
                 if empresa_id:
                     cache_data["data"]["empresa_id"] = empresa_id

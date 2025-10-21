@@ -435,23 +435,23 @@ class WhatsAppClient:
             if footer_text:
                 data["footer_text"] = footer_text
 
-            #print("📱 Enviando broadcast interactivo personalizado:")
-            #print(f"   📞 Destinatarios: {len(recipients_clean)} números")
-            #print(f"   🔘 Botón: {button_text}")
-            #print(f"   🔗 URL: {button_url}")
-            #print(f"   🔄 Cola: {use_queue}")
+            print("📱 Enviando broadcast interactivo personalizado:")
+            print(f"   📞 Destinatarios: {len(recipients_clean)} números")
+            print(f"   🔘 Botón: {button_text}")
+            print(f"   🔗 URL: {button_url}")
+            print(f"   🔄 Cola: {use_queue}")
 
             response = self.post('/api/send-personalized-broadcast', data=data)
 
             if response:
-                #print(f"✅ Broadcast interactivo enviado exitosamente a {len(recipients_clean)} números")
+                print(f"✅ Broadcast interactivo enviado exitosamente a {len(recipients_clean)} números")
                 return response
 
-            #print("❌ Error enviando broadcast interactivo personalizado")
+            print("❌ Error enviando broadcast interactivo personalizado")
             return None
 
         except Exception as e:
-            #print(f"💥 Error enviando broadcast interactivo personalizado: {type(e).__name__}")
+            print(f"💥 Error enviando broadcast interactivo personalizado: {type(e).__name__}")
             self.logger.error(f"Error enviando broadcast interactivo personalizado: {str(e)[:200]}")
             return None
     

@@ -444,6 +444,7 @@ class WhatsAppService:
                 else:
                     body_lines.append("¡HOLA!")
                 body_lines.append("Rescue te ayuda a llegar a la emergencia.")
+                body_lines.append("Equipo RESCUE")
 
                 body_text = "\n".join(body_lines)
 

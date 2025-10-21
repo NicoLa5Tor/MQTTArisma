@@ -151,6 +151,34 @@ class WebSocketMessageHandler:
             self.is_processing = False
             self.logger.info("🔄 Procesador de cola de WhatsApp detenido")
 
+    def _has_creator_permission(self, payload: Optional[Dict]) -> bool:
+        """Determinar si el payload contiene permisos de creador"""
+        if not isinstance(payload, dict):
+            return False
+
+        role_data = None
+        if "rol" in payload:
+            role_data = payload.get("rol")
+        elif "data" in payload and isinstance(payload["data"], dict):
+            role_data = payload["data"].get("rol")
+
+        if isinstance(role_data, dict):
+            return bool(role_data.get("is_creator"))
+
+        return False
+
+    def _send_permission_denied_message(self, phone: str, user: str, action: str) -> None:
+        """Notificar al usuario que no tiene privilegios para la acción solicitada"""
+        if not self.whatsapp_service:
+            return
+
+        friendly_user = user or "Usuario"
+        message = (
+            f"Lo siento {friendly_user}, no tienes permisos para {action}."
+            "\nContacta al administrador si necesitas acceso."
+        )
+        self.whatsapp_service.send_individual_message(phone=phone, message=message)
+
     def _process_single_whatsapp_message_sync(self, message: str) -> bool:
         """Procesar un solo mensaje de WhatsApp (versión síncrona para Redis)"""
         try:
@@ -279,6 +307,13 @@ class WebSocketMessageHandler:
                         "alert_id" : alarm_info["_id"]
                     }
                 }
+
+                role_info = user.get("rol") if isinstance(user, dict) else None
+                if isinstance(role_info, dict):
+                    data_user["rol"] = {
+                        "nombre": role_info.get("nombre") or role_info.get("name", ""),
+                        "is_creator": bool(role_info.get("is_creator"))
+                    }
                 if empresa_id:
                     data_user["empresa_id"] = empresa_id
                 self.whatsapp_service.add_number_to_cache(phone = user["numero"]
@@ -379,6 +414,7 @@ class WebSocketMessageHandler:
         is_button = entry[type_message].get("button_reply", False)
         #es para crear alarma
         exist_alert = cached_info["data"]
+        is_creator = self._has_creator_permission(cached_info)
         if "alert_active" in exist_alert:
             id_user = exist_alert["id"]
             alert_create = exist_alert["alert_active"]
@@ -404,6 +440,9 @@ class WebSocketMessageHandler:
                         self.whatsapp_service.send_individual_message(phone = number,
                                                                       message = "Ahora recibiras mensajes de los miembros del equipo")
                     elif type_button == "APAGAR ALARMA":
+                        if not is_creator:
+                            self._send_permission_denied_message(number, user, "apagar la alarma")
+                            return
                         try:
                             response_desactivate = self._desactivate_alarm_to_back(id_alert=id_alert,cached=cached_info)
                             
@@ -487,6 +526,10 @@ class WebSocketMessageHandler:
                     data_alert = self.backend_client.get_alert_by_id(alert_id = id_alert,user_id=id_user).get("alert",{})
                     data_user = [u for u in data_alert["numeros_telefonicos"] if u["numero"] == number]
                     if opcion == "APAGAR":
+                        if not is_creator:
+                            self._send_permission_denied_message(number, user, "apagar la alarma")
+                            self._send_options_user(number=number, user=user, can_manage_alarm=False)
+                            return
                         self._send_create_down_alarma(alert=data_alert,data_user=cached_info,list_users=data_user)
                     elif opcion == "UBICACION":
                         self._send_location_personalized_message(numeros_data=data_user,tipo_alarma_info=data_alert)
@@ -533,7 +576,7 @@ class WebSocketMessageHandler:
                             "HELP"
                         ]
                         if body_text.upper() in comandos_opciones:
-                            self._send_options_user(number=number,user=user)
+                            self._send_options_user(number=number,user=user,can_manage_alarm=is_creator)
                         else:
                             data_alert = self.backend_client.get_alert_by_id(alert_id = id_alert,user_id=id_user).get("alert",{})
                             data_user = [u for u in data_alert["numeros_telefonicos"] if u["numero"] != number]
@@ -553,10 +596,16 @@ class WebSocketMessageHandler:
                     #print(json.dumps(entry,indent=4))
                     location = entry.get("location",False)
                     if location:
+                        if not is_creator:
+                            self._send_permission_denied_message(number, user, "activar la alarma")
+                            return
                         self._create_alarm(cached_info=cached_info,ubication=location)
                     else:
-                        message_location = f"{user}\nPara crear la alerta {exist_alert['info_alert']['alert_title']}\nDebes enviar la ubicacion."
-                        self.whatsapp_service.send_location_request(phone=number,body_text=message_location)
+                        if not is_creator:
+                            self._send_permission_denied_message(number, user, "activar la alarma")
+                        else:
+                            message_location = f"{user}\nPara crear la alerta {exist_alert['info_alert']['alert_title']}\nDebes enviar la ubicacion."
+                            self.whatsapp_service.send_location_request(phone=number,body_text=message_location)
                     return
                 else:
                     #Ya pasaron 5 minutos o más
@@ -572,6 +621,9 @@ class WebSocketMessageHandler:
                     )
         else:
             if is_list:
+                if not is_creator:
+                    self._send_permission_denied_message(number, user, "activar una alarma")
+                    return
                 self._alarm_back_save(entry_alarm=is_list,cached_info=cached_info)
                 self.logger.info("Procesando selección de alarma")
                 return
@@ -595,8 +647,11 @@ class WebSocketMessageHandler:
             #         return  # No enviar lista de alarmas si hubo error
         
         
-      
+
         # Enviar lista de alarmas solo si NO es una desactivación
+        if not is_creator:
+            self._send_permission_denied_message(number, user, "activar una alarma")
+            return
         self._send_create_alarma(
             number=number,
             usuario=user,
@@ -682,6 +737,19 @@ class WebSocketMessageHandler:
         else:
             sede_nombre = sede_info or ""
         
+        # Preparar información de rol (por defecto sin privilegios)
+        raw_role = verify_number.get("rol")
+        normalized_role = {}
+        if isinstance(raw_role, dict):
+            normalized_role = {
+                "nombre": raw_role.get("nombre") or raw_role.get("name", ""),
+                "is_creator": bool(raw_role.get("is_creator"))
+            }
+        else:
+            normalized_role = {"is_creator": False}
+
+        is_creator = normalized_role.get("is_creator", False)
+
         # Agregar número al cache de WhatsApp
         if self.whatsapp_service:
             response_verify = self.whatsapp_service.add_number_to_cache(
@@ -691,6 +759,7 @@ class WebSocketMessageHandler:
                     "id": verify_number.get("id"),
                     "empresa": empresa_nombre,
                     "sede": sede_nombre,
+                    "rol": normalized_role,
                     **({"empresa_id": empresa_id} if empresa_id else {})
                 },
                 empresa_id=empresa_id
@@ -740,37 +809,46 @@ class WebSocketMessageHandler:
                 
         #         return True
         
+        if not is_creator:
+            self._send_permission_denied_message(number, usuario, "crear alertas")
+            return True
+
         # Enviar lista de alarmas
         self._send_create_alarma(number=number, usuario=usuario, empresa_id=empresa_id)
         return True
 
-    def _send_options_user(self,number : str ,user : str )-> bool:
+    def _send_options_user(self, number: str, user: str, can_manage_alarm: bool) -> bool:
         if not self.whatsapp_service:
             self.logger.warning("⚠️ WhatsApp service no disponible")
             return False
         try:
+            rows = []
+            if can_manage_alarm:
+                rows.append({
+                    "id": "APAGAR",
+                    "title": "Apagar Alarma",
+                    "description": "Al seleccionar esta opción, la alarma en cuestión se apagará."
+                })
+
+            rows.extend([
+                {
+                    "id": "UBICACION",
+                    "title": "Ubicación de la alarma",
+                    "description": "Obtener la ubicación de la alarma"
+                },
+                {
+                    "id": "EMBARCADO",
+                    "title": "Embarcarme",
+                    "description": "Indica que ya estás en camino a la emergencia"
+                }
+            ])
+
             sections = [
-                   {
+                {
                     "title": "Servicios técnicos",
-                    "rows": [
-                        {
-                            "id": "APAGAR",
-                            "title": "Apagar Alarma", 
-                            "description": "Al seleccionar esta opción, la alarma en cuestión se apagará."
-                        },
-                       {
-                            "id": "UBICACION",
-                            "title": "Ubicación de la alarma",
-                            "description": "Obtener la ubicación de la alarma"
-                        },
-                        {
-                            "id": "EMBARCADO",
-                            "title": "Embarcarme",
-                            "description": "Indica que ya estás en camino a la emergencia"
-                        }
-                            ]
-                    }
-                 ]
+                    "rows": rows
+                }
+            ]
             body_text = f"{user}\nEstas son las opciones disponibles"
             self.whatsapp_service.send_list_message(
                         phone=number,
@@ -1130,6 +1208,9 @@ class WebSocketMessageHandler:
         """Crear notificación de alarma por WhatsApp"""
         if not self.whatsapp_service:
             self.logger.warning("⚠️ WhatsApp service no disponible")
+            return False
+
+        if not self._has_creator_permission(data_user):
             return False
         try:
            # print(json.dumps(alert,indent=4))
