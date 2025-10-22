@@ -44,5 +44,5 @@ jobs:
               exit 1
             fi
             docker-compose down --remove-orphans
-            docker-compose build --pull mqtt-service websocket-service
-            docker-compose up -d --remove-orphans mqtt-service websocket-service
+            docker-compose build --pull rescue-mqtt rescue-websocket
+            docker-compose up -d --remove-orphans rescue-mqtt rescue-websocket

@@ -1,6 +1,6 @@
 /.envMQTT
 .env
-.env.*
+.env*
 /.envBack
 .env.local
 .env.production

@@ -1,8 +1,8 @@
 version: '3.8'
 services:
-  mqtt-service:
+  rescue-mqtt:
     build: .
-    container_name: mqtt-connection-service
+    container_name: rescue-mqtt
     command: ["python", "mqtt_service.py"]
     environment:
       - MQTT_BROKER=${MQTT_BROKER}
@@ -40,9 +40,9 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-  websocket-service:
+  rescue-websocket:
     build: .
-    container_name: websocket-connection-service
+    container_name: rescue-websocket
     command: ["python", "websocket_service.py"]
     expose:
       - "8080"
