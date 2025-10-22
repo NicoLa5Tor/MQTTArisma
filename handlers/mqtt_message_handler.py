@@ -6,7 +6,7 @@ import json
 import logging
 import threading
 import time
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 
 
 class MQTTMessageHandler:
@@ -157,47 +157,93 @@ class MQTTMessageHandler:
         try:
             # ENVIAR MENSAJES MQTT A OTROS HARDWARE
             self._send_mqtt_message(data=response, mqtt_data=mqtt_data)
-            
+
             # PROCESAR NOTIFICACIONES WHATSAPP (replicando WebSocket handler)
-            if self.whatsapp_service:
-                alert_data = response.get("alert", {})
+            template_success = True
+            whatsapp_success = True
+            location_success = True
+            cache_success = True
+
+            alert_data = response.get("alert", {})
+            topics = alert_data.get("topics_otros_hardware", [])
+
+            if self.whatsapp_service and alert_data:
                 list_users = alert_data.get("numeros_telefonicos", [])
-                if list_users and alert_data:
+                usuarios_normalizados = self._normalize_usuarios_list(list_users)
+
+                if usuarios_normalizados:
+                    activacion_alerta = alert_data.get("activacion_alerta", {})
+                    creador_nombre = activacion_alerta.get("nombre") or mqtt_data.get("empresa", "la empresa")
+                    telefono_creador = self._extract_phone_number(activacion_alerta)
+
+                    template_recipients = [
+                        usuario for usuario in usuarios_normalizados
+                        if not telefono_creador or usuario.get("numero") != telefono_creador
+                    ]
+
+                    if template_recipients:
+                        template_success = self._send_alert_created_template(
+                            recipients=template_recipients,
+                            alert_info=alert_data,
+                            creator_name=creador_nombre
+                        )
+                    else:
+                        self.logger.info("ℹ️ Sin destinatarios para plantilla de alerta creada")
+
+                    time.sleep(20)
+
                     hardware_location = alert_data.get("ubicacion", {})
                     if hardware_location:
-                        self._send_location_personalized_message(
-                            numeros_data=list_users,
+                        location_success = self._send_location_personalized_message(
+                            numeros_data=usuarios_normalizados,
                             hardware_location=hardware_location
                         )
-                        time.sleep(2)  
-                    # 1. ENVIAR MENSAJE DE UBICACIÓN
                     else:
                         self.logger.warning("⚠️ No hay datos de ubicación para enviar")
-                    self._send_create_active_user(
-                        alert=alert_data,
-                        list_users=list_users,
-                        mqtt_data=mqtt_data 
-                    )
-                  
-                    
-                    
-                    # 3. CREAR CACHE MASIVO PARA TODOS LOS USUARIOS
-                    self._create_bulk_cache(
+
+                    time.sleep(2)
+
+                    whatsapp_recipients = [
+                        usuario for usuario in usuarios_normalizados
+                        if not telefono_creador or usuario.get("numero") != telefono_creador
+                    ]
+
+                    if whatsapp_recipients:
+                        whatsapp_success = self._send_create_active_user(
+                            alert=alert_data,
+                            list_users=whatsapp_recipients,
+                            mqtt_data=mqtt_data
+                        )
+                    else:
+                        self.logger.info("ℹ️ Sin destinatarios para notificación de disponibilidad")
+
+                    cache_success = self._create_bulk_cache(
                         alarm_info=alert_data,
-                        list_users=list_users,
+                        list_users=usuarios_normalizados,
                         mqtt_data=mqtt_data
                     )
-                    
-                    # 4. ENVIAR COMANDOS MQTT A OTROS HARDWARE (usando método limpio)
-                    topics = alert_data.get("topics_otros_hardware", [])
-                    if topics:
-                        self._intermediate_to_mqtt(alert_data, topics)
-                    else:
-                        self.logger.info("ℹ️ No hay topics adicionales de hardware para activar")
                 else:
-                    self.logger.warning("⚠️ No hay usuarios o datos de alerta para procesar")
+                    self.logger.warning("⚠️ No hay usuarios válidos en la respuesta del backend")
             else:
-                self.logger.info("ℹ️ WhatsApp service no disponible - solo procesamiento MQTT")
+                if not self.whatsapp_service:
+                    self.logger.info("ℹ️ WhatsApp service no disponible - solo procesamiento MQTT")
+                else:
+                    self.logger.warning("⚠️ Respuesta del backend sin datos de alerta")
+
+            # 4. ENVIAR COMANDOS MQTT A OTROS HARDWARE (usando método limpio)
+            if topics:
+                self._intermediate_to_mqtt(alert_data, topics)
+            else:
+                self.logger.info("ℹ️ No hay topics adicionales de hardware para activar")
+
+            if not (template_success and whatsapp_success and location_success and cache_success):
+                self.logger.warning(
+                    "⚠️ Flujo de notificaciones vía MQTT incompleto | plantilla=%s ubicación=%s disponibilidad=%s cache=%s",
+                    template_success,
+                    location_success,
+                    whatsapp_success,
+                    cache_success
+                )
             
             self.logger.info(f"✅ Procesamiento completo de notificaciones completado")
             
@@ -292,6 +338,64 @@ class MQTTMessageHandler:
 
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensaje de ubicación: {e}")
+            return False
+
+    def _send_alert_created_template(
+        self,
+        recipients: List[Dict],
+        alert_info: Dict,
+        creator_name: Optional[str]
+    ) -> bool:
+        """Enviar la plantilla 'alerta_creada' a los destinatarios"""
+        if not self.whatsapp_service:
+            self.logger.warning("⚠️ WhatsApp service no disponible para plantilla de alerta")
+            return False
+
+        try:
+            template_recipients: List[Dict[str, Any]] = []
+            alert_name = alert_info.get("nombre_alerta") or alert_info.get("nombre") or "Alerta"
+            empresa = alert_info.get("empresa_nombre") or alert_info.get("empresa") or "la empresa"
+            creador = creator_name or alert_info.get("activacion_alerta", {}).get("nombre", "un miembro autorizado")
+
+            for usuario in recipients:
+                numero = self._extract_phone_number(usuario)
+                if not numero:
+                    continue
+
+                template_recipients.append({
+                    "phone": numero,
+                    "template_name": "alerta_creada",
+                    "language": "es_CO",
+                    "components": [
+                        {
+                            "type": "body",
+                            "parameters": [
+                                {"type": "text", "text": alert_name},
+                                {"type": "text", "text": empresa},
+                                {"type": "text", "text": creador}
+                            ]
+                        }
+                    ]
+                })
+
+            if not template_recipients:
+                self.logger.info("ℹ️ No hay destinatarios válidos para plantilla de alerta")
+                return False
+
+            success = self.whatsapp_service.send_bulk_template(
+                recipients=template_recipients,
+                use_queue=True
+            )
+
+            if success:
+                self.logger.info(f"✅ Plantilla de alerta enviada a {len(template_recipients)} usuarios")
+                return True
+
+            self.logger.error("❌ Error enviando plantilla de alerta")
+            return False
+
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando plantilla de alerta: {e}")
             return False
 
 
@@ -435,9 +539,10 @@ class MQTTMessageHandler:
             self.logger.error(f"❌ Error enviando notificación de activación de usuario: {e}")
             return False
 
-    def _create_bulk_cache(self, alarm_info: Dict, list_users: list, mqtt_data: Dict) -> None:
+    def _create_bulk_cache(self, alarm_info: Dict, list_users: list, mqtt_data: Dict) -> bool:
         """Crear cache masivo actualizado para todos los usuarios"""
         try:
+            success_count = 0
             empresa_id = alarm_info.get("empresa_id")
             if not empresa_id:
                 empresa_data = alarm_info.get("empresa")
@@ -473,17 +578,60 @@ class MQTTMessageHandler:
                     cache_data["data"]["empresa_id"] = empresa_id
                 
                 # Simular guardar en el cache
-                self.whatsapp_service.add_number_to_cache(
+                added = self.whatsapp_service.add_number_to_cache(
                     phone=user.get("numero", ""),
                     name=user.get("nombre", ""),
                     data=cache_data["data"],
                     empresa_id=empresa_id
                 )
-                self.logger.info(f'📝 Cache creado para usuario {user.get("numero")}: {json.dumps(cache_data, indent=2)}')
-            self.logger.info(f'✅ Cache masivo actualizado creado para {len(list_users)} usuarios')
+                if added:
+                    success_count += 1
+                    self.logger.debug(f'📝 Cache creado para usuario {user.get("numero")}: {json.dumps(cache_data, indent=2)}')
+                else:
+                    self.logger.warning(f'⚠️ Error creando cache para usuario {user.get("numero")}')
+            self.logger.info(f'✅ Cache masivo actualizado creado para {success_count}/{len(list_users)} usuarios')
+            return success_count > 0
         except Exception as e:
             self.logger.error(f'❌ Error creando cache masivo actualizado: {e}')
             return False
+
+    def _extract_phone_number(self, data: Dict[str, Any]) -> str:
+        """Obtener y normalizar un número telefónico desde un payload genérico"""
+        if not isinstance(data, dict):
+            return ""
+
+        numero = (
+            data.get("numero")
+            or data.get("telefono")
+            or data.get("phone")
+        )
+
+        if not isinstance(numero, str):
+            return ""
+
+        normalized = numero.strip()
+        if normalized.startswith("+"):
+            normalized = normalized[1:]
+
+        return normalized
+
+    def _normalize_usuarios_list(self, usuarios: List[Dict]) -> List[Dict]:
+        """Asegurar que cada usuario tenga un número válido y normalizado"""
+        normalized_users: List[Dict[str, Any]] = []
+
+        if not isinstance(usuarios, list):
+            return normalized_users
+
+        for usuario in usuarios:
+            phone = self._extract_phone_number(usuario)
+            if not phone:
+                continue
+
+            usuario_copy = dict(usuario)
+            usuario_copy["numero"] = phone
+            normalized_users.append(usuario_copy)
+
+        return normalized_users
 
 
     def get_statistics(self) -> Dict[str, Any]:
