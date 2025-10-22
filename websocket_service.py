@@ -145,8 +145,7 @@ class WebSocketService:
                     self.logger.info(f"  • Cola actual: {stats['queue_size']}/{stats['queue_max_size']}")
                     self.logger.info(f"  • Procesando: {'Sí' if stats['is_processing'] else 'No'}")
                     self.logger.info(f"  • Tasa de error: {stats['error_rate']}%")
-                    
-                    print("=" * 50)
+                    self.logger.info("=" * 50)
                     
             except asyncio.CancelledError:
                 break
@@ -182,19 +181,31 @@ class WebSocketService:
 
 async def main():
     """Función principal para ejecutar el servicio WebSocket"""
-    print("🚀 Iniciando Servicio WebSocket Independiente")
-    print("=" * 60)
-    print("📱 Solo procesamiento de WhatsApp")
-    print("❌ Sin dependencias de MQTT")
-    print("=" * 60)
-    
+    fallback_logger = None
+
     try:
-        # Crear y ejecutar servicio
         websocket_service = WebSocketService()
+    except Exception as exc:
+        fallback_logger = setup_logger(
+            "websocket_service_bootstrap",
+            os.getenv("LOG_LEVEL", "INFO"),
+            log_file="logs/websocket_service.log"
+        )
+        fallback_logger.exception("Error inicializando servicio WebSocket", exc_info=exc)
+        sys.exit(1)
+
+    try:
         await websocket_service.run()
-        
-    except Exception as e:
-        print(f"❌ Error ejecutando servicio WebSocket: {e}")
+
+    except Exception as exc:
+        logger = websocket_service.logger if websocket_service and websocket_service.logger else fallback_logger
+        if logger is None:
+            logger = setup_logger(
+                "websocket_service_bootstrap",
+                os.getenv("LOG_LEVEL", "INFO"),
+                log_file="logs/websocket_service.log"
+            )
+        logger.exception("Error ejecutando servicio WebSocket", exc_info=exc)
         sys.exit(1)
 
 

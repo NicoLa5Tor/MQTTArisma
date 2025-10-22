@@ -1,31 +1,14 @@
 version: '3.8'
 networks:
-  mqtt-network:
+  global-network:
     external: true
-    name: mqttarisma_mqtt-network
-  frontend_rescue-network:
+  rescue-network:
     external: true
 services:
-  redis:
-    image: redis:7.2-alpine
-    container_name: mqtt-redis-service
-    command: redis-server --appendonly yes
-    volumes:
-      - redis_data:/data
-    networks:
-      - mqtt-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
   mqtt-service:
     build: .
     container_name: mqtt-connection-service
     command: ["python", "mqtt_service.py"]
-    depends_on:
-      - redis
     environment:
       - MQTT_BROKER=${MQTT_BROKER}
       - MQTT_PORT=${MQTT_PORT}
@@ -54,8 +37,8 @@ services:
     volumes:
       - ./logs:/app/logs
     networks:
-      - mqtt-network
-      - frontend_rescue-network
+      - global-network
+      - rescue-network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python", "-c", "import os; exit(0)"]
@@ -66,8 +49,6 @@ services:
     build: .
     container_name: websocket-connection-service
     command: ["python", "websocket_service.py"]
-    depends_on:
-      - redis
     ports:
       - "8080:8080"
     environment:
@@ -89,14 +70,11 @@ services:
     volumes:
       - ./logs:/app/logs
     networks:
-      - mqtt-network
-      - frontend_rescue-network
+      - global-network
+      - rescue-network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "8080"]
       interval: 30s
       timeout: 10s
       retries: 3
-volumes:
-  redis_data:
-    driver: local
