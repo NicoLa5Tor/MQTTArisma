@@ -31,5 +31,18 @@ jobs:
             cd "${{ secrets.DEPLOY_PATH }}"
             git fetch --prune
             git reset --hard origin/main
+            if [ -f .env.production ]; then
+              set -a
+              . ./.env.production
+              set +a
+            elif [ -f .env ]; then
+              set -a
+              . ./.env
+              set +a
+            else
+              echo "[deploy] No environment file (.env or .env.production) found in $PWD" >&2
+              exit 1
+            fi
+            docker-compose down --remove-orphans
             docker-compose build --pull mqtt-service websocket-service
             docker-compose up -d --remove-orphans mqtt-service websocket-service
