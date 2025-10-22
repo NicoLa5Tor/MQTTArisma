@@ -88,6 +88,7 @@ class EmpresaAlertHandler:
             sede = alert_data.get("sede", "")
             prioridad = alert_data.get("prioridad", "media")
             usuarios = alert_data.get("numeros_telefonicos", [])
+            usuarios_normalizados = self._normalize_usuarios_list(usuarios)
             topics_hardware = alert_data.get("topics_otros_hardware", [])
             descripcion = alert_data.get("descripcion", "")
             
@@ -95,30 +96,60 @@ class EmpresaAlertHandler:
             self.logger.info(f"   🚨 Alert ID: {alert_id}")
             self.logger.info(f"   📛 Tipo: {alert_name}")
             self.logger.info(f"   📝 Descripción: {descripcion}")
-            self.logger.info(f"   👥 Usuarios: {len(usuarios)}")
+            self.logger.info(f"   👥 Usuarios: {len(usuarios_normalizados)}")
             self.logger.info(f"   📡 Hardware: {len(topics_hardware)}")
             self.logger.info(f"   🏢 Empresa: {empresa_nombre}")
             self.logger.info(f"   🏛️ Sede: {sede}")
             
             # 1. Enviar notificaciones WhatsApp a usuarios ("Estoy disponible") - solo si hay usuarios
+            template_success = True
             whatsapp_success = True
             location_success = True
-          
-                
-            if usuarios:
+
+            activacion_alerta = alert_data.get("activacion_alerta", {})
+            creador_nombre = activacion_alerta.get("nombre") or empresa_nombre
+            telefono_creador = self._extract_phone_number(activacion_alerta)
+
+            if usuarios_normalizados:
+                template_recipients = [
+                    usuario for usuario in usuarios_normalizados
+                    if not telefono_creador or usuario.get("numero") != telefono_creador
+                ]
+
+                if template_recipients:
+                    template_success = self._send_alert_created_template(
+                        recipients=template_recipients,
+                        alert_info=alert_data,
+                        creator_name=creador_nombre
+                    )
+                else:
+                    self.logger.info("ℹ️ Sin destinatarios para plantilla de alerta creada")
+
+                time.sleep(20)
+
                 hardware_location = alert_data.get("ubicacion", {})
                 if hardware_location:
                     location_success = self._send_location_message_empresa(
-                        usuarios=usuarios,
+                        usuarios=usuarios_normalizados,
                         location=hardware_location
                     )
                 else:
                     self.logger.info("ℹ️ No hay datos de ubicación para enviar")
-                time.sleep(3)
-                whatsapp_success = self._send_empresa_activation_notification(
-                    usuarios=usuarios,
-                    alert_data=alert_data
-                )
+
+                time.sleep(2)
+
+                whatsapp_recipients = [
+                    usuario for usuario in usuarios_normalizados
+                    if not telefono_creador or usuario.get("numero") != telefono_creador
+                ]
+
+                if whatsapp_recipients:
+                    whatsapp_success = self._send_empresa_activation_notification(
+                        usuarios=whatsapp_recipients,
+                        alert_data=alert_data
+                    )
+                else:
+                    self.logger.info("ℹ️ Sin destinatarios para notificación de disponibilidad")
             else:
                 self.logger.info("ℹ️ No hay usuarios para notificar por WhatsApp")
             
@@ -126,10 +157,10 @@ class EmpresaAlertHandler:
             
             # 3. Crear cache masivo para todos los usuarios - solo si hay usuarios
             cache_success = True
-            if usuarios:
+            if usuarios_normalizados:
                 cache_success = self._create_bulk_cache_empresa(
                     alert_data=alert_data,
-                    usuarios=usuarios
+                    usuarios=usuarios_normalizados
                 )
             else:
                 self.logger.info("ℹ️ No hay usuarios para crear cache")
@@ -145,7 +176,8 @@ class EmpresaAlertHandler:
                 self.logger.info("ℹ️ No hay hardware para activar por MQTT")
             
             # Actualizar estadísticas
-            if whatsapp_success and location_success and cache_success and mqtt_success:
+            if (template_success and whatsapp_success and location_success 
+                    and cache_success and mqtt_success):
                 self.processed_count += 1
                 self.logger.info("✅ Activación por empresa procesada exitosamente")
                 return True
@@ -601,6 +633,102 @@ class EmpresaAlertHandler:
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensaje de ubicación: {e}")
             return False
+
+    def _send_alert_created_template(
+        self,
+        recipients: List[Dict],
+        alert_info: Dict,
+        creator_name: Optional[str]
+    ) -> bool:
+        """Enviar plantilla 'alerta_creada' a los destinatarios previstos"""
+        if not self.whatsapp_service:
+            self.logger.warning("⚠️ WhatsApp service no disponible para plantilla de alerta")
+            return False
+
+        try:
+            template_recipients: List[Dict[str, Any]] = []
+            alert_name = alert_info.get("nombre_alerta") or alert_info.get("nombre") or "Alerta"
+            empresa = alert_info.get("empresa_nombre") or alert_info.get("empresa") or "la empresa"
+            creador = creator_name or alert_info.get("activacion_alerta", {}).get("nombre", "un miembro autorizado")
+
+            for usuario in recipients:
+                numero = self._extract_phone_number(usuario)
+                if not numero:
+                    continue
+
+                template_recipients.append({
+                    "phone": numero,
+                    "template_name": "alerta_creada",
+                    "language": "es_CO",
+                    "components": [
+                        {
+                            "type": "body",
+                            "parameters": [
+                                {"type": "text", "text": alert_name},
+                                {"type": "text", "text": empresa},
+                                {"type": "text", "text": creador}
+                            ]
+                        }
+                    ]
+                })
+
+            if not template_recipients:
+                self.logger.info("ℹ️ No hay destinatarios válidos para la plantilla de alerta creada")
+                return False
+
+            success = self.whatsapp_service.send_bulk_template(
+                recipients=template_recipients,
+                use_queue=True
+            )
+
+            if success:
+                self.logger.info(f"✅ Plantilla de alerta enviada a {len(template_recipients)} usuarios")
+                return True
+
+            self.logger.error("❌ Error enviando plantilla de alerta")
+            return False
+
+        except Exception as e:
+            self.logger.error(f"❌ Error enviando plantilla de alerta: {e}")
+            return False
+
+    def _extract_phone_number(self, data: Dict[str, Any]) -> str:
+        """Obtener y normalizar el número telefónico del payload"""
+        if not isinstance(data, dict):
+            return ""
+
+        numero = (
+            data.get("numero")
+            or data.get("telefono")
+            or data.get("phone")
+        )
+
+        if not isinstance(numero, str):
+            return ""
+
+        normalized = numero.strip()
+        if normalized.startswith("+"):
+            normalized = normalized[1:]
+
+        return normalized
+
+    def _normalize_usuarios_list(self, usuarios: List[Dict]) -> List[Dict]:
+        """Normalizar la lista de usuarios asegurando números válidos"""
+        normalized_users: List[Dict[str, Any]] = []
+
+        if not isinstance(usuarios, list):
+            return normalized_users
+
+        for usuario in usuarios:
+            phone = self._extract_phone_number(usuario)
+            if not phone:
+                continue
+
+            usuario_copy = dict(usuario)
+            usuario_copy["numero"] = phone
+            normalized_users.append(usuario_copy)
+
+        return normalized_users
     
     def _create_bulk_cache_empresa(self, alert_data: Dict, usuarios: List[Dict]) -> bool:
         """Crear cache masivo para todos los usuarios (similar a MQTT handler)"""
