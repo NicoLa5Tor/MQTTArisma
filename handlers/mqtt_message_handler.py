@@ -267,6 +267,7 @@ class MQTTMessageHandler:
         try:
             # Obtener datos de la alerta desde la respuesta
             alert_data = data.get("alert", {})
+            print(json.dumps(data,indent=4))
             if not alert_data:
                 self.logger.warning("⚠️ No hay datos de alert en la respuesta")
                 return
