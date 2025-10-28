@@ -155,17 +155,24 @@ class MQTTMessageHandler:
     def _handle_alarm_notifications(self, response: Dict, mqtt_data: Dict) -> None:
         """Procesar respuesta del backend y enviar notificaciones - COMPLETO como WebSocket handler"""
         try:
+            # Registrar payloads completos para inspección en producción
+            self.logger.info("📥 Respuesta cruda del backend: %s", json.dumps(response, ensure_ascii=False, default=str))
+            self.logger.info("🛰️ Payload original desde MQTT: %s", json.dumps(mqtt_data, ensure_ascii=False, default=str))
+
+            alert_data = self._resolve_alert_data(response, mqtt_data)
+
+            if not alert_data:
+                self.logger.warning("⚠️ Respuesta del backend sin datos de alerta")
+                return
+
             # ENVIAR MENSAJES MQTT A OTROS HARDWARE
-            self._send_mqtt_message(data=response, mqtt_data=mqtt_data)
+            self._send_mqtt_message(alert_data=alert_data, mqtt_data=mqtt_data)
 
             # PROCESAR NOTIFICACIONES WHATSAPP (replicando WebSocket handler)
             template_success = True
             whatsapp_success = True
             location_success = True
             cache_success = True
-
-            alert_data = response.get("alert", {})
-            topics = alert_data.get("topics_otros_hardware", [])
 
             if self.whatsapp_service and alert_data:
                 list_users = alert_data.get("numeros_telefonicos", [])
@@ -230,12 +237,6 @@ class MQTTMessageHandler:
                 else:
                     self.logger.warning("⚠️ Respuesta del backend sin datos de alerta")
 
-            # 4. ENVIAR COMANDOS MQTT A OTROS HARDWARE (usando método limpio)
-            if topics:
-                self._intermediate_to_mqtt(alert_data, topics)
-            else:
-                self.logger.info("ℹ️ No hay topics adicionales de hardware para activar")
-
             if not (template_success and whatsapp_success and location_success and cache_success):
                 self.logger.warning(
                     "⚠️ Flujo de notificaciones vía MQTT incompleto | plantilla=%s ubicación=%s disponibilidad=%s cache=%s",
@@ -262,25 +263,98 @@ class MQTTMessageHandler:
         except Exception as ex:
             self.logger.error(f"❌ Error en el intermediario a enviar mensajes al mqtt: {ex}")
 
-    def _send_mqtt_message(self, data, mqtt_data) -> None:
+    def _resolve_alert_data(self, backend_response: Dict, mqtt_data: Dict) -> Dict:
+        """Unificar los datos de alerta aunque el backend no entregue la clave `alert`"""
+        alert_data = backend_response.get("alert")
+        if alert_data:
+            return alert_data
+
+        derived: Dict[str, Any] = {}
+        keys_to_copy = [
+            "topics_otros_hardware",
+            "numeros_telefonicos",
+            "activacion_alerta",
+            "ubicacion",
+            "elementos_necesarios",
+            "instrucciones",
+            "prioridad",
+            "tipo_alerta",
+            "nombre_alerta",
+            "empresa_nombre",
+            "empresa",
+            "sede",
+            "image_alert",
+            "imagen_base64",
+            "alert_id",
+            "_id",
+            "descripcion",
+            "fecha_creacion",
+        ]
+
+        for key in keys_to_copy:
+            value = backend_response.get(key)
+            if value is not None:
+                derived[key] = value
+
+        derived.setdefault("topics_otros_hardware", [])
+        derived.setdefault("numeros_telefonicos", [])
+        derived.setdefault("activacion_alerta", {})
+        derived.setdefault("ubicacion", {})
+        derived.setdefault("elementos_necesarios", [])
+        derived.setdefault("instrucciones", [])
+
+        if "tipo_alerta" not in derived and derived.get("nombre_alerta"):
+            derived["tipo_alerta"] = derived["nombre_alerta"]
+        if "nombre_alerta" not in derived and derived.get("tipo_alerta"):
+            derived["nombre_alerta"] = derived["tipo_alerta"]
+
+        if "empresa" not in derived and mqtt_data.get("empresa"):
+            derived["empresa"] = mqtt_data["empresa"]
+        if "empresa_nombre" not in derived:
+            empresa_nombre = derived.get("empresa") or mqtt_data.get("empresa")
+            if empresa_nombre:
+                derived["empresa_nombre"] = empresa_nombre
+        if "sede" not in derived and mqtt_data.get("sede"):
+            derived["sede"] = mqtt_data["sede"]
+
+        data_payload = backend_response.get("data") or mqtt_data.get("data")
+        if data_payload:
+            derived["data"] = data_payload
+        else:
+            derived.setdefault("data", {})
+
+        has_meaningful_data = any([
+            derived.get("topics_otros_hardware"),
+            derived.get("numeros_telefonicos"),
+            derived.get("tipo_alerta"),
+            derived.get("nombre_alerta"),
+        ])
+
+        return derived if has_meaningful_data else {}
+
+    def _send_mqtt_message(self, alert_data: Dict, mqtt_data: Dict) -> None:
         """Enviar mensajes MQTT a otros hardware - IGUAL al WebSocket handler"""
         try:
-            # Obtener datos de la alerta desde la respuesta
-            alert_data = data.get("alert", {})
-            print(json.dumps(data,indent=4))
             if not alert_data:
-                self.logger.warning("⚠️ No hay datos de alert en la respuesta")
+                self.logger.warning("⚠️ No hay datos de alerta para enviar a otros hardware")
                 return
-            
-            # Obtener topics desde alert_data (igual que WebSocket)
-            topics = alert_data.get("topics_otros_hardware", [])
+
+            alert_payload = dict(alert_data)
+
+            self.logger.info("📨 alert_data utilizado para fanout MQTT: %s", json.dumps(alert_payload, ensure_ascii=False, default=str))
+            self.logger.info("🔁 mqtt_data de origen: %s", json.dumps(mqtt_data, ensure_ascii=False, default=str))
+
+            if not alert_payload.get("data"):
+                alert_payload["data"] = mqtt_data.get("data", {})
+
+            topics = alert_payload.get("topics_otros_hardware", [])
             if not topics:
                 self.logger.info("ℹ️ No hay topics adicionales de hardware para activar")
                 return
-                
+
             # Enviar mensajes usando el mismo método que WebSocket
-            self._intermediate_to_mqtt(alert=alert_data, topics=topics)
-                    
+            self._intermediate_to_mqtt(alert=alert_payload, topics=topics)
+
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensajes MQTT: {e}")
 
