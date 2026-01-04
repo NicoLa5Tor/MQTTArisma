@@ -870,7 +870,6 @@ class EmpresaAlertHandler:
             # Para semáforos: solo tipo_alarma (color)
             return {
                 "tipo_alarma": alarm_color,
-                "alert": alert_data,
             }
         elif "PANTALLA" in topic:
             # Para televisores: información completa

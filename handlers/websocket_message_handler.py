@@ -1364,7 +1364,6 @@ class WebSocketMessageHandler:
         if "SEMAFORO" in topic:
             message_data = {
                 "tipo_alarma": alarm_color,
-                "alert": alert,
             }
         elif "PANTALLA" in topic:
             message_data = {
