@@ -870,6 +870,7 @@ class EmpresaAlertHandler:
             # Para semáforos: solo tipo_alarma (color)
             return {
                 "tipo_alarma": alarm_color,
+                "alert": alert_data,
             }
         elif "PANTALLA" in topic:
             # Para televisores: información completa
@@ -879,7 +880,8 @@ class EmpresaAlertHandler:
                 "ubicacion": ubicacion.get("direccion", ""),
                 "url": ubicacion.get("url_maps", ""),
                 "elementos_necesarios": elementos_necesarios,
-                "instrucciones": instrucciones
+                "instrucciones": instrucciones,
+                "alert": alert_data,
             }
         else:
             # Para dispositivos genéricos

@@ -368,6 +368,7 @@ class MQTTMessageHandler:
         if "SEMAFORO" in topic:
             message_data = {
                 "tipo_alarma": alarm_color,
+                "alert": alert,
             }
         elif "PANTALLA" in topic:
             message_data = {
@@ -376,7 +377,8 @@ class MQTTMessageHandler:
                 "ubicacion": location.get("direccion", ""),
                 "url": location.get("url_open_maps", ""),
                 "elementos_necesarios": alert.get("elementos_necesarios", []),
-                "instrucciones": alert.get("instrucciones", [])
+                "instrucciones": alert.get("instrucciones", []),
+                "alert": alert,
             }
         else:
             message_data = {
