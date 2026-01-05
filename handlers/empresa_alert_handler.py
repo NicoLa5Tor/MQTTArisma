@@ -5,6 +5,12 @@ Solo maneja WhatsApp Service y MQTT Publisher
 import time
 import logging
 from typing import Dict, Any, Optional, List
+
+from utils.alert_normalizer import (
+    AlertNormalizationError,
+    build_tv_topic,
+    normalize_alert_to_tv,
+)
 from clients.mqtt_publisher_lite import MQTTPublisherLite
 from config.settings import MQTTConfig
 
@@ -100,6 +106,9 @@ class EmpresaAlertHandler:
             self.logger.info(f"   📡 Hardware: {len(topics_hardware)}")
             self.logger.info(f"   🏢 Empresa: {empresa_nombre}")
             self.logger.info(f"   🏛️ Sede: {sede}")
+
+            # Enviar alerta normalizada a TV
+            self._publish_tv_alert(alert_data=alert_data)
             
             # 1. Enviar notificaciones WhatsApp a usuarios ("Estoy disponible") - solo si hay usuarios
             template_success = True
@@ -221,6 +230,9 @@ class EmpresaAlertHandler:
             self.logger.info(f"   📡 Hardware: {len(hardware_vinculado)}")
             self.logger.info(f"   🏢 Empresa: {empresa}")
             self.logger.info(f"   🏛️ Sede: {sede}")
+
+            # Enviar alerta normalizada a TV
+            self._publish_tv_alert(alert_data=alert)
             
             # 1. Limpiar caché de usuarios afectados (igual que WebSocket handler)
             cache_success = self._clean_users_cache_after_deactivation(usuarios)
@@ -903,6 +915,38 @@ class EmpresaAlertHandler:
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensaje MQTT: {e}")
             return False
+
+    def _resolve_tv_topic_parts(self, alert_data: Dict) -> tuple[str, str, str]:
+        empresa = (
+            alert_data.get("empresa")
+            or alert_data.get("empresa_nombre")
+            or "desconocida"
+        )
+        sede = alert_data.get("sede") or "desconocida"
+        pantalla = (
+            alert_data.get("pantalla")
+            or alert_data.get("nombre_pantalla")
+            or "principal"
+        )
+        return str(empresa), str(sede), str(pantalla)
+
+    def _publish_tv_alert(self, alert_data: Dict) -> None:
+        if not self.mqtt_publisher:
+            self.logger.warning("⚠️ No hay cliente MQTT publisher disponible para TV")
+            return
+
+        try:
+            normalized = normalize_alert_to_tv(alert_data)
+        except AlertNormalizationError as exc:
+            self.logger.error(f"❌ Error normalizando alerta para TV: {exc}")
+            return
+        except Exception as exc:
+            self.logger.error(f"❌ Error inesperado normalizando alerta para TV: {exc}")
+            return
+
+        empresa, sede, pantalla = self._resolve_tv_topic_parts(alert_data)
+        topic = build_tv_topic(empresa=empresa, sede=sede, pantalla=pantalla)
+        self._send_mqtt_message(topic=topic, message_data=normalized)
 
     def get_statistics(self) -> Dict[str, Any]:
         """Obtener estadísticas del handler de empresa"""

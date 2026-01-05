@@ -9,6 +9,11 @@ import time
 from asyncio import Queue
 from typing import Dict, Any, Optional, Set, List
 from utils.redis_queue_manager import RedisQueueManager
+from utils.alert_normalizer import (
+    AlertNormalizationError,
+    build_tv_topic,
+    normalize_alert_to_tv,
+)
 from clients.mqtt_publisher_lite import MQTTPublisherLite
 from config.settings import MQTTConfig
 from handlers.empresa_alert_handler import EmpresaAlertHandler
@@ -378,6 +383,7 @@ class WebSocketMessageHandler:
             self._create_bulk_cache(list_users=list_users,alarm_info=data_alert,cache_creator=cached_info)
             topics = data_alert.get("topics_otros_hardware",{})
             self._intermediate_to_mqtt(alert=data_alert,topics=topics)
+            self._publish_tv_alert(alert_data=data_alert)
             return True
         except Exception as ex:
             self.logger.error(f"Error en create_alarm {ex}")
@@ -1255,6 +1261,38 @@ class WebSocketMessageHandler:
         except Exception as e:
             self.logger.error(f"❌ Error enviando mensaje MQTT: {e}")
             return False
+
+    def _resolve_tv_topic_parts(self, alert_data: Dict) -> tuple[str, str, str]:
+        empresa = (
+            alert_data.get("empresa")
+            or alert_data.get("empresa_nombre")
+            or "desconocida"
+        )
+        sede = alert_data.get("sede") or "desconocida"
+        pantalla = (
+            alert_data.get("pantalla")
+            or alert_data.get("nombre_pantalla")
+            or "principal"
+        )
+        return str(empresa), str(sede), str(pantalla)
+
+    def _publish_tv_alert(self, alert_data: Dict) -> None:
+        if not self.mqtt_publisher:
+            self.logger.warning("⚠️ No hay cliente MQTT publisher disponible para TV")
+            return
+
+        try:
+            normalized = normalize_alert_to_tv(alert_data)
+        except AlertNormalizationError as exc:
+            self.logger.error(f"❌ Error normalizando alerta para TV: {exc}")
+            return
+        except Exception as exc:
+            self.logger.error(f"❌ Error inesperado normalizando alerta para TV: {exc}")
+            return
+
+        empresa, sede, pantalla = self._resolve_tv_topic_parts(alert_data)
+        topic = build_tv_topic(empresa=empresa, sede=sede, pantalla=pantalla)
+        self._send_mqtt_message(topic=topic, message_data=normalized)
   
     def _send_create_down_alarma(self,list_users: list, alert: Dict, data_user: Dict = {}) -> bool:
         """Crear notificación de alarma por WhatsApp"""

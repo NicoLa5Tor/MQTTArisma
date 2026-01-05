@@ -8,6 +8,12 @@ import threading
 import time
 from typing import Dict, Any, Optional, List
 
+from utils.alert_normalizer import (
+    AlertNormalizationError,
+    build_tv_topic,
+    normalize_alert_to_tv,
+)
+
 
 class MQTTMessageHandler:
     """Manejador de mensajes MQTT puro - SIN dependencias de WhatsApp"""
@@ -167,6 +173,9 @@ class MQTTMessageHandler:
 
             # ENVIAR MENSAJES MQTT A OTROS HARDWARE
             self._send_mqtt_message(alert_data=alert_data, mqtt_data=mqtt_data)
+
+            # ENVIAR ALERTA NORMALIZADA A TV
+            self._publish_tv_alert(alert_data=alert_data, mqtt_data=mqtt_data)
 
             # PROCESAR NOTIFICACIONES WHATSAPP (replicando WebSocket handler)
             template_success = True
@@ -384,6 +393,39 @@ class MQTTMessageHandler:
             }
             
         return message_data
+
+    def _resolve_tv_topic_parts(self, alert_data: Dict, mqtt_data: Dict) -> tuple[str, str, str]:
+        empresa = (
+            alert_data.get("empresa")
+            or alert_data.get("empresa_nombre")
+            or mqtt_data.get("empresa")
+            or "desconocida"
+        )
+        sede = alert_data.get("sede") or mqtt_data.get("sede") or "desconocida"
+        pantalla = (
+            alert_data.get("pantalla")
+            or alert_data.get("nombre_pantalla")
+            or "principal"
+        )
+        return str(empresa), str(sede), str(pantalla)
+
+    def _publish_tv_alert(self, alert_data: Dict, mqtt_data: Dict) -> None:
+        if not self.mqtt_publisher:
+            self.logger.warning("⚠️ No hay cliente MQTT publisher disponible para TV")
+            return
+
+        try:
+            normalized = normalize_alert_to_tv(alert_data)
+        except AlertNormalizationError as exc:
+            self.logger.error(f"❌ Error normalizando alerta para TV: {exc}")
+            return
+        except Exception as exc:
+            self.logger.error(f"❌ Error inesperado normalizando alerta para TV: {exc}")
+            return
+
+        empresa, sede, pantalla = self._resolve_tv_topic_parts(alert_data, mqtt_data)
+        topic = build_tv_topic(empresa=empresa, sede=sede, pantalla=pantalla)
+        self.send_mqtt_message(topic=topic, message_data=normalized)
   
     def _send_location_personalized_message(self, numeros_data: list, hardware_location: Dict) -> bool:
         """Enviar mensaje de ubicación por WhatsApp usando CTA 'Abrir en Maps'"""
