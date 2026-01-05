@@ -848,9 +848,6 @@ class EmpresaAlertHandler:
         # Extraer datos de la alerta para el mensaje
         tipo_alerta = alert_data.get("tipo_alerta", "")
         prioridad = alert_data.get("prioridad", "media")
-        ubicacion = alert_data.get("ubicacion", {})
-        elementos_necesarios = alert_data.get("elementos_necesarios", [])
-        instrucciones = alert_data.get("instrucciones", [])
         
         # # Mapear tipo de alerta a color (igual que en MQTT handler)
         # color_map = {
@@ -872,14 +869,12 @@ class EmpresaAlertHandler:
                 "tipo_alarma": alarm_color,
             }
         elif "PANTALLA" in topic:
-            # Para televisores: información completa
+            if str(alert_data.get("tipo_alarma") or tipo_alerta).upper() == "NORMAL":
+                return {
+                    "tipo_alarma": "NORMAL",
+                    "prioridad": prioridad.upper()
+                }
             return {
-                "tipo_alarma": alarm_color,
-                "prioridad": prioridad.upper(),
-                "ubicacion": ubicacion.get("direccion", ""),
-                "url": ubicacion.get("url_maps", ""),
-                "elementos_necesarios": elementos_necesarios,
-                "instrucciones": instrucciones,
                 "alert": alert_data,
             }
         else:

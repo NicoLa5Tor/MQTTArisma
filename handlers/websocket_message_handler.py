@@ -1360,19 +1360,17 @@ class WebSocketMessageHandler:
     def _select_data_hardware(self, topic, alert:Dict) -> Dict:
         """Seleccionar datos específicos según el tipo de hardware"""
         alarm_color = alert.get("tipo_alerta", "")
-        location = alert.get("ubicacion",{})
         if "SEMAFORO" in topic:
             message_data = {
                 "tipo_alarma": alarm_color,
             }
         elif "PANTALLA" in topic:
+            if str(alert.get("tipo_alarma") or alarm_color).upper() == "NORMAL":
+                return {
+                    "tipo_alarma": "NORMAL",
+                    "prioridad": alert.get("prioridad","").upper()
+                }
             message_data = {
-                "tipo_alarma": alarm_color,
-                "prioridad": alert.get("prioridad",""),
-                "ubicacion": location.get("direccion", ""),
-                "url": location.get("url_maps", ""),
-                "elementos_necesarios": alert.get("elementos_necesarios", []),
-                "instrucciones": alert.get("instrucciones", []),
                 "alert": alert,
             }
         else:
