@@ -107,9 +107,6 @@ class EmpresaAlertHandler:
             self.logger.info(f"   🏢 Empresa: {empresa_nombre}")
             self.logger.info(f"   🏛️ Sede: {sede}")
 
-            # Enviar alerta normalizada a TV
-            self._publish_tv_alert(alert_data=alert_data)
-            
             # 1. Enviar notificaciones WhatsApp a usuarios ("Estoy disponible") - solo si hay usuarios
             template_success = True
             whatsapp_success = True
@@ -231,9 +228,6 @@ class EmpresaAlertHandler:
             self.logger.info(f"   🏢 Empresa: {empresa}")
             self.logger.info(f"   🏛️ Sede: {sede}")
 
-            # Enviar alerta normalizada a TV
-            self._publish_tv_alert(alert_data=alert)
-            
             # 1. Limpiar caché de usuarios afectados (igual que WebSocket handler)
             cache_success = self._clean_users_cache_after_deactivation(usuarios)
             
@@ -886,9 +880,14 @@ class EmpresaAlertHandler:
                     "tipo_alarma": "NORMAL",
                     "prioridad": prioridad.upper()
                 }
-            return {
-                "alert": alert_data,
-            }
+            try:
+                return normalize_alert_to_tv(alert_data)
+            except AlertNormalizationError as exc:
+                self.logger.error(f"❌ Error normalizando alerta para PANTALLA: {exc}")
+                return {"alert": alert_data}
+            except Exception as exc:
+                self.logger.error(f"❌ Error inesperado normalizando alerta para PANTALLA: {exc}")
+                return {"alert": alert_data}
         else:
             # Para dispositivos genéricos
             return {

@@ -383,7 +383,6 @@ class WebSocketMessageHandler:
             self._create_bulk_cache(list_users=list_users,alarm_info=data_alert,cache_creator=cached_info)
             topics = data_alert.get("topics_otros_hardware",{})
             self._intermediate_to_mqtt(alert=data_alert,topics=topics)
-            self._publish_tv_alert(alert_data=data_alert)
             return True
         except Exception as ex:
             self.logger.error(f"Error en create_alarm {ex}")
@@ -1408,9 +1407,14 @@ class WebSocketMessageHandler:
                     "tipo_alarma": "NORMAL",
                     "prioridad": alert.get("prioridad","").upper()
                 }
-            message_data = {
-                "alert": alert,
-            }
+            try:
+                message_data = normalize_alert_to_tv(alert)
+            except AlertNormalizationError as exc:
+                self.logger.error(f"❌ Error normalizando alerta para PANTALLA: {exc}")
+                message_data = {"alert": alert}
+            except Exception as exc:
+                self.logger.error(f"❌ Error inesperado normalizando alerta para PANTALLA: {exc}")
+                message_data = {"alert": alert}
         else:
             message_data = {
                 "action": "generic",

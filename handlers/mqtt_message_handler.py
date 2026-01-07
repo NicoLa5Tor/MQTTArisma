@@ -174,9 +174,6 @@ class MQTTMessageHandler:
             # ENVIAR MENSAJES MQTT A OTROS HARDWARE
             self._send_mqtt_message(alert_data=alert_data, mqtt_data=mqtt_data)
 
-            # ENVIAR ALERTA NORMALIZADA A TV
-            self._publish_tv_alert(alert_data=alert_data, mqtt_data=mqtt_data)
-
             # PROCESAR NOTIFICACIONES WHATSAPP (replicando WebSocket handler)
             template_success = True
             whatsapp_success = True
@@ -383,9 +380,14 @@ class MQTTMessageHandler:
                     "tipo_alarma": "NORMAL",
                     "prioridad": alert.get("prioridad", "").upper()
                 }
-            message_data = {
-                "alert": alert,
-            }
+            try:
+                message_data = normalize_alert_to_tv(alert)
+            except AlertNormalizationError as exc:
+                self.logger.error(f"❌ Error normalizando alerta para PANTALLA: {exc}")
+                message_data = {"alert": alert}
+            except Exception as exc:
+                self.logger.error(f"❌ Error inesperado normalizando alerta para PANTALLA: {exc}")
+                message_data = {"alert": alert}
         else:
             message_data = {
                 "action": "generic",
