@@ -79,19 +79,26 @@ def normalize_alert_to_tv(alert: Dict[str, Any]) -> Dict[str, Any]:
         base["ubicacion"] = {
             "nombre": _stringify(ubicacion.get("nombre")),
             "direccion": _stringify(ubicacion.get("direccion")),
-            "maps": _stringify(ubicacion.get("maps") or ubicacion.get("url_maps")),
+            "maps": _stringify(
+                ubicacion.get("maps")
+                or ubicacion.get("url_maps")
+                or ubicacion.get("url_open_maps")
+            ),
+            "open_maps": _stringify(ubicacion.get("url_open_maps")),
         }
     elif isinstance(ubicacion, str):
         base["ubicacion"] = {
             "nombre": _stringify(ubicacion),
             "direccion": "",
             "maps": "",
+            "open_maps": "",
         }
     else:
         base["ubicacion"] = {
             "nombre": "",
             "direccion": "",
             "maps": "",
+            "open_maps": "",
         }
 
     base["origen"] = {
