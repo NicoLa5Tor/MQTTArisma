@@ -101,6 +101,12 @@ def normalize_alert_to_tv(alert: Dict[str, Any]) -> Dict[str, Any]:
             "open_maps": "",
         }
 
+    if _stringify(activacion_alerta.get("tipo_activacion")).lower() == "whatsapp":
+        if not base["ubicacion"]["nombre"]:
+            base["ubicacion"]["nombre"] = "whatsapp"
+        if not base["ubicacion"]["direccion"]:
+            base["ubicacion"]["direccion"] = "whatsapp"
+
     base["origen"] = {
         "tipo": _stringify(activacion_alerta.get("tipo_activacion")),
         "nombre": _stringify(activacion_alerta.get("nombre")),
