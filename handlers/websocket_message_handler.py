@@ -387,6 +387,25 @@ class WebSocketMessageHandler:
         except Exception as ex:
             self.logger.error(f"Error en create_alarm {ex}")
             return False
+
+    def _ensure_whatsapp_alert_activation(self, alert_data: Dict, cached_info: Optional[Dict] = None) -> None:
+        """Ensure WhatsApp-originated alerts include activacion_alerta.tipo_activacion."""
+        if not isinstance(alert_data, dict):
+            return
+
+        activacion_alerta = alert_data.get("activacion_alerta")
+        if not isinstance(activacion_alerta, dict):
+            activacion_alerta = {}
+            alert_data["activacion_alerta"] = activacion_alerta
+
+        if not activacion_alerta.get("tipo_activacion"):
+            activacion_alerta["tipo_activacion"] = "whatsapp"
+
+        if cached_info and not activacion_alerta.get("nombre"):
+            creator_name = cached_info.get("name")
+            if creator_name:
+                activacion_alerta["nombre"] = creator_name
+
     def _send_bulk_text_message(self,body:str,list_users: list[Dict],name_made:str) -> bool:
         try:
             recipients = []
@@ -1280,6 +1299,7 @@ class WebSocketMessageHandler:
             self.logger.warning("⚠️ No hay cliente MQTT publisher disponible para TV")
             return
 
+        self._ensure_whatsapp_alert_activation(alert_data=alert_data)
         try:
             normalized = normalize_alert_to_tv(alert_data)
         except AlertNormalizationError as exc:
@@ -1407,6 +1427,7 @@ class WebSocketMessageHandler:
                     "tipo_alarma": "NORMAL",
                     "prioridad": alert.get("prioridad","").upper()
                 }
+            self._ensure_whatsapp_alert_activation(alert_data=alert)
             try:
                 message_data = normalize_alert_to_tv(alert)
             except AlertNormalizationError as exc:
