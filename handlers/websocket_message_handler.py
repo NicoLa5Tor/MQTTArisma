@@ -359,6 +359,8 @@ class WebSocketMessageHandler:
                     alert_info=data_alert,
                     creator_name=creator_name
                 )
+                topics = data_alert.get("topics_otros_hardware",{})
+                self._intermediate_to_mqtt(alert=data_alert,topics=topics)
                 time.sleep(20)
                 self._send_location_personalized_message(
                     numeros_data=list_users,
@@ -381,15 +383,13 @@ class WebSocketMessageHandler:
             #print(json.dumps(response_alarm,indent=4))
            
             self._create_bulk_cache(list_users=list_users,alarm_info=data_alert,cache_creator=cached_info)
-            topics = data_alert.get("topics_otros_hardware",{})
-            self._intermediate_to_mqtt(alert=data_alert,topics=topics)
             return True
         except Exception as ex:
             self.logger.error(f"Error en create_alarm {ex}")
             return False
 
     def _ensure_whatsapp_alert_activation(self, alert_data: Dict, cached_info: Optional[Dict] = None) -> None:
-        """Ensure WhatsApp-originated alerts include activacion_alerta.tipo_activacion."""
+        """Prepare WhatsApp-originated alerts for TV normalization."""
         if not isinstance(alert_data, dict):
             return
 
@@ -405,6 +405,16 @@ class WebSocketMessageHandler:
             creator_name = cached_info.get("name")
             if creator_name:
                 activacion_alerta["nombre"] = creator_name
+
+        ubicacion = alert_data.get("ubicacion")
+        if not isinstance(ubicacion, dict):
+            ubicacion = {}
+            alert_data["ubicacion"] = ubicacion
+
+        if not str(ubicacion.get("nombre") or "").strip():
+            ubicacion["nombre"] = "whatsapp"
+        if not str(ubicacion.get("direccion") or "").strip():
+            ubicacion["direccion"] = "whatsapp"
 
     def _send_bulk_text_message(self,body:str,list_users: list[Dict],name_made:str) -> bool:
         try:
