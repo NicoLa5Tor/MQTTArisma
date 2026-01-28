@@ -82,5 +82,5 @@ class AppConfig:
     whatsapp: WhatsAppConfig = field(default_factory=WhatsAppConfig)
     websocket: WebSocketConfig = field(default_factory=WebSocketConfig)
     redis: RedisConfig = field(default_factory=RedisConfig)
-    log_level: str = os.getenv("LOG_LEVEL", "INFO")
+    log_level: str = os.getenv("LOG_LEVEL", "ERROR")
     message_interval: int = int(os.getenv("MESSAGE_INTERVAL", "20"))

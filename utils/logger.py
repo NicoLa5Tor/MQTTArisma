@@ -6,7 +6,7 @@ import sys
 from datetime import datetime
 
 
-def setup_logger(name: str = "mqtt_app", level: str = "INFO", 
+def setup_logger(name: str = "mqtt_app", level: str = "ERROR", 
                 log_file: str = None, format_string: str = None) -> logging.Logger:
     """
     Configurar logger para la aplicación
@@ -20,8 +20,13 @@ def setup_logger(name: str = "mqtt_app", level: str = "INFO",
     Returns:
         Logger configurado
     """
+    requested_level = getattr(logging, level.upper(), logging.INFO)
+    if requested_level < logging.ERROR:
+        requested_level = logging.ERROR
+
     logger = logging.getLogger(name)
-    logger.setLevel(getattr(logging, level.upper()))
+    logger.setLevel(requested_level)
+    logging.getLogger().setLevel(requested_level)
     
     # Limpiar handlers existentes
     logger.handlers.clear()
@@ -34,12 +39,14 @@ def setup_logger(name: str = "mqtt_app", level: str = "INFO",
     
     # Handler para consola
     console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setLevel(requested_level)
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
     
     # Handler para archivo si se especifica
     if log_file:
         file_handler = logging.FileHandler(log_file)
+        file_handler.setLevel(requested_level)
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
     

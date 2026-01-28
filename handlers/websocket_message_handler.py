@@ -1386,7 +1386,6 @@ class WebSocketMessageHandler:
             return False
             
         try:
-            print(f"La alerta es {json.dumps(alert,indent=4)}")
             data_create = alert.get("activacion_alerta",{})
             image = alert["image_alert"]
             alert_name = alert["nombre_alerta"]

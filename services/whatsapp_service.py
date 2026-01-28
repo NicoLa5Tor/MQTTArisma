@@ -40,7 +40,6 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"📱 Servicio WhatsApp - Enviando mensaje individual...")
             
             response = self.client.send_location_request(phone, body_text)
             
@@ -48,17 +47,14 @@ class WhatsAppService:
                 self.stats["individual_messages_sent"] += 1
                 self.stats["total_recipients"] += 1
                 
-                print(f"✅ Mensaje individual de peticion de ubicacion enviado exitosamente")
                 self.logger.info(f"Mensaje individual de peticion de ubicacion enviado a {phone}")
                 return True
             else:
                 self.stats["errors"] += 1
-                print(f"❌ Error enviando mensaje de peticion de ubicacion individual")
                 self.logger.error(f"Error enviando mensaje de peticion de ubicacion individual a {phone}")
                 return False
                 
         except Exception as e:
-            print(f"💥 Error en servicio WhatsApp: {e}")
             self.logger.error(f"Error en servicio WhatsApp: {e}")
     def send_individual_message(self, phone: str, message: str, use_queue: bool = False) -> bool:
         """
@@ -78,7 +74,6 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"📱 Servicio WhatsApp - Enviando mensaje individual...")
             
             response = self.client.send_individual_message(phone, message, use_queue)
             
@@ -86,18 +81,15 @@ class WhatsAppService:
                 self.stats["individual_messages_sent"] += 1
                 self.stats["total_recipients"] += 1
                 
-                print(f"✅ Mensaje individual enviado exitosamente")
                 self.logger.info(f"Mensaje individual enviado a {phone}")
                 return True
             else:
                 self.stats["errors"] += 1
-                print(f"❌ Error enviando mensaje individual")
                 self.logger.error(f"Error enviando mensaje individual a {phone}")
                 return False
                 
         except Exception as e:
             self.stats["errors"] += 1
-            print(f"💥 Error en servicio WhatsApp: {e}")
             self.logger.error(f"Error en servicio WhatsApp: {e}")
             return False
     
@@ -117,7 +109,6 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"📱 Servicio WhatsApp - Enviando mensajes masivos individuales a {len(recipients)} destinatarios...")
             
             response = self.client.send_bulk_individual(
                 recipients=recipients,
@@ -129,18 +120,15 @@ class WhatsAppService:
                 self.stats["individual_messages_sent"] += sent_count
                 self.stats["total_recipients"] += len(recipients)
                 
-                print(f"✅ Mensajes masivos individuales enviados exitosamente")
                 self.logger.info(f"Mensajes masivos individuales enviados a {len(recipients)} destinatarios")
                 return True
             else:
                 self.stats["errors"] += 1
-                print(f"❌ Error enviando mensajes masivos individuales")
                 self.logger.error(f"Error enviando mensajes masivos individuales a {len(recipients)} destinatarios")
                 return False
                 
         except Exception as e:
             self.stats["errors"] += 1
-            print(f"💥 Error en servicio WhatsApp masivo individual: {e}")
             self.logger.error(f"Error en servicio WhatsApp masivo individual: {e}")
             return False
     
@@ -168,7 +156,6 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"📱 Servicio WhatsApp - Enviando broadcast a {len(phones)} números...")
             
             response = self.client.send_broadcast_message(
                 phones=phones,
@@ -185,18 +172,15 @@ class WhatsAppService:
                 self.stats["broadcast_messages_sent"] += 1
                 self.stats["total_recipients"] += len(phones)
                 
-                print(f"✅ Broadcast enviado exitosamente a {len(phones)} números")
                 self.logger.info(f"Broadcast enviado a {len(phones)} números")
                 return True
             else:
                 self.stats["errors"] += 1
-                print(f"❌ Error enviando broadcast")
                 self.logger.error(f"Error enviando broadcast a {len(phones)} números")
                 return False
                 
         except Exception as e:
             self.stats["errors"] += 1
-            print(f"💥 Error en servicio WhatsApp broadcast: {e}")
             self.logger.error(f"Error en servicio WhatsApp broadcast: {e}")
             return False
     
@@ -222,7 +206,6 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"📱 Servicio WhatsApp - Enviando broadcast personalizado a {len(recipients)} destinatarios...")
             
             response = self.client.send_personalized_broadcast(
                 recipients=recipients,
@@ -238,18 +221,15 @@ class WhatsAppService:
                 self.stats["broadcast_messages_sent"] += 1
                 self.stats["total_recipients"] += len(recipients)
                 
-                print(f"✅ Broadcast personalizado enviado exitosamente a {len(recipients)} destinatarios")
                 self.logger.info(f"Broadcast personalizado enviado a {len(recipients)} destinatarios")
                 return True
             else:
                 self.stats["errors"] += 1
-                print(f"❌ Error enviando broadcast personalizado")
                 self.logger.error(f"Error enviando broadcast personalizado a {len(recipients)} destinatarios")
                 return False
                 
         except Exception as e:
             self.stats["errors"] += 1
-            print(f"💥 Error en servicio WhatsApp broadcast personalizado: {e}")
             self.logger.error(f"Error en servicio WhatsApp broadcast personalizado: {e}")
             return False
     
@@ -274,7 +254,6 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"📱 Servicio WhatsApp - Enviando mensaje de lista...")
             
             response = self.client.send_list_message(
                 phone=phone,
@@ -289,18 +268,15 @@ class WhatsAppService:
                 self.stats["individual_messages_sent"] += 1
                 self.stats["total_recipients"] += 1
                 
-                print(f"✅ Mensaje de lista enviado exitosamente")
                 self.logger.info(f"Mensaje de lista enviado a {phone}")
                 return True
             else:
                 self.stats["errors"] += 1
-                print(f"❌ Error enviando mensaje de lista")
                 self.logger.error(f"Error enviando mensaje de lista a {phone}")
                 return False
                 
         except Exception as e:
             self.stats["errors"] += 1
-            print(f"💥 Error en servicio WhatsApp enviando lista: {e}")
             self.logger.error(f"Error en servicio WhatsApp enviando lista: {e}")
             return False
     
@@ -325,7 +301,6 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"📱 Servicio WhatsApp - Enviando bulk list a {len(recipients)} destinatarios...")
             
             response = self.client.send_bulk_list_message(
                 header_text=header_text,
@@ -341,18 +316,15 @@ class WhatsAppService:
                 self.stats["broadcast_messages_sent"] += 1
                 self.stats["total_recipients"] += len(recipients)
                 
-                print(f"✅ Bulk list enviado exitosamente a {len(recipients)} destinatarios")
                 self.logger.info(f"Bulk list enviado a {len(recipients)} destinatarios")
                 return True
             else:
                 self.stats["errors"] += 1
-                print(f"❌ Error enviando bulk list")
                 self.logger.error(f"Error enviando bulk list a {len(recipients)} destinatarios")
                 return False
                 
         except Exception as e:
             self.stats["errors"] += 1
-            print(f"💥 Error en servicio WhatsApp bulk list: {e}")
             self.logger.error(f"Error en servicio WhatsApp bulk list: {e}")
             return False
     
@@ -377,7 +349,6 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"📱 Servicio WhatsApp - Enviando bulk button a {len(recipients)} destinatarios...")
             
             response = self.client.send_bulk_button_message(
                 header_type=header_type,
@@ -393,18 +364,15 @@ class WhatsAppService:
                 self.stats["broadcast_messages_sent"] += 1
                 self.stats["total_recipients"] += len(recipients)
                 
-                print(f"✅ Bulk button enviado exitosamente a {len(recipients)} destinatarios")
                 self.logger.info(f"Bulk button enviado a {len(recipients)} destinatarios")
                 return True
             else:
                 self.stats["errors"] += 1
-                print(f"❌ Error enviando bulk button")
                 self.logger.error(f"Error enviando bulk button a {len(recipients)} destinatarios")
                 return False
                 
         except Exception as e:
             self.stats["errors"] += 1
-            print(f"💥 Error en servicio WhatsApp bulk button: {e}")
             self.logger.error(f"Error en servicio WhatsApp bulk button: {e}")
             return False
 
@@ -501,21 +469,17 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"📞 Servicio WhatsApp - Agregando número al cache...")
             
             response = self.client.add_number_to_cache(phone, name, data, empresa_id=empresa_id)
             
             if response:
-                print(f"✅ Número agregado al cache exitosamente")
                 self.logger.info(f"Número {phone} agregado al cache")
                 return True
             else:
-                print(f"❌ Error agregando número al cache")
                 self.logger.error(f"Error agregando número {phone} al cache")
                 return False
                 
         except Exception as e:
-            print(f"💥 Error en servicio WhatsApp agregando al cache: {e}")
             self.logger.error(f"Error en servicio WhatsApp agregando al cache: {e}")
             return False
     
@@ -536,21 +500,17 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"🔄 Servicio WhatsApp - Actualizando información del cache...")
             
             response = self.client.update_number_cache(phone, data, empresa_id=empresa_id)
             
             if response:
-                print(f"✅ Información del cache actualizada exitosamente")
                 self.logger.info(f"Cache del número {phone} actualizado con datos: {data}")
                 return True
             else:
-                print(f"❌ Error actualizando información del cache")
                 self.logger.error(f"Error actualizando cache del número {phone}")
                 return False
                 
         except Exception as e:
-            print(f"💥 Error en servicio WhatsApp actualizando cache: {e}")
             self.logger.error(f"Error en servicio WhatsApp actualizando cache: {e}")
             return False
 
@@ -600,7 +560,6 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"📱 Servicio WhatsApp - Enviando bulk template a {len(recipients)} destinatarios...")
             
             response = self.client.send_bulk_template(
                 recipients=recipients,
@@ -612,18 +571,15 @@ class WhatsAppService:
                 self.stats["broadcast_messages_sent"] += 1
                 self.stats["total_recipients"] += len(recipients)
                 
-                print(f"✅ Bulk template enviado exitosamente a {len(recipients)} destinatarios")
                 self.logger.info(f"Bulk template enviado a {len(recipients)} destinatarios")
                 return True
             else:
                 self.stats["errors"] += 1
-                print(f"❌ Error enviando bulk template")
                 self.logger.error(f"Error enviando bulk template a {len(recipients)} destinatarios")
                 return False
                 
         except Exception as e:
             self.stats["errors"] += 1
-            print(f"💥 Error en servicio WhatsApp bulk template: {e}")
             self.logger.error(f"Error en servicio WhatsApp bulk template: {e}")
             return False
     
@@ -643,22 +599,18 @@ class WhatsAppService:
                 self.logger.warning("⚠️ Servicio WhatsApp deshabilitado")
                 return False
             
-            print(f"🔄 Servicio WhatsApp - Realizando actualización masiva de {len(phones)} números...")
             
             response = self.client.bulk_update_numbers(phones, data)
             
             if response:
                 updated_count = response.get('updated_count', len(phones))
-                print(f"✅ Actualización masiva completada exitosamente")
                 self.logger.info(f"Actualización masiva completada: {updated_count}/{len(phones)} números actualizados con datos: {data}")
                 return True
             else:
-                print(f"❌ Error en actualización masiva")
                 self.logger.error(f"Error en actualización masiva de {len(phones)} números")
                 return False
                 
         except Exception as e:
-            print(f"💥 Error en servicio WhatsApp actualización masiva: {e}")
             self.logger.error(f"Error en servicio WhatsApp actualización masiva: {e}")
             return False
     
@@ -680,11 +632,9 @@ class WhatsAppService:
             elif message_type == 'broadcast':
                 return self._process_broadcast_notification(notification)
             else:
-                print(f"⚠️ Tipo de mensaje desconocido: {message_type}")
                 return False
                 
         except Exception as e:
-            print(f"❌ Error procesando notificación WhatsApp: {e}")
             self.logger.error(f"Error procesando notificación WhatsApp: {e}")
             return False
     
@@ -696,13 +646,11 @@ class WhatsAppService:
             use_queue = notification.get('use_queue', False)
             
             if not phone or not message:
-                print(f"❌ Notificación individual incompleta: falta phone o message")
                 return False
             
             return self.send_individual_message(phone, message, use_queue)
             
         except Exception as e:
-            print(f"❌ Error procesando notificación individual: {e}")
             return False
     
     def _process_broadcast_notification(self, notification: Dict[str, Any]) -> bool:
@@ -718,7 +666,6 @@ class WhatsAppService:
             use_queue = notification.get('use_queue', True)
             
             if not phones or not body_text:
-                print(f"❌ Notificación broadcast incompleta: falta phones o body_text")
                 return False
             
             return self.send_broadcast_message(
@@ -733,7 +680,6 @@ class WhatsAppService:
             )
             
         except Exception as e:
-            print(f"❌ Error procesando notificación broadcast: {e}")
             return False
     
     def health_check(self) -> bool:

@@ -228,7 +228,6 @@ class MQTTService:
         self.logger.info(f"  • Errores: {handler_stats['error_count']}")
         self.logger.info(f"  • Tasa de éxito: {100 - handler_stats['error_rate']}%")
         
-        print("=" * 60)
     
     def _show_final_statistics(self):
         """Mostrar estadísticas finales"""
@@ -256,11 +255,6 @@ class MQTTService:
 
 def main():
     """Función principal para ejecutar el servicio MQTT"""
-    print("🚀 Iniciando Servicio MQTT Independiente")
-    print("=" * 60)
-    print("📡 Sin dependencias de WebSocket")
-    print("🎯 Solo procesamiento MQTT + Backend + WhatsApp")
-    print("=" * 60)
     
     try:
         # Crear y ejecutar servicio
@@ -268,7 +262,7 @@ def main():
         mqtt_service.run()
         
     except Exception as e:
-        print(f"❌ Error ejecutando servicio MQTT: {e}")
+        logging.getLogger(__name__).error(f"❌ Error ejecutando servicio MQTT: {e}")
         sys.exit(1)
 
 

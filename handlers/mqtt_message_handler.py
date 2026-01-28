@@ -162,8 +162,15 @@ class MQTTMessageHandler:
         """Procesar respuesta del backend y enviar notificaciones - COMPLETO como WebSocket handler"""
         try:
             # Registrar payloads completos para inspección en producción
-            self.logger.info("📥 Respuesta cruda del backend: %s", json.dumps(response, ensure_ascii=False, default=str))
-            self.logger.info("🛰️ Payload original desde MQTT: %s", json.dumps(mqtt_data, ensure_ascii=False, default=str))
+            if self.logger.isEnabledFor(logging.INFO):
+                self.logger.info(
+                    "📥 Respuesta cruda del backend: %s",
+                    json.dumps(response, ensure_ascii=False, default=str)
+                )
+                self.logger.info(
+                    "🛰️ Payload original desde MQTT: %s",
+                    json.dumps(mqtt_data, ensure_ascii=False, default=str)
+                )
 
             alert_data = self._resolve_alert_data(response, mqtt_data)
 
@@ -347,8 +354,15 @@ class MQTTMessageHandler:
 
             alert_payload = dict(alert_data)
 
-            self.logger.info("📨 alert_data utilizado para fanout MQTT: %s", json.dumps(alert_payload, ensure_ascii=False, default=str))
-            self.logger.info("🔁 mqtt_data de origen: %s", json.dumps(mqtt_data, ensure_ascii=False, default=str))
+            if self.logger.isEnabledFor(logging.INFO):
+                self.logger.info(
+                    "📨 alert_data utilizado para fanout MQTT: %s",
+                    json.dumps(alert_payload, ensure_ascii=False, default=str)
+                )
+                self.logger.info(
+                    "🔁 mqtt_data de origen: %s",
+                    json.dumps(mqtt_data, ensure_ascii=False, default=str)
+                )
 
             if not alert_payload.get("data"):
                 alert_payload["data"] = mqtt_data.get("data", {})
@@ -704,7 +718,12 @@ class MQTTMessageHandler:
                 )
                 if added:
                     success_count += 1
-                    self.logger.debug(f'📝 Cache creado para usuario {user.get("numero")}: {json.dumps(cache_data, indent=2)}')
+                    if self.logger.isEnabledFor(logging.DEBUG):
+                        self.logger.debug(
+                            "📝 Cache creado para usuario %s: %s",
+                            user.get("numero"),
+                            json.dumps(cache_data, indent=2)
+                        )
                 else:
                     self.logger.warning(f'⚠️ Error creando cache para usuario {user.get("numero")}')
             self.logger.info(f'✅ Cache masivo actualizado creado para {success_count}/{len(list_users)} usuarios')

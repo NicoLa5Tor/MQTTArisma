@@ -108,31 +108,25 @@ class BackendClient:
                 "telefono":number
             }
             response = self.get(data=data,endpoint=endpoint)
-            print(f"response del verify {response}")
             
             # Si no hay respuesta (error de conexión), return None
             if response is None:
-                print("❌ Sin respuesta del servidor")
                 return None
             
             # Manejar códigos de estado específicos
             status_code = response.get('_status_code', 200)
             
             if status_code == 404:
-                print("🔍 Usuario no encontrado (404) - respuesta válida")
                 return response  # Devolver la respuesta para que se pueda manejar en el código que llama
             
             elif status_code == 401:
-                print("🔒 No autorizado (401) - respuesta válida")
                 return response  # Devolver la respuesta para que se pueda manejar en el código que llama
             
             # Para códigos de éxito, verificar el campo 'success'
             validate_response = response.get('success', False)
             if validate_response:
-                print("✅ Verificación exitosa")
                 return response
             else:
-                print(f"❌ Verificación falló: {response.get('message', 'Error desconocido')}")
                 return response  # Devolver la respuesta completa, no None
         
         except Exception as ex:
@@ -148,24 +142,20 @@ class BackendClient:
                 'hardware': mqtt_data.get('nombre_hardware'),
                 'tipo_hardware': mqtt_data.get('tipo_hardware')
             }
-            print(f"🔐 Autenticando: {auth_data['hardware']} ({auth_data['empresa']}/{auth_data['sede']})")
             
             response = self.post('/api/hardware-auth/authenticate', data=auth_data)
             
             # Si no hay respuesta (error de conexión), return None
             if response is None:
-                print("❌ Sin respuesta del servidor")
                 return None
             
             # Manejar códigos de estado específicos
             status_code = response.get('_status_code', 200)
             
             if status_code == 404:
-                print("🔍 Hardware no encontrado (404) - credenciales inválidas")
                 return None
             
             elif status_code == 401:
-                print("🔒 No autorizado (401) - credenciales inválidas")
                 return None
             
             # Para respuestas exitosas, verificar el token
@@ -173,18 +163,14 @@ class BackendClient:
                 # Obtener token de la respuesta
                 if 'token' in response:
                     token = response['token']
-                    print(f"✅ Token obtenido exitosamente")
                     return token
                 else:
-                    print(f"❌ No se encontró token en respuesta")
                     return None
             else:
                 error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
-                print(f"❌ Autenticación fallida: {error_msg}")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error autenticación: {e}")
             return None
     
     def send_alarm_data(self, mqtt_data: Dict[str, Any], token: str) -> Optional[Dict]:
@@ -198,7 +184,6 @@ class BackendClient:
             # Endpoint para enviar datos de alarma
             endpoint = '/api/mqtt-alerts'
             
-            print(f"🚨 Enviando alarma: {mqtt_data['nombre_hardware']}")
             
             # Enviar datos (esto consumirá el token)
             response = self.post(endpoint, data=mqtt_data)
@@ -208,14 +193,11 @@ class BackendClient:
             
             if response:
                 alert_id = response.get('alert_id', 'N/A')
-                print(f"✅ Alarma creada: ID {alert_id}")
                 return response
             else:
-                print(f"❌ Sin respuesta del backend")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error enviando alarma: {e}")
             self._clear_token()
             return None
     
@@ -266,13 +248,6 @@ class BackendClient:
                 "prioridad": prioridad
             }
             
-            print(f"🚨 Creando alerta de usuario:")
-            print(f"   🆔 Usuario ID: {usuario_id}")
-            print(f"   👤 Tipo creador: {tipo_creador}")
-            print(f"   📍 Ubicación: {latitud}, {longitud}")
-            print(f"   🔔 Tipo: {tipo_alerta}")
-            print(f"   📝 Descripción: {descripcion}")
-            print(f"   ⚡ Prioridad: {prioridad}")
             
             response = self.post(endpoint, data=data)
             
@@ -280,18 +255,13 @@ class BackendClient:
                 alert_id = response.get('alert_id', 'N/A')
                 topics = response.get('topics_otros_hardware', [])
                 
-                print(f"✅ Alerta creada exitosamente:")
-                print(f"   🆔 ID de alerta: {alert_id}")
-                print(f"   📡 Topics generados: {len(topics)} topics")
                 
                 return response
             else:
                 error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
-                print(f"❌ Error creando alerta: {error_msg}")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error creando alerta de usuario: {e}")
             return None
     
     def deactivate_user_alert(self, alert_id: str, desactivado_por_id: str, desactivado_por_tipo: str = "usuario") -> Optional[Dict]:
@@ -315,39 +285,25 @@ class BackendClient:
                 "desactivado_por_tipo": desactivado_por_tipo
             }
             
-            print(f"🔄 Desactivando alerta de usuario:")
-            print(f"   🆔 Alert ID: {alert_id}")
-            print(f"   👤 Desactivado por ID: {desactivado_por_id}")
-            print(f"   🏷️ Tipo: {desactivado_por_tipo}")
             
             response = self.put(endpoint, data=data)
             
             # Debug: mostrar respuesta completa para diagnosticar error 400
             if response:
                 status_code = response.get('_status_code', 200)
-                print(f"📊 Respuesta completa (status {status_code}):")
-                print(f"   📝 Data enviada: {json.dumps(data, indent=2)}")
-                print(f"   🔍 Respuesta: {json.dumps(response, indent=2)}")
             
             if response and response.get('success'):
-                print(f"✅ Alerta desactivada exitosamente:")
-                print(f"   🆔 ID de alerta: {alert_id}")
-                print(f"   👤 Desactivado por: {desactivado_por_id}")
-                print(f"   🏷️ Tipo: {desactivado_por_tipo}")
                 
                 # Mostrar información adicional si está disponible
                 if 'message' in response:
-                    print(f"   📝 Mensaje: {response['message']}")
                 
                 return response
             else:
                 error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
                 status_code = response.get('_status_code', 'N/A') if response else 'N/A'
-                print(f"❌ Error desactivando alerta (status {status_code}): {error_msg}")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error desactivando alerta de usuario: {e}")
             return None
     
     def put(self, endpoint: str, data: Optional[Dict] = None) -> Optional[Dict]:
@@ -389,40 +345,26 @@ class BackendClient:
                 self.logger.error("❌ Debe proporcionar al menos 'disponible' o 'embarcado'")
                 return None
             
-            print(f"🔄 Actualizando estado de usuario:")
-            print(f"   🆔 Alert ID: {alert_id}")
-            print(f"   👤 Usuario ID: {usuario_id}")
             if disponible is not None:
-                print(f"   ✅ Disponible: {disponible}")
             if embarcado is not None:
-                print(f"   🚢 Embarcado: {embarcado}")
             
             response = self.patch(endpoint, data=data)
             
             if response:
                 status_code = response.get('_status_code', 200)
-                print(f"📊 Respuesta (status {status_code}):")
-                print(f"   📝 Data enviada: {json.dumps(data, indent=2)}")
-                print(f"   🔍 Respuesta: {json.dumps(response, indent=2)}")
             
             if response and response.get('success'):
-                print(f"✅ Estado de usuario actualizado exitosamente:")
-                print(f"   🆔 Alert ID: {alert_id}")
-                print(f"   👤 Usuario ID: {usuario_id}")
                 
                 # Mostrar información adicional si está disponible
                 if 'message' in response:
-                    print(f"   📝 Mensaje: {response['message']}")
                 
                 return response
             else:
                 error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
                 status_code = response.get('_status_code', 'N/A') if response else 'N/A'
-                print(f"❌ Error actualizando estado de usuario (status {status_code}): {error_msg}")
                 return response  # Devolver la respuesta completa para manejo de errores
                 
         except Exception as e:
-            print(f"💥 Error actualizando estado de usuario: {e}")
             return None
     
     def create_empresa_alert(self, empresa_id: str, sede: str, tipo_alerta: str, descripcion: str, 
@@ -454,12 +396,6 @@ class BackendClient:
                 "prioridad": prioridad
             }
             
-            print(f"🏢 Creando alerta de empresa:")
-            print(f"   🆔 Empresa ID: {empresa_id}")
-            print(f"   🏛️ Sede: {sede}")
-            print(f"   🔔 Tipo: {tipo_alerta}")
-            print(f"   📝 Descripción: {descripcion}")
-            print(f"   ⚡ Prioridad: {prioridad}")
             
             response = self.post(endpoint, data=data)
             
@@ -467,18 +403,13 @@ class BackendClient:
                 alert_id = response.get('alert_id', 'N/A')
                 topics = response.get('topics_otros_hardware', [])
                 
-                print(f"✅ Alerta de empresa creada exitosamente:")
-                print(f"   🆔 ID de alerta: {alert_id}")
-                print(f"   📡 Topics generados: {len(topics)} topics")
                 
                 return response
             else:
                 error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
-                print(f"❌ Error creando alerta de empresa: {error_msg}")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error creando alerta de empresa: {e}")
             return None
 
     def get_empresa_alarm_types(self, empresa_id: str) -> Optional[Dict]:
@@ -486,30 +417,23 @@ class BackendClient:
         try:
             endpoint = f"/api/tipos-alarma/empresa/{empresa_id}/todos"
 
-            print("📋 Consultando tipos de alarma disponibles para empresa:")
-            print(f"   🆔 Empresa ID: {empresa_id}")
 
             response = self.get(endpoint=endpoint)
 
             if response:
                 status_code = response.get('_status_code', 200)
-                print(f"📊 Respuesta (status {status_code}): {json.dumps(response, indent=2)}")
 
                 if status_code == 404:
-                    print("⚠️ Empresa sin tipos de alarma registrados")
                     return response
 
             if response and response.get('success'):
                 tipos = response.get('data', [])
-                print(f"✅ Tipos de alarma recuperados ({len(tipos)} tipos)")
                 return response
 
             error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
-            print(f"❌ Error consultando tipos de alarma: {error_msg}")
             return response
 
         except Exception as e:
-            print(f"💥 Error consultando tipos de alarma por empresa: {e}")
             return None
 
     def get_alert_by_id(self, alert_id: str, user_id: str) -> Optional[Dict]:
@@ -531,56 +455,37 @@ class BackendClient:
                 "user_id": user_id
             }
             
-            print(f"🔍 Consultando detalles de alerta para usuario:")
-            print(f"   🆔 Alert ID: {alert_id}")
-            print(f"   👤 User ID: {user_id}")
             
             response = self.post(endpoint, data=data)
             
             if response:
                 status_code = response.get('_status_code', 200)
-                print(f"📊 Respuesta (status {status_code}):")
                 
                 # Manejo específico para 404 (alerta no encontrada o usuario sin acceso)
                 if status_code == 404:
                     error_msg = response.get('message', 'Alerta no encontrada o usuario sin acceso')
-                    print(f"❌ No encontrado (404): {error_msg}")
                     return response  # Devolver respuesta completa para manejo de errores
                 
                 # Manejo específico para 401 (no autorizado)
                 elif status_code == 401:
                     error_msg = response.get('message', 'No autorizado')
-                    print(f"🔒 No autorizado (401): {error_msg}")
                     return response  # Devolver respuesta completa para manejo de errores
                 
                 # Para respuestas exitosas
                 if response.get('success'):
                     alert_data = response.get('alert')
                     if alert_data:
-                        print(f"✅ Detalles de alerta obtenidos exitosamente:")
-                        print(f"   🆔 ID: {alert_data.get('_id', 'N/A')}")
-                        print(f"   🏢 Empresa: {alert_data.get('empresa_nombre', 'N/A')}")
-                        print(f"   🏢 Sede: {alert_data.get('sede', 'N/A')}")
-                        print(f"   🔔 Tipo: {alert_data.get('tipo_alerta', 'N/A')}")
-                        print(f"   📝 Descripción: {alert_data.get('descripcion', 'N/A')}")
-                        print(f"   ⚡ Prioridad: {alert_data.get('prioridad', 'N/A')}")
-                        print(f"   🟢 Activa: {alert_data.get('activo', False)}")
-                        print(f"   📱 Números telefónicos: {len(alert_data.get('numeros_telefonicos', []))}")
                         
                         return response  # Devolver respuesta completa
                     else:
-                        print(f"❌ No se encontraron datos de alerta en la respuesta")
                         return response
                 else:
                     error_msg = response.get('error', response.get('message', 'Error desconocido'))
-                    print(f"❌ Error consultando detalles de alerta: {error_msg}")
                     return response  # Devolver respuesta completa para manejo de errores
             else:
-                print(f"❌ Sin respuesta del servidor para alerta: {alert_id}")
                 return None
                 
         except Exception as e:
-            print(f"💥 Error consultando detalles de alerta: {e}")
             return None
     
     def patch(self, endpoint: str, data: Optional[Dict] = None) -> Optional[Dict]:

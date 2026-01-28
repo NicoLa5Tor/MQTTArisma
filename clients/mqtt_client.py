@@ -94,28 +94,24 @@ class MQTTClient:
             should_display = self._should_display_message(topic)
             
             if should_display:
-                print("\n" + "=" * 100)
-                print(f"🔥🔥🔥 MENSAJE RECIBIDO 🔥🔥🔥")
-                print(f"TOPIC: {topic}")
-                print(f"PAYLOAD: {payload}")
-                print("=" * 100 + "\n")
-                
-                self.logger.info("=" * 100)
-                self.logger.info(f"🎯 MENSAJE MQTT RECIBIDO 🎯")
-                self.logger.info(f"📡 TOPIC: {topic}")
-                self.logger.info(f"📦 PAYLOAD: {payload}")
-                self.logger.info(f"📊 QoS: {msg.qos}")
-                self.logger.info(f"🔄 Retain: {msg.retain}")
-                self.logger.info("=" * 100)
-                
                 # Intentar parsear JSON solo para BOTONERA válidos
                 try:
                     json_data = json.loads(payload)
-                    self.logger.info(f"✅ JSON VÁLIDO: {json.dumps(json_data, indent=2)}")
-                    print(f"JSON: {json.dumps(json_data, indent=2)}")
                 except json.JSONDecodeError:
-                    self.logger.info("⚠️ NO ES JSON VÁLIDO")
                     json_data = None
+
+                if self.logger.isEnabledFor(logging.INFO):
+                    self.logger.info("=" * 100)
+                    self.logger.info("🎯 MENSAJE MQTT RECIBIDO 🎯")
+                    self.logger.info("📡 TOPIC: %s", topic)
+                    self.logger.info("📦 PAYLOAD: %s", payload)
+                    self.logger.info("📊 QoS: %s", msg.qos)
+                    self.logger.info("🔄 Retain: %s", msg.retain)
+                    if json_data is not None:
+                        self.logger.info("✅ JSON VÁLIDO: %s", json.dumps(json_data, indent=2))
+                    else:
+                        self.logger.info("⚠️ NO ES JSON VÁLIDO")
+                    self.logger.info("=" * 100)
             else:
                 # Para mensajes no-BOTONERA, parsear JSON sin mostrar
                 try:
@@ -126,12 +122,9 @@ class MQTTClient:
             # Ejecutar callback personalizado si existe (siempre)
             if self.on_message_callback:
                 self.on_message_callback(topic, payload, json_data)
-            else:
-                self.logger.warning("⚠️ NO HAY CALLBACK CONFIGURADO")
                 
         except Exception as e:
             self.logger.error(f"💥 ERROR PROCESANDO MENSAJE: {e}")
-            print(f"ERROR: {e}")
     
     def _on_disconnect(self, client, userdata, rc):
         """Callback interno para desconexión"""
