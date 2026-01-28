@@ -88,6 +88,13 @@ class WebSocketMessageHandler:
         self.logger.info("📱 WebSocket Message Handler - SOLO procesamiento WhatsApp")
         self.logger.info("❌ SIN procesamiento de mensajes MQTT")
 
+    def _get_first_name(self, name: str) -> str:
+        """Usar solo el primer nombre para evitar headers muy largos."""
+        if not name:
+            return ""
+        parts = str(name).strip().split()
+        return parts[0] if parts else ""
+
     async def queue_whatsapp_message(self, message: str) -> bool:
         """Agregar mensaje de WhatsApp a la cola para procesamiento"""
         #print(f"🔍 DEBUG: Mensaje recibido en WebSocket: {message}")
@@ -891,7 +898,8 @@ class WebSocketMessageHandler:
                     "rows": rows
                 }
             ]
-            body_text = f"{user}\nEstas son las opciones disponibles"
+            friendly_user = self._get_first_name(user) or "Usuario"
+            body_text = f"{friendly_user}\nEstas son las opciones disponibles"
             self.whatsapp_service.send_list_message(
                         phone=number,
                         header_text=body_text,
@@ -1192,7 +1200,12 @@ class WebSocketMessageHandler:
             if message_time is not None:
                 body_text = message_time
             else:
-                body_text = f"Hola de nuevo {usuario}.\nUn gusto tenerte de vuelta" if is_in_cached else f"Hola {usuario}.\nBienvenido al Sistema de Alertas RESCUE"
+                display_name = self._get_first_name(usuario) or "Usuario"
+                body_text = (
+                    f"Hola de nuevo {display_name}.\nUn gusto tenerte de vuelta"
+                    if is_in_cached
+                    else f"Hola {display_name}.\nBienvenido al Sistema de Alertas RESCUE"
+                )
             
             self.whatsapp_service.send_list_message(
                 phone=number,
