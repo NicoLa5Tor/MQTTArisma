@@ -606,6 +606,12 @@ class WebSocketMessageHandler:
                     por ahora se procesa solo mensajes de texto"""
                     if type_message:
                         body_text = entry[type_message]["body"]
+                        if len(body_text) > 1000:
+                            self.whatsapp_service.send_individual_message(
+                                phone=number,
+                                message="Tu mensaje excede los 1000 caracteres. Por favor envía un mensaje más corto."
+                            )
+                            return
                         comandos_opciones = [
                             "OPCIONES",
                             "MENU",
