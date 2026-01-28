@@ -5,8 +5,28 @@ import logging
 import sys
 from datetime import datetime
 
+ACTION_LOGGER_PREFIXES = (
+    "clients.backend_client",
+    "services.whatsapp_service",
+)
 
-def setup_logger(name: str = "mqtt_app", level: str = "ERROR", 
+
+class ActionFilter(logging.Filter):
+    """Permitir solo logs de acciones y errores."""
+
+    def __init__(self, allowed_prefixes=None):
+        super().__init__()
+        self.allowed_prefixes = tuple(allowed_prefixes or ())
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        if record.levelno >= logging.ERROR:
+            return True
+        if record.levelno >= logging.INFO:
+            return any(record.name.startswith(prefix) for prefix in self.allowed_prefixes)
+        return False
+
+
+def setup_logger(name: str = "mqtt_app", level: str = "INFO",
                 log_file: str = None, format_string: str = None) -> logging.Logger:
     """
     Configurar logger para la aplicación
@@ -21,12 +41,9 @@ def setup_logger(name: str = "mqtt_app", level: str = "ERROR",
         Logger configurado
     """
     requested_level = getattr(logging, level.upper(), logging.INFO)
-    if requested_level < logging.ERROR:
-        requested_level = logging.ERROR
-
     logger = logging.getLogger(name)
     logger.setLevel(requested_level)
-    logging.getLogger().setLevel(requested_level)
+    logger.propagate = False
     
     # Limpiar handlers existentes
     logger.handlers.clear()
@@ -38,8 +55,11 @@ def setup_logger(name: str = "mqtt_app", level: str = "ERROR",
     formatter = logging.Formatter(format_string)
     
     # Handler para consola
+    action_filter = ActionFilter(ACTION_LOGGER_PREFIXES)
+
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(requested_level)
+    console_handler.addFilter(action_filter)
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
     
@@ -47,6 +67,7 @@ def setup_logger(name: str = "mqtt_app", level: str = "ERROR",
     if log_file:
         file_handler = logging.FileHandler(log_file)
         file_handler.setLevel(requested_level)
+        file_handler.addFilter(action_filter)
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
     

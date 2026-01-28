@@ -176,6 +176,7 @@ class BackendClient:
     def send_alarm_data(self, mqtt_data: Dict[str, Any], token: str) -> Optional[Dict]:
         """Enviar datos de alarma al backend usando token"""
         try:
+            self.logger.info("🚨 Enviando alarma MQTT al backend")
             # Establecer token en headers
             self.session.headers.update({
                 'Authorization': f'Bearer {token}'
@@ -232,6 +233,11 @@ class BackendClient:
             Dict con la respuesta del backend incluyendo topics e ID de alerta
         """
         try:
+            self.logger.info(
+                "🚨 Creando alerta de usuario para %s (%s)",
+                usuario_id,
+                tipo_alerta
+            )
             endpoint = '/api/mqtt-alerts/user-alert'
             
             data = {
@@ -277,6 +283,11 @@ class BackendClient:
             Dict con la respuesta del backend
         """
         try:
+            self.logger.info(
+                "🛑 Desactivando alerta %s por %s",
+                alert_id,
+                desactivado_por_id
+            )
             endpoint = '/api/mqtt-alerts/user-alert/deactivate'
             
             data = {
@@ -288,20 +299,21 @@ class BackendClient:
             
             response = self.put(endpoint, data=data)
             
-            # Debug: mostrar respuesta completa para diagnosticar error 400
-            if response:
-                status_code = response.get('_status_code', 200)
-            
             if response and response.get('success'):
-                
-                # Mostrar información adicional si está disponible
-                if 'message' in response:
-                    pass
                 return response
-            else:
-                error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
-                status_code = response.get('_status_code', 'N/A') if response else 'N/A'
-                return None
+
+            if response:
+                error_msg = response.get('message', 'Error desconocido')
+                status_code = response.get('_status_code', 'N/A')
+                self.logger.error(
+                    "❌ Error desactivando alerta (status %s): %s",
+                    status_code,
+                    error_msg
+                )
+                return response
+
+            self.logger.error("❌ Sin respuesta del backend al desactivar alerta")
+            return None
                 
         except Exception as e:
             return None
@@ -325,6 +337,11 @@ class BackendClient:
             Dict con la respuesta del backend
         """
         try:
+            self.logger.info(
+                "✅ Actualizando estado de usuario %s en alerta %s",
+                usuario_id,
+                alert_id
+            )
             endpoint = '/api/mqtt-alerts/update-user-status'
             
             # Construir data solo con los campos proporcionados
@@ -345,28 +362,26 @@ class BackendClient:
                 self.logger.error("❌ Debe proporcionar al menos 'disponible' o 'embarcado'")
                 return None
             
-            if disponible is not None:
-                pass
-            if embarcado is not None:
-                pass
-            
             response = self.patch(endpoint, data=data)
             
-            if response:
-                status_code = response.get('_status_code', 200)
-            
             if response and response.get('success'):
-                
-                # Mostrar información adicional si está disponible
-                if 'message' in response:
-                    pass
                 return response
-            else:
-                error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
-                status_code = response.get('_status_code', 'N/A') if response else 'N/A'
-                return response  # Devolver la respuesta completa para manejo de errores
-                
+
+            if response:
+                error_msg = response.get('message', 'Error desconocido')
+                status_code = response.get('_status_code', 'N/A')
+                self.logger.error(
+                    "❌ Error actualizando estado de usuario (status %s): %s",
+                    status_code,
+                    error_msg
+                )
+                return response
+
+            self.logger.error("❌ Sin respuesta del backend al actualizar estado de usuario")
+            return None
+
         except Exception as e:
+            self.logger.error(f"❌ Error actualizando estado de usuario: {e}")
             return None
     
     def create_empresa_alert(self, empresa_id: str, sede: str, tipo_alerta: str, descripcion: str, 
@@ -385,6 +400,11 @@ class BackendClient:
             Dict con la respuesta del backend incluyendo topics e ID de alerta
         """
         try:
+            self.logger.info(
+                "🏢 Creando alerta de empresa %s (%s)",
+                empresa_id,
+                tipo_alerta
+            )
             endpoint = '/api/mqtt-alerts/user-alert'
             
             data = {
