@@ -296,7 +296,7 @@ class BackendClient:
                 
                 # Mostrar información adicional si está disponible
                 if 'message' in response:
-                
+                    pass
                 return response
             else:
                 error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
@@ -346,7 +346,9 @@ class BackendClient:
                 return None
             
             if disponible is not None:
+                pass
             if embarcado is not None:
+                pass
             
             response = self.patch(endpoint, data=data)
             
@@ -357,7 +359,7 @@ class BackendClient:
                 
                 # Mostrar información adicional si está disponible
                 if 'message' in response:
-                
+                    pass
                 return response
             else:
                 error_msg = response.get('message', 'Error desconocido') if response else 'Sin respuesta'
