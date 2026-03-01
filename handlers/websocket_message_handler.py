@@ -514,20 +514,6 @@ class WebSocketMessageHandler:
                                 except Exception as confirm_error:
                                     self.logger.error(f"❌ Error enviando confirmación: {confirm_error}")
                                 
-                                # Debug response
-                                # try:
-                                #     print(json.dumps(response_desactivate,indent=4))
-                                # except Exception as json_error:
-                                #     self.logger.error(f"❌ Error imprimiendo JSON: {json_error}")
-                    elif isinstance(exist_alert.get("disponible"), bool) and not exist_alert["disponible"]:
-                        data_alert = self.backend_client.get_alert_by_id(alert_id = id_alert,user_id=id_user).get("alert",{})
-                        data_user = [u for u in data_alert["numeros_telefonicos"] if u["numero"] == number]
-                        self._send_create_active_user(alert=data_alert,list_users=data_user,data_user=cached_info)
-                        self._send_location_personalized_message(
-                            numeros_data=data_user,
-                            tipo_alarma_info=data_alert
-                        )
-                                
                                 # Enviar comando MQTT de desactivación
                                 try:
                                     topics = response_desactivate.get("topics", [])
@@ -564,6 +550,14 @@ class WebSocketMessageHandler:
                                 )
                             except Exception:
                                 pass  # Si ni siquiera podemos enviar el mensaje de error, no hacer nada
+                    elif isinstance(exist_alert.get("disponible"), bool) and not exist_alert["disponible"]:
+                        data_alert = self.backend_client.get_alert_by_id(alert_id = id_alert,user_id=id_user).get("alert",{})
+                        data_user = [u for u in data_alert["numeros_telefonicos"] if u["numero"] == number]
+                        self._send_create_active_user(alert=data_alert,list_users=data_user,data_user=cached_info)
+                        self._send_location_personalized_message(
+                            numeros_data=data_user,
+                            tipo_alarma_info=data_alert
+                        )
                 elif is_list:
                     #Esto es para si es una lista despues de que ya se activo
                     opcion = is_list["id"]
