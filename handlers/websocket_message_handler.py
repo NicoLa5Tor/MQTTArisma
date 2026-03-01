@@ -357,7 +357,6 @@ class WebSocketMessageHandler:
             # print(f"hardware_location: {json.dumps(hardware_location, indent=2)}")
  
             numero_excluido = cached_info["phone"]
-            usuarios_filtrados = [u for u in list_users if u["numero"] != numero_excluido]
             if list_users:
                 creator_name = data_alert.get("activacion_alerta", {}).get("nombre")
                 recipients_template = [u for u in list_users if u.get("numero") != numero_excluido]
@@ -368,20 +367,8 @@ class WebSocketMessageHandler:
                 )
                 topics = data_alert.get("topics_otros_hardware",{})
                 self._intermediate_to_mqtt(alert=data_alert,topics=topics)
-                time.sleep(20)
-                self._send_location_personalized_message(
-                    numeros_data=list_users,
-                    tipo_alarma_info=data_alert,
-                )
-                time.sleep(2)
             else:
-                self.logger.error("⚠️ NO se envió mensaje de ubicación - faltan datos")
-
-            self._send_create_active_user(
-                alert=data_alert,
-                list_users=usuarios_filtrados,
-                data_user=cached_info
-            )
+                self.logger.error("⚠️ No hay destinatarios válidos para notificar")
             
             # print(f"list_users exists: {bool(list_users)}")
             # print(f"hardware_location exists: {bool(hardware_location)}")
@@ -532,6 +519,14 @@ class WebSocketMessageHandler:
                                 #     print(json.dumps(response_desactivate,indent=4))
                                 # except Exception as json_error:
                                 #     self.logger.error(f"❌ Error imprimiendo JSON: {json_error}")
+                    elif isinstance(exist_alert.get("disponible"), bool) and not exist_alert["disponible"]:
+                        data_alert = self.backend_client.get_alert_by_id(alert_id = id_alert,user_id=id_user).get("alert",{})
+                        data_user = [u for u in data_alert["numeros_telefonicos"] if u["numero"] == number]
+                        self._send_create_active_user(alert=data_alert,list_users=data_user,data_user=cached_info)
+                        self._send_location_personalized_message(
+                            numeros_data=data_user,
+                            tipo_alarma_info=data_alert
+                        )
                                 
                                 # Enviar comando MQTT de desactivación
                                 try:
@@ -601,6 +596,10 @@ class WebSocketMessageHandler:
                     #print(json.dumps(data_alert,indent=4))
                     data_user = [u for u in data_alert["numeros_telefonicos"] if u["numero"] == number]
                     self._send_create_active_user(alert=data_alert,list_users=data_user,data_user=cached_info)
+                    self._send_location_personalized_message(
+                        numeros_data=data_user,
+                        tipo_alarma_info=data_alert
+                    )
                 else:
                     """Aqui se deberia colocar el envio de mensaje a todos los usuarios, pero..
                     por ahora se procesa solo mensajes de texto"""
@@ -618,6 +617,7 @@ class WebSocketMessageHandler:
                             "MENÚ",
                             "OPCION",
                             "OPCIÓN",
+                            ".",
                             "LISTA",
                             "LISTADO",
                             "MOSTRAR",
@@ -1016,7 +1016,6 @@ class WebSocketMessageHandler:
 
         template_recipients = []
         alert_name = alert_info.get("nombre_alerta") or alert_info.get("nombre") or "Alerta"
-        empresa = alert_info.get("empresa_nombre") or alert_info.get("empresa") or "la empresa"
         creator = creator_name or alert_info.get("activacion_alerta", {}).get("nombre", "un miembro autorizado")
 
         for usuario in recipients:
@@ -1024,17 +1023,18 @@ class WebSocketMessageHandler:
             if not numero:
                 continue
 
-            
+            recipient_name = usuario.get("nombre") or usuario.get("name") or "Usuario"
+
             template_recipients.append({
                 "phone": numero,
-                "template_name": "alerta_creada",
+                "template_name": "crear_alerta",
                 "language": "es_CO",
                 "components": [
                     {
                         "type": "body",
                         "parameters": [
+                            {"type": "text", "text": recipient_name},
                             {"type": "text", "text": alert_name},
-                            {"type": "text", "text": empresa},
                             {"type": "text", "text": creator}
                         ]
                     }

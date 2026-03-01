@@ -478,7 +478,7 @@ class MQTTMessageHandler:
         alert_info: Dict,
         creator_name: Optional[str]
     ) -> bool:
-        """Enviar la plantilla 'alerta_creada' a los destinatarios"""
+        """Enviar la plantilla 'crear_alerta' a los destinatarios"""
         if not self.whatsapp_service:
             self.logger.warning("⚠️ WhatsApp service no disponible para plantilla de alerta")
             return False
@@ -486,7 +486,6 @@ class MQTTMessageHandler:
         try:
             template_recipients: List[Dict[str, Any]] = []
             alert_name = alert_info.get("nombre_alerta") or alert_info.get("nombre") or "Alerta"
-            empresa = alert_info.get("empresa_nombre") or alert_info.get("empresa") or "la empresa"
             creador = creator_name or alert_info.get("activacion_alerta", {}).get("nombre", "un miembro autorizado")
 
             for usuario in recipients:
@@ -494,16 +493,18 @@ class MQTTMessageHandler:
                 if not numero:
                     continue
 
+                recipient_name = usuario.get("nombre") or usuario.get("name") or "Usuario"
+
                 template_recipients.append({
                     "phone": numero,
-                    "template_name": "alerta_creada",
+                    "template_name": "crear_alerta",
                     "language": "es_CO",
                     "components": [
                         {
                             "type": "body",
                             "parameters": [
+                                {"type": "text", "text": recipient_name},
                                 {"type": "text", "text": alert_name},
-                                {"type": "text", "text": empresa},
                                 {"type": "text", "text": creador}
                             ]
                         }
