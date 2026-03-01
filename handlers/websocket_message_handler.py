@@ -460,6 +460,11 @@ class WebSocketMessageHandler:
                 #aqui se valida si es un boton lo que llega
                 if is_button:
                     type_button = is_button["id"]
+                    self.logger.info(
+                        "🔘 Boton recibido: %s | disponible=%s",
+                        type_button,
+                        exist_alert.get("disponible")
+                    )
                     #esto valida si es para activacion de un usuario
                     if type_button == "Activar_User":
                         self.backend_client.update_user_status( alert_id = id_alert,
@@ -551,6 +556,9 @@ class WebSocketMessageHandler:
                             except Exception:
                                 pass  # Si ni siquiera podemos enviar el mensaje de error, no hacer nada
                     elif isinstance(exist_alert.get("disponible"), bool) and not exist_alert["disponible"]:
+                        self.logger.info(
+                            "📍 Reenviando disponibilidad y mapa por boton sin payload"
+                        )
                         data_alert = self.backend_client.get_alert_by_id(alert_id = id_alert,user_id=id_user).get("alert",{})
                         data_user = [u for u in data_alert["numeros_telefonicos"] if u["numero"] == number]
                         self._send_create_active_user(alert=data_alert,list_users=data_user,data_user=cached_info)
@@ -1036,6 +1044,20 @@ class WebSocketMessageHandler:
             })
 
         if template_recipients:
+            self.logger.info(
+                "📨 Enviando plantilla crear_alerta a %s destinatarios",
+                len(template_recipients)
+            )
+            if self.logger.isEnabledFor(logging.INFO):
+                sample_recipient = template_recipients[0]
+                self.logger.info(
+                    "📨 Crear_alerta sample: phone=%s params=%s",
+                    sample_recipient.get("phone"),
+                    [
+                        param.get("text")
+                        for param in sample_recipient.get("components", [{}])[0].get("parameters", [])
+                    ]
+                )
             self.whatsapp_service.send_bulk_template(
                 recipients=template_recipients,
                 use_queue=True
