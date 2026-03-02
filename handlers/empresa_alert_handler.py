@@ -2,7 +2,6 @@
 Handler específico para alertas desactivadas por empresa
 Solo maneja WhatsApp Service y MQTT Publisher
 """
-import time
 import logging
 from typing import Dict, Any, Optional, List
 
@@ -86,13 +85,10 @@ class EmpresaAlertHandler:
             
             # Extraer datos principales de la estructura del backend
             alert_data = message_data.get("alert", {})
-            timestamp = message_data.get("timestamp", "")
-            
             alert_id = alert_data.get("_id", "N/A")
             alert_name = alert_data.get("tipo_alerta", "Alerta")  # Usar tipo_alerta como nombre
             empresa_nombre = alert_data.get("empresa_nombre", "La Empresa")
             sede = alert_data.get("sede", "")
-            prioridad = alert_data.get("prioridad", "media")
             usuarios = alert_data.get("numeros_telefonicos", [])
             usuarios_normalizados = self._normalize_usuarios_list(usuarios)
             topics_hardware = alert_data.get("topics_otros_hardware", [])
@@ -107,11 +103,8 @@ class EmpresaAlertHandler:
             self.logger.info(f"   🏢 Empresa: {empresa_nombre}")
             self.logger.info(f"   🏛️ Sede: {sede}")
 
-            # 1. Enviar notificaciones WhatsApp a usuarios ("Estoy disponible") - solo si hay usuarios
+            # 1. Enviar plantilla de alerta creada
             template_success = True
-            whatsapp_success = True
-            location_success = True
-
             activacion_alerta = alert_data.get("activacion_alerta", {})
             creador_nombre = activacion_alerta.get("nombre") or empresa_nombre
             telefono_creador = self._extract_phone_number(activacion_alerta)
@@ -130,38 +123,10 @@ class EmpresaAlertHandler:
                     )
                 else:
                     self.logger.info("ℹ️ Sin destinatarios para plantilla de alerta creada")
-
-                time.sleep(20)
-
-                hardware_location = alert_data.get("ubicacion", {})
-                if hardware_location:
-                    location_success = self._send_location_message_empresa(
-                        usuarios=usuarios_normalizados,
-                        location=hardware_location
-                    )
-                else:
-                    self.logger.info("ℹ️ No hay datos de ubicación para enviar")
-
-                time.sleep(2)
-
-                whatsapp_recipients = [
-                    usuario for usuario in usuarios_normalizados
-                    if not telefono_creador or usuario.get("numero") != telefono_creador
-                ]
-
-                if whatsapp_recipients:
-                    whatsapp_success = self._send_empresa_activation_notification(
-                        usuarios=whatsapp_recipients,
-                        alert_data=alert_data
-                    )
-                else:
-                    self.logger.info("ℹ️ Sin destinatarios para notificación de disponibilidad")
             else:
                 self.logger.info("ℹ️ No hay usuarios para notificar por WhatsApp")
             
-            # 2. Enviar mensaje de ubicación si está disponible - solo si hay usuarios
-            
-            # 3. Crear cache masivo para todos los usuarios - solo si hay usuarios
+            # 2. Crear cache masivo para todos los usuarios - solo si hay usuarios
             cache_success = True
             if usuarios_normalizados:
                 cache_success = self._create_bulk_cache_empresa(
@@ -170,8 +135,8 @@ class EmpresaAlertHandler:
                 )
             else:
                 self.logger.info("ℹ️ No hay usuarios para crear cache")
-            
-            # 4. Enviar comandos MQTT a dispositivos hardware
+
+            # 3. Enviar comandos MQTT a dispositivos hardware
             mqtt_success = True
             if topics_hardware:
                 mqtt_success = self._send_mqtt_activation_commands(
@@ -180,10 +145,9 @@ class EmpresaAlertHandler:
                 )
             else:
                 self.logger.info("ℹ️ No hay hardware para activar por MQTT")
-            
+
             # Actualizar estadísticas
-            if (template_success and whatsapp_success and location_success 
-                    and cache_success and mqtt_success):
+            if template_success and cache_success and mqtt_success:
                 self.processed_count += 1
                 self.logger.info("✅ Activación por empresa procesada exitosamente")
                 return True

@@ -396,59 +396,11 @@ class WebSocketMessageHandler:
             if not alert_id:
                 alert_id = response_alarm.get("alert_id") or response_alarm.get("_id")
 
-            if (not data_alert or not list_users) and alert_id:
-                user_id = cached_info.get("data", {}).get("id")
-                if user_id:
-                    response_detail = self.backend_client.get_alert_by_id(
-                        alert_id=alert_id,
-                        user_id=user_id
-                    )
-                    detail_alert = response_detail.get("alert") if isinstance(response_detail, dict) else None
-                    if isinstance(detail_alert, dict):
-                        data_alert = detail_alert
-                        list_users = detail_alert.get("numeros_telefonicos", list_users or [])
-                        if isinstance(list_users, dict):
-                            list_users = list(list_users.values())
-                        elif not isinstance(list_users, list):
-                            list_users = []
-         
-            
-       
             # print(f"data_alert: {json.dumps(data_alert, indent=2)}")
             # print(f"list_users: {json.dumps(list_users, indent=2)}")
             # print(f"hardware_location: {json.dumps(hardware_location, indent=2)}")
  
             numero_excluido = cached_info["phone"]
-            if (
-                self.whatsapp_service
-                and alert_id
-                and not any(
-                    isinstance(u, dict) and u.get("numero") == numero_excluido
-                    for u in list_users
-                )
-            ):
-                creator_cache = cached_info.get("data", {})
-                creator_data = {
-                    "id": creator_cache.get("id"),
-                    "alert_active": True,
-                    "empresa": (
-                        creator_cache.get("empresa")
-                        or data_alert.get("empresa")
-                        or data_alert.get("empresa_nombre", "")
-                    ),
-                    "disponible": creator_cache.get("disponible", True),
-                    "embarcado": creator_cache.get("embarcado", False),
-                    "info_alert": {"alert_id": alert_id}
-                }
-                if creator_cache.get("rol"):
-                    creator_data["rol"] = creator_cache["rol"]
-                if creator_cache.get("empresa_id"):
-                    creator_data["empresa_id"] = creator_cache["empresa_id"]
-                self.whatsapp_service.update_number_cache(
-                    phone=numero_excluido,
-                    data=creator_data,
-                    empresa_id=creator_cache.get("empresa_id")
-                )
             if list_users:
                 creator_name = data_alert.get("activacion_alerta", {}).get("nombre")
                 recipients_template = [u for u in list_users if u.get("numero") != numero_excluido]
