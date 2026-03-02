@@ -181,10 +181,8 @@ class MQTTMessageHandler:
             # ENVIAR MENSAJES MQTT A OTROS HARDWARE
             self._send_mqtt_message(alert_data=alert_data, mqtt_data=mqtt_data)
 
-            # PROCESAR NOTIFICACIONES WHATSAPP (replicando WebSocket handler)
+            # PROCESAR NOTIFICACIONES WHATSAPP (solo plantilla + cache)
             template_success = True
-            whatsapp_success = True
-            location_success = True
             cache_success = True
 
             if self.whatsapp_service and alert_data:
@@ -210,33 +208,6 @@ class MQTTMessageHandler:
                     else:
                         self.logger.info("ℹ️ Sin destinatarios para plantilla de alerta creada")
 
-                    time.sleep(20)
-
-                    hardware_location = alert_data.get("ubicacion", {})
-                    if hardware_location:
-                        location_success = self._send_location_personalized_message(
-                            numeros_data=usuarios_normalizados,
-                            hardware_location=hardware_location
-                        )
-                    else:
-                        self.logger.warning("⚠️ No hay datos de ubicación para enviar")
-
-                    time.sleep(2)
-
-                    whatsapp_recipients = [
-                        usuario for usuario in usuarios_normalizados
-                        if not telefono_creador or usuario.get("numero") != telefono_creador
-                    ]
-
-                    if whatsapp_recipients:
-                        whatsapp_success = self._send_create_active_user(
-                            alert=alert_data,
-                            list_users=whatsapp_recipients,
-                            mqtt_data=mqtt_data
-                        )
-                    else:
-                        self.logger.info("ℹ️ Sin destinatarios para notificación de disponibilidad")
-
                     cache_success = self._create_bulk_cache(
                         alarm_info=alert_data,
                         list_users=usuarios_normalizados,
@@ -250,12 +221,10 @@ class MQTTMessageHandler:
                 else:
                     self.logger.warning("⚠️ Respuesta del backend sin datos de alerta")
 
-            if not (template_success and whatsapp_success and location_success and cache_success):
+            if not (template_success and cache_success):
                 self.logger.warning(
-                    "⚠️ Flujo de notificaciones vía MQTT incompleto | plantilla=%s ubicación=%s disponibilidad=%s cache=%s",
+                    "⚠️ Flujo de notificaciones vía MQTT incompleto | plantilla=%s cache=%s",
                     template_success,
-                    location_success,
-                    whatsapp_success,
                     cache_success
                 )
             
