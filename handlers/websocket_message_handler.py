@@ -288,7 +288,13 @@ class WebSocketMessageHandler:
         try:
             # print(json.dumps(alarm_info,indent=3))
             # print(json.dumps(list_users,indent=3))
-            data_cache = cache_creator["data"]
+            if isinstance(list_users, dict):
+                list_users = list(list_users.values())
+            elif not isinstance(list_users, list):
+                self.logger.warning("⚠️ list_users inválido para cache: %s", type(list_users).__name__)
+                return
+
+            data_cache = cache_creator.get("data", {})
             """
             Este es un ejemplo del data del cache
                "data": {
@@ -307,16 +313,23 @@ class WebSocketMessageHandler:
 
             """
             empresa_id = data_cache.get("empresa_id")
+            empresa_nombre = (
+                data_cache.get("empresa")
+                or alarm_info.get("empresa")
+                or alarm_info.get("empresa_nombre", "")
+            )
 
             for user in list_users:
+                if not isinstance(user, dict):
+                    continue
                 data_user = {
-                    "id" : user["usuario_id"],
-                    "alert_active":True,
-                    "empresa" : data_cache["empresa"],
-                    "disponible" : user["disponible"],
-                    "embarcado" : user["embarcado"],
-                    "info_alert" : {
-                        "alert_id" : alarm_info["_id"]
+                    "id": user.get("usuario_id") or user.get("id"),
+                    "alert_active": True,
+                    "empresa": empresa_nombre,
+                    "disponible": user.get("disponible", True),
+                    "embarcado": user.get("embarcado", False),
+                    "info_alert": {
+                        "alert_id": alarm_info.get("_id") or alarm_info.get("alert_id")
                     }
                 }
 
@@ -328,10 +341,21 @@ class WebSocketMessageHandler:
                     }
                 if empresa_id:
                     data_user["empresa_id"] = empresa_id
-                self.whatsapp_service.add_number_to_cache(phone = user["numero"]
-                                                          , name = user["nombre"]
-                                                          , data = data_user
-                                                          , empresa_id = empresa_id)
+                phone = user.get("numero") or user.get("telefono", "")
+                if not phone:
+                    continue
+                added = self.whatsapp_service.add_number_to_cache(
+                    phone=phone,
+                    name=user.get("nombre", ""),
+                    data=data_user,
+                    empresa_id=empresa_id
+                )
+                if not added:
+                    self.whatsapp_service.update_number_cache(
+                        phone=phone,
+                        data=data_user,
+                        empresa_id=empresa_id
+                    )
         except Exception as ex:
             self.logger.error(f"Error en _create_bulk_cache {ex}")
     def _create_alarm(self,cached_info:Dict,ubication:Dict) -> bool:
@@ -347,8 +371,46 @@ class WebSocketMessageHandler:
             )
            
    
-            data_alert = response_alarm.get("alert",{})
-            list_users = data_alert.get("numeros_telefonicos",{})
+            if not response_alarm:
+                self.logger.error("❌ Backend no respondió al crear la alerta")
+                return False
+
+            data_alert = (
+                response_alarm.get("alert")
+                or response_alarm.get("data")
+                or response_alarm.get("alerta")
+                or {}
+            )
+            list_users = data_alert.get("numeros_telefonicos") if isinstance(data_alert, dict) else None
+            if not list_users:
+                list_users = response_alarm.get("numeros_telefonicos", [])
+
+            if isinstance(list_users, dict):
+                list_users = list(list_users.values())
+            elif not isinstance(list_users, list):
+                list_users = []
+
+            alert_id = None
+            if isinstance(data_alert, dict):
+                alert_id = data_alert.get("_id") or data_alert.get("alert_id")
+            if not alert_id:
+                alert_id = response_alarm.get("alert_id") or response_alarm.get("_id")
+
+            if (not data_alert or not list_users) and alert_id:
+                user_id = cached_info.get("data", {}).get("id")
+                if user_id:
+                    response_detail = self.backend_client.get_alert_by_id(
+                        alert_id=alert_id,
+                        user_id=user_id
+                    )
+                    detail_alert = response_detail.get("alert") if isinstance(response_detail, dict) else None
+                    if isinstance(detail_alert, dict):
+                        data_alert = detail_alert
+                        list_users = detail_alert.get("numeros_telefonicos", list_users or [])
+                        if isinstance(list_users, dict):
+                            list_users = list(list_users.values())
+                        elif not isinstance(list_users, list):
+                            list_users = []
          
             
        
@@ -357,6 +419,36 @@ class WebSocketMessageHandler:
             # print(f"hardware_location: {json.dumps(hardware_location, indent=2)}")
  
             numero_excluido = cached_info["phone"]
+            if (
+                self.whatsapp_service
+                and alert_id
+                and not any(
+                    isinstance(u, dict) and u.get("numero") == numero_excluido
+                    for u in list_users
+                )
+            ):
+                creator_cache = cached_info.get("data", {})
+                creator_data = {
+                    "id": creator_cache.get("id"),
+                    "alert_active": True,
+                    "empresa": (
+                        creator_cache.get("empresa")
+                        or data_alert.get("empresa")
+                        or data_alert.get("empresa_nombre", "")
+                    ),
+                    "disponible": creator_cache.get("disponible", True),
+                    "embarcado": creator_cache.get("embarcado", False),
+                    "info_alert": {"alert_id": alert_id}
+                }
+                if creator_cache.get("rol"):
+                    creator_data["rol"] = creator_cache["rol"]
+                if creator_cache.get("empresa_id"):
+                    creator_data["empresa_id"] = creator_cache["empresa_id"]
+                self.whatsapp_service.update_number_cache(
+                    phone=numero_excluido,
+                    data=creator_data,
+                    empresa_id=creator_cache.get("empresa_id")
+                )
             if list_users:
                 creator_name = data_alert.get("activacion_alerta", {}).get("nombre")
                 recipients_template = [u for u in list_users if u.get("numero") != numero_excluido]
@@ -365,7 +457,7 @@ class WebSocketMessageHandler:
                     alert_info=data_alert,
                     creator_name=creator_name
                 )
-                topics = data_alert.get("topics_otros_hardware",{})
+                topics = data_alert.get("topics_otros_hardware", {}) or response_alarm.get("topics_otros_hardware", {})
                 self._intermediate_to_mqtt(alert=data_alert,topics=topics)
             else:
                 self.logger.error("⚠️ No hay destinatarios válidos para notificar")
