@@ -350,8 +350,8 @@ class MQTTMessageHandler:
     def _select_data_hardware(self, topic, alert: Dict) -> Dict:
         """Seleccionar datos específicos según el tipo de hardware - IGUAL al WebSocket handler"""
       #  print(json.dumps(alert,indent=4))
-        data_alert = alert.get("data",{})
-        alarm_color = data_alert.get("tipo_alarma", "")
+        data_alert = alert.get("data", {}) or {}
+        alarm_color = data_alert.get("tipo_alarma") or alert.get("tipo_alerta", "")
         
         if "SEMAFORO" in topic:
             message_data = {

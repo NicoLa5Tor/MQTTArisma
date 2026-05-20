@@ -21,6 +21,9 @@ class MQTTConfig:
     password: str = os.getenv("MQTT_PASSWORD", "B0mb3r0s")
     client_id: str = os.getenv("MQTT_CLIENT_ID", "TST123")
     keep_alive: int = int(os.getenv("MQTT_KEEP_ALIVE", "60"))
+    transport: str = os.getenv("MQTT_TRANSPORT", "tcp")       # "tcp" o "websockets"
+    ws_path: str = os.getenv("MQTT_WS_PATH", "/mqtt")         # path WebSocket del broker
+    tls: bool = os.getenv("MQTT_TLS", "false").lower() == "true"  # wss:// (Cloudflare = true)
     
     @classmethod
     def with_random_client_id(cls) -> 'MQTTConfig':

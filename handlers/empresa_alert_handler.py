@@ -819,20 +819,12 @@ class EmpresaAlertHandler:
         # Extraer datos de la alerta para el mensaje
         tipo_alerta = alert_data.get("tipo_alerta", "")
         prioridad = alert_data.get("prioridad", "media")
-        
-        # # Mapear tipo de alerta a color (igual que en MQTT handler)
-        # color_map = {
-        #     "incendio": "ROJO",
-        #     "accidente": "AZUL",
-        #     "sanitaria": "AMARILLO",
-        #     "delincuencia": "VERDE",
-        #     "catastrofe": "NARANJA",
-        #     "evacuacion": "ROJO",  # Agregar evacuación como rojo
-        #     "mantenimiento": "AZUL",
-        #     "seguridad": "VERDE"
-        # }
-        
-        alarm_color = tipo_alerta
+
+        data_payload = alert_data.get("data", {}) or {}
+        alarm_color = (
+            data_payload.get("tipo_alarma")
+            or tipo_alerta
+        )
         
         if "SEMAFORO" in topic:
             # Para semáforos: solo tipo_alarma (color)

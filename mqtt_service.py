@@ -49,10 +49,13 @@ class MQTTService:
             username=self.config.mqtt.username,
             password=self.config.mqtt.password,
             client_id=f"{self.config.mqtt.client_id}_receiver",
-            keep_alive=self.config.mqtt.keep_alive
+            keep_alive=self.config.mqtt.keep_alive,
+            transport=self.config.mqtt.transport,
+            ws_path=self.config.mqtt.ws_path,
+            tls=self.config.mqtt.tls,
         )
         self.mqtt_receiver = MQTTClient(receiver_config)
-        
+
         # MQTT Publisher para enviar mensajes (publisher)
         publisher_config = MQTTConfig(
             broker=self.config.mqtt.broker,
@@ -61,7 +64,10 @@ class MQTTService:
             username=self.config.mqtt.username,
             password=self.config.mqtt.password,
             client_id=f"{self.config.mqtt.client_id}_publisher",
-            keep_alive=self.config.mqtt.keep_alive
+            keep_alive=self.config.mqtt.keep_alive,
+            transport=self.config.mqtt.transport,
+            ws_path=self.config.mqtt.ws_path,
+            tls=self.config.mqtt.tls,
         )
         self.mqtt_publisher = MQTTPublisherLite(publisher_config)
         

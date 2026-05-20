@@ -14,19 +14,19 @@ class MQTTClient:
     
     def __init__(self, config: MQTTConfig):
         self.config = config
-        self.client = mqtt.Client(config.client_id)
+        self.client = mqtt.Client(config.client_id, transport=config.transport)
         self.is_connected = False
         self.logger = logging.getLogger(__name__)
-        
+
         # Callbacks personalizables
         self.on_message_callback: Optional[Callable] = None
         self.on_connect_callback: Optional[Callable] = None
         self.on_disconnect_callback: Optional[Callable] = None
-        
+
         # Control de logs para evitar spam
         self.first_connection = True
         self.connection_count = 0
-        
+
         # Configurar cliente
         self._setup_client()
     
@@ -37,6 +37,13 @@ class MQTTClient:
         self.client.on_message = self._on_message
         self.client.on_disconnect = self._on_disconnect
         self.client.reconnect_delay_set(min_delay=1, max_delay=120)
+
+        if self.config.transport == "websockets":
+            self.client.ws_set_options(path=self.config.ws_path)
+            if self.config.tls:
+                import ssl
+                self.client.tls_set(cert_reqs=ssl.CERT_REQUIRED)
+                self.logger.info(f"🔒 MQTT sobre WSS (TLS habilitado) — path: {self.config.ws_path}")
     
     def _should_display_message(self, topic: str) -> bool:
         """Determinar si un mensaje debe mostrarse (solo BOTONERA válidos)"""

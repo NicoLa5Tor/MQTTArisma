@@ -54,20 +54,16 @@ def setup_logger(name: str = "mqtt_app", level: str = "INFO",
     
     formatter = logging.Formatter(format_string)
     
-    # Handler para consola
-    action_filter = ActionFilter(ACTION_LOGGER_PREFIXES)
-
+    # Handler para consola (sin filtro — muestra todo)
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(requested_level)
-    console_handler.addFilter(action_filter)
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
-    
-    # Handler para archivo si se especifica
+
+    # Handler para archivo si se especifica (sin filtro)
     if log_file:
         file_handler = logging.FileHandler(log_file)
         file_handler.setLevel(requested_level)
-        file_handler.addFilter(action_filter)
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
     
