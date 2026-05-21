@@ -1436,3 +1436,85 @@
 2025-10-28 10:23:28,263 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 2
 2025-10-28 10:23:28,263 - mqtt_service - INFO -   • Errores totales: 0
 2025-10-28 10:23:28,263 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2026-05-04 19:25:02,668 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2026-05-04 19:25:02,669 - mqtt_service - INFO - 📡 Broker: mqtt.sabervisual.com:443
+2026-05-04 19:25:02,669 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2026-05-04 19:25:02,669 - mqtt_service - INFO - 📋 Topic base: empresas
+2026-05-04 19:25:03,337 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2026-05-04 19:25:03,797 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2026-05-04 19:25:03,797 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2026-05-04 19:25:03,797 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2026-05-04 19:25:03,910 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2026-05-04 19:25:03,911 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2026-05-04 19:25:10,365 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2026-05-04 19:25:10,365 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2026-05-04 19:25:11,033 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2026-05-04 19:25:11,264 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2026-05-04 19:25:11,264 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2026-05-04 19:25:11,264 - mqtt_service - INFO -   • Total de mensajes recibidos: 0
+2026-05-04 19:25:11,264 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2026-05-04 19:25:11,264 - mqtt_service - INFO -   • Errores totales: 0
+2026-05-04 19:25:11,264 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2026-05-04 19:25:11,264 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2026-05-04 19:25:11,264 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2026-05-04 19:25:11,264 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2026-05-04 19:25:11,264 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2026-05-04 19:25:11,264 - mqtt_service - INFO -   • Total de mensajes recibidos: 0
+2026-05-04 19:25:11,264 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2026-05-04 19:25:11,264 - mqtt_service - INFO -   • Errores totales: 0
+2026-05-04 19:25:11,264 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2026-05-04 19:26:13,353 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2026-05-04 19:26:13,353 - mqtt_service - INFO - 📡 Broker: mqtt.sabervisual.com:443
+2026-05-04 19:26:13,353 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2026-05-04 19:26:13,353 - mqtt_service - INFO - 📋 Topic base: empresas
+2026-05-04 19:26:14,113 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2026-05-04 19:26:14,660 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2026-05-04 19:26:14,660 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2026-05-04 19:26:14,660 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2026-05-04 19:26:14,774 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2026-05-04 19:26:14,774 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2026-05-04 20:29:52,370 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2026-05-04 20:29:52,376 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2026-05-04 20:29:54,896 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2026-05-04 20:29:54,897 - mqtt_service - INFO - 📡 Broker: mqtt.sabervisual.com:443
+2026-05-04 20:29:54,897 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2026-05-04 20:29:54,897 - mqtt_service - INFO - 📋 Topic base: empresas
+2026-05-04 20:29:55,973 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2026-05-04 20:29:56,640 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2026-05-04 20:29:56,640 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2026-05-04 20:29:56,641 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2026-05-04 20:29:56,754 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2026-05-04 20:29:56,754 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2026-05-04 20:30:35,935 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2026-05-04 20:30:35,935 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2026-05-19 23:28:58,628 - mqtt_service - INFO - 🚀 Iniciando servicio MQTT independiente...
+2026-05-19 23:28:58,630 - mqtt_service - INFO - 📡 Broker: mqtt.sabervisual.com:1883
+2026-05-19 23:28:58,630 - mqtt_service - INFO - 👤 Usuario: tocancipa
+2026-05-19 23:28:58,630 - mqtt_service - INFO - 📋 Topic base: empresas
+2026-05-19 23:28:59,105 - mqtt_service - INFO - ✅ MQTT Publisher conectado exitosamente
+2026-05-19 23:28:59,388 - mqtt_service - INFO - ✅ Servicio MQTT iniciado correctamente
+2026-05-19 23:28:59,388 - mqtt_service - INFO - 🎯 Esperando mensajes MQTT de BOTONERA...
+2026-05-19 23:28:59,388 - mqtt_service - INFO - 📋 Presiona Ctrl+C para detener
+2026-05-19 23:28:59,489 - mqtt_service - INFO - 🔥 Conectado exitosamente al broker MQTT
+2026-05-19 23:28:59,490 - mqtt_service - INFO - 🔍 Suscrito a: empresas/+/+/BOTONERA/+
+2026-05-19 23:29:05,894 - mqtt_service - INFO - 
+¡Recibida señal de terminación para servicio MQTT!
+2026-05-19 23:29:05,894 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2026-05-19 23:29:06,596 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2026-05-19 23:29:07,016 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2026-05-19 23:29:07,016 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2026-05-19 23:29:07,016 - mqtt_service - INFO -   • Total de mensajes recibidos: 0
+2026-05-19 23:29:07,017 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2026-05-19 23:29:07,017 - mqtt_service - INFO -   • Errores totales: 0
+2026-05-19 23:29:07,017 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
+2026-05-19 23:29:07,017 - mqtt_service - INFO - 🛑 Deteniendo servicio MQTT...
+2026-05-19 23:29:07,017 - mqtt_service - INFO - ✅ MQTT Receiver desconectado
+2026-05-19 23:29:07,017 - mqtt_service - INFO - ✅ MQTT Publisher desconectado
+2026-05-19 23:29:07,017 - mqtt_service - INFO - 📊 Estadísticas finales del servicio MQTT:
+2026-05-19 23:29:07,017 - mqtt_service - INFO -   • Total de mensajes recibidos: 0
+2026-05-19 23:29:07,017 - mqtt_service - INFO -   • Mensajes procesados exitosamente: 0
+2026-05-19 23:29:07,018 - mqtt_service - INFO -   • Errores totales: 0
+2026-05-19 23:29:07,018 - mqtt_service - INFO -   • Tasa de éxito final: 100.0%
