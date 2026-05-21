@@ -9,6 +9,8 @@ import signal
 import sys
 import os
 import logging
+import json
+from aiohttp import web
 
 # Agregar el directorio actual al path para las importaciones
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -49,7 +51,8 @@ class WebSocketService:
         
         # Estado del servicio
         self.is_running = False
-        
+        self._http_runner = None
+
         # Configurar manejo de señales
         signal.signal(signal.SIGINT, self._signal_handler)
         signal.signal(signal.SIGTERM, self._signal_handler)
@@ -60,24 +63,52 @@ class WebSocketService:
         asyncio.create_task(self.stop())
         sys.exit(0)
     
+    async def _handle_fanout(self, request: web.Request) -> web.Response:
+        """Endpoint HTTP interno: POST /internal/fanout-alert"""
+        try:
+            alert_data = await request.json()
+            if not isinstance(alert_data, dict):
+                return web.json_response({"success": False, "error": "alert_data must be a JSON object"}, status=400)
+
+            handler = self.websocket_server.message_handler
+            success = handler.trigger_fanout(alert_data)
+            return web.json_response({"success": success}, status=200 if success else 500)
+        except Exception as e:
+            self.logger.error(f"❌ Error en /internal/fanout-alert: {e}")
+            return web.json_response({"success": False, "error": str(e)}, status=500)
+
+    async def _start_http_server(self) -> None:
+        """Iniciar servidor HTTP interno en puerto 8081"""
+        http_port = int(os.getenv("INTERNAL_HTTP_PORT", "8081"))
+        app = web.Application()
+        app.router.add_post("/internal/fanout-alert", self._handle_fanout)
+        app.router.add_get("/health", lambda r: web.json_response({"status": "ok"}))
+        self._http_runner = web.AppRunner(app)
+        await self._http_runner.setup()
+        site = web.TCPSite(self._http_runner, "0.0.0.0", http_port)
+        await site.start()
+        self.logger.info(f"✅ HTTP interno iniciado en puerto {http_port}")
+
     async def start(self) -> bool:
         """Iniciar el servicio WebSocket"""
         self.logger.info("🚀 Iniciando servicio WebSocket independiente...")
         self.logger.info(f"📡 Servidor: ws://{self.config.websocket.host}:{self.config.websocket.port}")
         self.logger.info("📱 Procesamiento de WhatsApp con envío MQTT")
         self.logger.info("✅ MQTT Publisher habilitado para notificaciones")
-        
+
         try:
             # Iniciar servidor WebSocket
             await self.websocket_server.start()
+            # Iniciar servidor HTTP interno para fanout desde RescueBack
+            await self._start_http_server()
             self.is_running = True
-            
+
             self.logger.info("✅ Servicio WebSocket iniciado correctamente")
             self.logger.info("📱 Esperando mensajes de WhatsApp...")
             self.logger.info("📋 Presiona Ctrl+C para detener")
-            
+
             return True
-            
+
         except Exception as e:
             self.logger.error(f"❌ Error iniciando servicio WebSocket: {e}")
             return False
@@ -127,6 +158,10 @@ class WebSocketService:
                 await self.websocket_server.stop()
                 self.logger.info("✅ WebSocket Server detenido")
             
+            if self._http_runner:
+                await self._http_runner.cleanup()
+                self.logger.info("✅ HTTP interno detenido")
+
         except Exception as e:
             self.logger.error(f"❌ Error deteniendo servicio: {e}")
     

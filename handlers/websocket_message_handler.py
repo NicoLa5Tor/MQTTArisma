@@ -1582,6 +1582,29 @@ class WebSocketMessageHandler:
                 "action": "deactivate"
             }
 
+    def trigger_fanout(self, alert_data: Dict) -> bool:
+        """Disparar fanout MQTT con datos de alerta - llamado via HTTP desde RescueBack"""
+        try:
+            if not self.empresa_handler:
+                self.logger.error("❌ Empresa handler no disponible para fanout")
+                return False
+
+            empresa_message = {
+                "type": "alert_created_by_empresa",
+                "timestamp": alert_data.get("fecha_creacion", ""),
+                "alert": alert_data
+            }
+
+            success = self.empresa_handler.process_empresa_activation(empresa_message)
+            if success:
+                self.logger.info("✅ Fanout MQTT disparado via HTTP")
+            else:
+                self.logger.error("❌ Error en fanout MQTT via HTTP")
+            return success
+        except Exception as e:
+            self.logger.error(f"❌ Error en trigger_fanout: {e}")
+            return False
+
     def _handle_create_empresa_alert_sync(self, message_data: Dict) -> bool:
         """Manejar mensaje de creación de alerta de empresa con alert_data incluido"""
         try:

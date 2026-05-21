@@ -10,6 +10,9 @@ websocket-client==1.6.4
 # WebSocket Server
 websockets==11.0.3
 
+# HTTP Server (endpoint interno para fanout desde RescueBack)
+aiohttp==3.9.5
+
 # Redis client
 redis==5.0.1
 
