@@ -1510,7 +1510,8 @@ class WebSocketMessageHandler:
         data_alert = alert.get("data", {}) or {}
         alarm_color = (
             data_alert.get("tipo_alarma")
-            or alert.get("tipo_alerta", "")
+            or alert.get("nombre_alerta")
+            or ""
         )
         if "SEMAFORO" in topic:
             message_data = {

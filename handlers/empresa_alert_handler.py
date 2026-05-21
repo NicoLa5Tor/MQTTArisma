@@ -823,7 +823,8 @@ class EmpresaAlertHandler:
         data_payload = alert_data.get("data", {}) or {}
         alarm_color = (
             data_payload.get("tipo_alarma")
-            or tipo_alerta
+            or alert_data.get("nombre_alerta")
+            or ""
         )
         
         if "SEMAFORO" in topic:
