@@ -3,6 +3,7 @@ Cliente para comunicación con el backend
 """
 import json
 import logging
+import threading
 from typing import Dict, Any, Optional
 import requests
 from requests.adapters import HTTPAdapter
@@ -12,11 +13,12 @@ from config.settings import BackendConfig
 
 class BackendClient:
     """Cliente para comunicación con el backend"""
-    
+
     def __init__(self, config: BackendConfig):
-        
+
         self.config = config
         self.session = requests.Session()
+        self._auth_header_lock = threading.Lock()
         self.logger = logging.getLogger(__name__)
         
         # Configurar reintentos automáticos
@@ -174,32 +176,23 @@ class BackendClient:
             return None
     
     def send_alarm_data(self, mqtt_data: Dict[str, Any], token: str) -> Optional[Dict]:
-        """Enviar datos de alarma al backend usando token"""
+        """Enviar datos de alarma al backend usando token (thread-safe)"""
         try:
             self.logger.info("🚨 Enviando alarma MQTT al backend")
-            # Establecer token en headers
-            self.session.headers.update({
-                'Authorization': f'Bearer {token}'
-            })
-            
-            # Endpoint para enviar datos de alarma
             endpoint = '/api/mqtt-alerts'
-            
-            
-            # Enviar datos (esto consumirá el token)
-            response = self.post(endpoint, data=mqtt_data)
-            
-            # Limpiar token después de usar
-            self._clear_token()
-            
+            with self._auth_header_lock:
+                self.session.headers['Authorization'] = f'Bearer {token}'
+                try:
+                    response = self.post(endpoint, data=mqtt_data)
+                finally:
+                    self.session.headers.pop('Authorization', None)
+
             if response:
-                alert_id = response.get('alert_id', 'N/A')
                 return response
-            else:
-                return None
-                
+            return None
+
         except Exception as e:
-            self._clear_token()
+            self.logger.error("❌ send_alarm_data excepción: %s", e)
             return None
     
     def health_check(self) -> bool:

@@ -15,23 +15,30 @@ from utils.alert_normalizer import (
 )
 
 
+_DEDUP_WINDOW_SECONDS = 2
+
+
 class MQTTMessageHandler:
     """Manejador de mensajes MQTT puro - SIN dependencias de WhatsApp"""
-    
+
     def __init__(self, backend_client, mqtt_publisher=None, whatsapp_service=None, config=None):
         self.backend_client = backend_client
         self.mqtt_publisher = mqtt_publisher
         self.whatsapp_service = whatsapp_service  # Solo para ENVIAR cuando el backend lo requiera
         self.config = config
         self.logger = logging.getLogger(__name__)
-        
+
         # Estadísticas
         self.processed_messages = 0
         self.error_count = 0
-        
+
         # Usar settings en lugar de .env directo
         self.pattern_topic = config.mqtt.topic if config else "empresas"
-        
+
+        # Dedup: evita procesar el mismo hardware más de 1 vez por ventana de tiempo
+        self._last_processed: Dict[str, float] = {}
+        self._dedup_lock = threading.Lock()
+
         self.logger.info("🎯 MQTT Message Handler - SOLO procesamiento MQTT")
         self.logger.info("❌ SIN procesamiento de mensajes WhatsApp entrantes")
 
@@ -107,9 +114,22 @@ class MQTTMessageHandler:
             # No mostrar ni procesar otros topics
             return True
 
+    def _is_duplicate(self, topic: str) -> bool:
+        """Retorna True si ya procesamos este topic dentro de la ventana de dedup."""
+        now = time.time()
+        with self._dedup_lock:
+            last = self._last_processed.get(topic, 0)
+            if now - last < _DEDUP_WINDOW_SECONDS:
+                return True
+            self._last_processed[topic] = now
+            return False
+
     def _send_botonera_to_backend(self, hardware_name: str, data: Dict, topic: str, payload: str) -> None:
         """Enviar mensaje de BOTONERA al backend usando un nuevo hilo"""
-        thread = threading.Thread(target=self._send_alarm_thread, args=(hardware_name, data, topic, payload))
+        if self._is_duplicate(topic):
+            self.logger.info("⏭️ Dedup: ignorando %s (ya procesado en los últimos %ss)", topic, _DEDUP_WINDOW_SECONDS)
+            return
+        thread = threading.Thread(target=self._send_alarm_thread, args=(hardware_name, data, topic, payload), daemon=True)
         thread.start()
 
     def _send_alarm_thread(self, hardware_name: str, data: Dict, topic: str, payload: str):
@@ -142,7 +162,10 @@ class MQTTMessageHandler:
             token = self.backend_client.authenticate_hardware(mqtt_data)
             
             if not token:
-                self.logger.error(f"❌ Autenticación fallida")
+                self.logger.error(
+                    "❌ Autenticación fallida empresa=%s sede=%s hardware=%s",
+                    mqtt_data.get('empresa'), mqtt_data.get('sede'), mqtt_data.get('nombre_hardware')
+                )
                 return False
             
             response = self.backend_client.send_alarm_data(mqtt_data, token)
