@@ -86,6 +86,8 @@ class BackendClient:
             # intentar parsear JSON normalmente
             try:
                 result = response.json()
+                if isinstance(result, list):
+                    return {'success': bool(result), 'data': result, '_status_code': response.status_code}
                 result['_status_code'] = response.status_code
                 return result
             except json.JSONDecodeError:

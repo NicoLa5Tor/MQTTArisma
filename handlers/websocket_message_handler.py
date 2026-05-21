@@ -409,10 +409,13 @@ class WebSocketMessageHandler:
                     alert_info=data_alert,
                     creator_name=creator_name
                 )
-                topics = data_alert.get("topics_otros_hardware", {}) or response_alarm.get("topics_otros_hardware", {})
-                self._intermediate_to_mqtt(alert=data_alert,topics=topics)
             else:
                 self.logger.error("⚠️ No hay destinatarios válidos para notificar")
+
+            # Fanout MQTT siempre, independiente de si hay usuarios con teléfono
+            topics = data_alert.get("topics_otros_hardware") or response_alarm.get("topics_otros_hardware") or []
+            if topics:
+                self._intermediate_to_mqtt(alert=data_alert, topics=topics)
             
             # print(f"list_users exists: {bool(list_users)}")
             # print(f"hardware_location exists: {bool(hardware_location)}")
